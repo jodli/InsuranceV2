@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic;
 using AutoMapper;
@@ -16,9 +15,9 @@ namespace InsuranceV2.Application.Services
     public class InsureeManagementAppService : IInsureeManagementAppService
     {
         private readonly IInsureeRepository _insureeRepository;
-        private readonly IUnitOfWorkFactory _unitOfWorkFactory;
         private readonly ILogger<InsureeManagementAppService> _logger;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWorkFactory _unitOfWorkFactory;
 
         public InsureeManagementAppService(IInsureeRepository insureeRepository, IUnitOfWorkFactory unitOfWorkFactory,
             ILogger<InsureeManagementAppService> logger, IMapper mapper)
@@ -33,14 +32,14 @@ namespace InsuranceV2.Application.Services
 
         public PagerModel<DisplayInsuree> GetPagedInsurees(int page = 1, string sort = "Id", string sortDir = "ASC")
         {
-            int totalRecords = _insureeRepository.FindAll().Count();
+            var totalRecords = _insureeRepository.FindAll().Count();
             var data = new List<DisplayInsuree>();
-            IQueryable<Insuree> insurees =
+            var insurees =
                 _insureeRepository.FindAll()
                     .OrderBy(BuildOrderBy(sort, sortDir))
-                    .Skip((page*PageSize) - PageSize)
+                    .Skip(page*PageSize - PageSize)
                     .Take(PageSize);
-            
+
             _mapper.Map(insurees, data);
 
             var model = new PagerModel<DisplayInsuree>
@@ -52,13 +51,6 @@ namespace InsuranceV2.Application.Services
             };
 
             return model;
-        }
-
-        private static string BuildOrderBy(string sortOn, string sortDirection)
-        {
-            return sortOn.ToLower() == "fullname"
-                ? $"FirstName {sortDirection}, LastName {sortDirection}"
-                : $"{sortOn} {sortDirection}";
         }
 
         public DetailInsuree GetDetailInsuree(int id)
@@ -112,9 +104,9 @@ namespace InsuranceV2.Application.Services
             {
                 using (_unitOfWorkFactory.Create())
                 {
+                    _logger.Info($"Update insuree with id: {editInsuree.Id}");
                     var insureeToUpdate = _insureeRepository.FindById(editInsuree.Id);
                     _mapper.Map(editInsuree, insureeToUpdate, typeof (CreateOrEditInsuree), typeof (Insuree));
-                    _logger.Info($"Edited insuree with id: {insureeToUpdate.Id}");
                 }
             }
             catch (ModelValidationException e)
@@ -127,9 +119,16 @@ namespace InsuranceV2.Application.Services
         {
             using (_unitOfWorkFactory.Create())
             {
+                _logger.Info($"Delete insuree with id: {id}");
                 _insureeRepository.Remove(id);
-                _logger.Info($"Deleted insuree with id: {id}");
             }
+        }
+
+        private static string BuildOrderBy(string sortOn, string sortDirection)
+        {
+            return sortOn.ToLower() == "fullname"
+                ? $"FirstName {sortDirection}, LastName {sortDirection}"
+                : $"{sortOn} {sortDirection}";
         }
     }
 }

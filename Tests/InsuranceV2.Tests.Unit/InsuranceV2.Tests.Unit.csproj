@@ -65,9 +65,7 @@
     <Compile Include="CollectionBaseTests.cs" />
     <Compile Include="DomainEntityTests.cs" />
     <Compile Include="InsureeTests.cs" />
-    <Compile Include="MVVM\ActionCommandTests.cs" />
     <Compile Include="MVVM\ObservableObjectTests.cs" />
-    <Compile Include="MVVM\ViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTestBase.cs" />
   </ItemGroup>
