@@ -1,0 +1,11 @@
+﻿<UserControl x:Class="InsureeList.Views.InsureeListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <Grid>
+        <StackPanel>
+            <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding Path=Insurees}" />
+        </StackPanel>
+    </Grid>
+</UserControl>

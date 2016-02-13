@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="ToolBar.Views.ToolBarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <StackPanel Orientation="Horizontal">
+        <Button Content="Navigate to InsureeList" Command="{Binding NavigateCommand}"
+                CommandParameter="InsureeListView" />
+        <Button Content="Navigate to Settings" Command="{Binding NavigateCommand}" 
+                CommandParameter="SettingsView" />
+    </StackPanel>
+</UserControl>

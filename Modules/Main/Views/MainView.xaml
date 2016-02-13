@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="Main.Views.MainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:infrastructure="clr-namespace:InsuranceV2.Common.MVVM;assembly=InsuranceV2.Common"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <DockPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid x:Name="ToolBarRegion" Grid.Row="0">
+                <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.ToolBarRegion}" />
+            </Grid>
+            <Grid x:Name="ContentRegion" Grid.Row="1">
+                <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.ContentRegion}" />
+            </Grid>
+            <Grid x:Name="StatusBarRegion" Grid.Row="2">
+                <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.StatusBarRegion}" />
+            </Grid>
+        </Grid>
+    </DockPanel>
+</UserControl>
