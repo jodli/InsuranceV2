@@ -11,7 +11,7 @@ namespace InsuranceV2.Application.Models
             var mapperConfiguration = new MapperConfiguration(
                 configuration =>
                 {
-                    configuration.CreateMap<Common.Models.Insuree, DisplayInsuree>();
+                    configuration.CreateMap<Common.Models.Insuree, ListInsuree>();
                     configuration.CreateMap<Common.Models.Insuree, DetailInsuree>();
                     configuration.CreateMap<Common.Models.Insuree, CreateOrEditInsuree>();
                     configuration.CreateMap<Common.Models.Address, DetailAddress>();

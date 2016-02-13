@@ -6,7 +6,7 @@ namespace InsuranceV2.Application.Services
     public interface IInsureeManagementAppService
     {
         int PageSize { get; set; }
-        PagerModel<DisplayInsuree> GetPagedInsurees(int page = 1, string sort = "Id", string sortDir = "ASC");
+        PagerModel<ListInsuree> GetPagedInsurees(int page = 1, string sort = "Id", string sortDir = "ASC");
         CreateOrEditInsuree GetExistingInsureeToEdit(int id);
         DetailInsuree GetDetailInsuree(int id);
         CreateOrEditInsuree GetNewInsuree();

@@ -8,5 +8,10 @@ namespace InsuranceV2.Application.Models
         public int PageSize { get; set; }
         public int PageNumber { get; set; }
         public int TotalRows { get; set; }
+
+        public override string ToString()
+        {
+            return $"PageSize: {PageSize}, PageNumber: {PageNumber}, TotalRows: {TotalRows}";
+        }
     }
 }

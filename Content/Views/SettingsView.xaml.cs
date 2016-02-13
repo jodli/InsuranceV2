@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Settings.Views
+namespace Content.Views
 {
     /// <summary>
     /// Interaction logic for SettingsView

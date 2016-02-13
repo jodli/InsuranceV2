@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Markup;
+using Content;
 using InsuranceV2.Application.DependencyResolution;
 using InsuranceV2.Common.DependencyResolution;
 using InsuranceV2.Common.Logging;
 using InsuranceV2.Domain.DependencyResolution;
 using InsuranceV2.Infrastructure.DependencyResolution;
 using InsuranceV2.Views;
-using InsureeList;
 using Main;
 using Prism.Logging;
 using Prism.Modularity;
 using Prism.StructureMap;
-using Settings;
 using StatusBar;
 using StructureMap.Graph;
 using ToolBar;
@@ -56,8 +55,7 @@ namespace InsuranceV2.IoC
             AddModuleToCatalog(typeof (ToolBarModule));
             AddModuleToCatalog(typeof (StatusBarModule));
 
-            AddModuleToCatalog(typeof (SettingsModule));
-            AddModuleToCatalog(typeof (InsureeListModule));
+            AddModuleToCatalog(typeof (ContentModule));
         }
 
         private void AddModuleToCatalog(Type type)

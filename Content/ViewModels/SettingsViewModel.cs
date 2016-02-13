@@ -1,6 +1,6 @@
 ﻿using Prism.Mvvm;
 
-namespace Settings.ViewModels
+namespace Content.ViewModels
 {
     public class SettingsViewModel : BindableBase
     {

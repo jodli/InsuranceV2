@@ -77,7 +77,7 @@
     <Compile Include="Models\AutoMapperConfig.cs" />
     <Compile Include="Models\Insuree\CreateOrEditInsuree.cs" />
     <Compile Include="Models\Insuree\DetailInsuree.cs" />
-    <Compile Include="Models\Insuree\DisplayInsuree.cs" />
+    <Compile Include="Models\Insuree\ListInsuree.cs" />
     <Compile Include="Models\PagerModel.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

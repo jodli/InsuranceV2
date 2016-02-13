@@ -26,14 +26,16 @@ namespace InsuranceV2.Application.Services
             _unitOfWorkFactory = unitOfWorkFactory;
             _logger = logger;
             _mapper = mapper;
+
+            PageSize = 5;
         }
 
         public int PageSize { get; set; }
 
-        public PagerModel<DisplayInsuree> GetPagedInsurees(int page = 1, string sort = "Id", string sortDir = "ASC")
+        public PagerModel<ListInsuree> GetPagedInsurees(int page = 1, string sort = "Id", string sortDir = "ASC")
         {
             var totalRecords = _insureeRepository.FindAll().Count();
-            var data = new List<DisplayInsuree>();
+            var data = new List<ListInsuree>();
             var insurees =
                 _insureeRepository.FindAll()
                     .OrderBy(BuildOrderBy(sort, sortDir))
@@ -42,13 +44,15 @@ namespace InsuranceV2.Application.Services
 
             _mapper.Map(insurees, data);
 
-            var model = new PagerModel<DisplayInsuree>
+            var model = new PagerModel<ListInsuree>
             {
                 Data = data,
                 PageNumber = page,
                 PageSize = PageSize,
                 TotalRows = totalRecords
             };
+
+            _logger.Info($"Returning PagerModel: {model}");
 
             return model;
         }

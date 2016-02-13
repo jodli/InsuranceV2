@@ -62,7 +62,7 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
                 FirstName = "firstName",
                 LastName = "lastName"
             };
-            var listInsuree = new DisplayInsuree();
+            var listInsuree = new ListInsuree();
 
             Mapper.Map(insuree, listInsuree);
 

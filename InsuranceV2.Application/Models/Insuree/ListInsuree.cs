@@ -2,7 +2,7 @@
 
 namespace InsuranceV2.Application.Models.Insuree
 {
-    public class DisplayInsuree
+    public class ListInsuree
     {
         public int Id { get; set; }
 
