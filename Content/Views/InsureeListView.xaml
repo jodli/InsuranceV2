@@ -20,7 +20,9 @@
             <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Path=InsureeData, Mode=OneWay}"
                       VerticalAlignment="Top" ColumnWidth="*"
                       SelectedItem="{Binding Path=SelectedInsuree, Mode=TwoWay}"
-                      IsReadOnly="True">
+                      IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow"
+                      CanUserReorderColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Gainsboro"
+                      AlternationCount="2">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Id" Width="50" Binding="{Binding Id}" />
                     <DataGridTextColumn Header="Vorname" Width="250" Binding="{Binding FirstName}" />
