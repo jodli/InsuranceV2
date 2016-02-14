@@ -22,19 +22,30 @@
                       SelectedItem="{Binding Path=SelectedInsuree, Mode=TwoWay}"
                       IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow"
                       CanUserReorderColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Gainsboro"
-                      AlternationCount="2">
+                      AlternationCount="2" Margin="5">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Id" Width="50" Binding="{Binding Id}" />
                     <DataGridTextColumn Header="Vorname" Width="250" Binding="{Binding FirstName}" />
                     <DataGridTextColumn Header="Nachname" Width="250" Binding="{Binding LastName}" />
                 </DataGrid.Columns>
             </DataGrid>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="ListPage" />
-                <TextBox Text="{Binding ListPage.Value}" />
-                <TextBlock Text="PageSize" />
-                <TextBox Text="{Binding PageSize.Value}" />
-            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="5">
+                    <TextBlock Text="Seite" />
+                    <TextBox Text="{Binding SelectedPage.Value}" Margin="5,0" />
+                    <TextBlock Text="von" />
+                    <TextBlock Text="{Binding TotalPages.Value}" Margin="5,0" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Column="2" Margin="5">
+                    <TextBlock Text="PageSize" />
+                    <TextBox Text="{Binding PageSize.Value}" Margin="5,0" />
+                </StackPanel>
+            </Grid>
             <Button Content="Update List" Command="{Binding UpdateListCommand}" />
         </StackPanel>
     </Grid>

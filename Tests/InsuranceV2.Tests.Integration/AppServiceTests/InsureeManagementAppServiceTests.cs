@@ -94,7 +94,7 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
         {
             var pagedInsurees = _insureeManagementAppService.GetPagedInsurees();
 
-            pagedInsurees.TotalRows.ShouldBeEquivalentTo(15);
+            pagedInsurees.TotalPages.ShouldBeEquivalentTo(2);
             pagedInsurees.PageNumber.ShouldBeEquivalentTo(1);
             pagedInsurees.PageSize.ShouldBeEquivalentTo(10);
 
@@ -109,7 +109,7 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
         {
             var pagedInsurees = _insureeManagementAppService.GetPagedInsurees(2, 10, "Id", "DESC");
 
-            pagedInsurees.TotalRows.ShouldBeEquivalentTo(15);
+            pagedInsurees.TotalPages.ShouldBeEquivalentTo(2);
             pagedInsurees.PageNumber.ShouldBeEquivalentTo(2);
             pagedInsurees.PageSize.ShouldBeEquivalentTo(10);
 

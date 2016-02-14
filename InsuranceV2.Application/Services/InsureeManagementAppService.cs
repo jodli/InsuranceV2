@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic;
 using AutoMapper;
@@ -46,7 +47,7 @@ namespace InsuranceV2.Application.Services
                 Data = data,
                 PageNumber = page,
                 PageSize = pageSize,
-                TotalRows = totalRecords
+                TotalPages = (int) Math.Ceiling(totalRecords/(double) pageSize)
             };
 
             _logger.Info($"Returning PagerModel: {model}");

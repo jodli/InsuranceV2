@@ -1,6 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
-using InsuranceV2.Application.Models;
 using InsuranceV2.Application.Models.Insuree;
 using InsuranceV2.Application.Services;
 using InsuranceV2.Common.Logging;
@@ -14,10 +14,11 @@ namespace Content.ViewModels
     {
         private readonly IInsureeManagementAppService _insureeManagementAppService;
         private readonly ILogger<InsureeListViewModel> _logger;
-
-        private ObservableObject<int> _listPage;
         private ObservableObject<int> _pageSize;
         private ListInsuree _selectedInsuree;
+
+        private ObservableObject<int> _selectedPage;
+        private ObservableObject<int> _totalPages;
 
         public InsureeListViewModel(IInsureeManagementAppService insureeManagementAppService,
             ILogger<InsureeListViewModel> logger)
@@ -26,8 +27,9 @@ namespace Content.ViewModels
             _logger = logger;
 
             InsureeData = new ObservableCollection<ListInsuree>();
-            _listPage = new ObservableObject<int> {Value = 1};
+            _selectedPage = new ObservableObject<int> {Value = 1};
             _pageSize = new ObservableObject<int> {Value = 5};
+            _totalPages = new ObservableObject<int>();
 
             UpdateListCommand = new DelegateCommand(UpdateListExecute);
 
@@ -36,22 +38,28 @@ namespace Content.ViewModels
 
         public ICommand UpdateListCommand { get; }
 
-        public ObservableCollection<ListInsuree> InsureeData { get; set; }
+        public ObservableCollection<ListInsuree> InsureeData { get; }
 
         public ListInsuree SelectedInsuree
         {
             get { return _selectedInsuree; }
             set
             {
-                _logger.Debug($"Selecting Insuree with Id: {value.Id}");
+                _logger.Debug(value != null ? $"Selecting Insuree with Id: {value.Id}" : "Deselecting Insuree.");
                 SetProperty(ref _selectedInsuree, value);
             }
         }
 
-        public ObservableObject<int> ListPage
+        public ObservableObject<int> SelectedPage
         {
-            get { return _listPage; }
-            set { SetProperty(ref _listPage, value); }
+            get { return _selectedPage; }
+            set { SetProperty(ref _selectedPage, value); }
+        }
+
+        public ObservableObject<int> TotalPages
+        {
+            get { return _totalPages; }
+            set { SetProperty(ref _totalPages, value); }
         }
 
         public ObservableObject<int> PageSize
@@ -63,14 +71,16 @@ namespace Content.ViewModels
         private void UpdateListExecute()
         {
             _logger.Debug("Executing UpdateListCommand.");
-            var pagedInsurees = _insureeManagementAppService.GetPagedInsurees(ListPage.Value, PageSize.Value);
-            UpdateInsureeData(pagedInsurees);
+            var pagedInsurees = _insureeManagementAppService.GetPagedInsurees(SelectedPage.Value, PageSize.Value);
+
+            UpdateInsureeData(pagedInsurees.Data);
+            TotalPages.Value = pagedInsurees.TotalPages;
         }
 
-        private void UpdateInsureeData(PagerModel<ListInsuree> pagedInsurees)
+        private void UpdateInsureeData(IEnumerable<ListInsuree> insureeData)
         {
             InsureeData.Clear();
-            InsureeData.AddRange(pagedInsurees.Data);
+            InsureeData.AddRange(insureeData);
         }
     }
 }
