@@ -56,10 +56,7 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
             });
 
             _insureeManagementAppService = new InsureeManagementAppService(_insureeRepositoryMock.Object,
-                _unitOfWorkFactoryMock.Object, _logger.Object, Mapper)
-            {
-                PageSize = 10
-            };
+                _unitOfWorkFactoryMock.Object, _logger.Object, Mapper);
         }
 
         [Test]
@@ -110,7 +107,7 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
         [Test]
         public void GetPagedInsureesSecondPageSortedDescendingById()
         {
-            var pagedInsurees = _insureeManagementAppService.GetPagedInsurees(2, "Id", "DESC");
+            var pagedInsurees = _insureeManagementAppService.GetPagedInsurees(2, 10, "Id", "DESC");
 
             pagedInsurees.TotalRows.ShouldBeEquivalentTo(15);
             pagedInsurees.PageNumber.ShouldBeEquivalentTo(2);
@@ -125,7 +122,7 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
         [Test]
         public void GetPagedInsureesSortedDescendingByFullName()
         {
-            var pagedInsurees = _insureeManagementAppService.GetPagedInsurees(1, "FullName", "DESC");
+            var pagedInsurees = _insureeManagementAppService.GetPagedInsurees(1, 10, "FullName", "DESC");
 
             pagedInsurees.Data.Count().ShouldBeEquivalentTo(10);
 
