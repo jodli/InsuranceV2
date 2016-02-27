@@ -1,19 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using InsuranceV2.Application.Models.Insuree;
 using InsuranceV2.Application.Services;
 using InsuranceV2.Common.Logging;
+using InsuranceV2.Common.MVVM;
 using Prism.Commands;
 using Prism.Common;
-using Prism.Mvvm;
 
 namespace Content.ViewModels
 {
-    public class InsureeListViewModel : BindableBase
+    public class InsureeListViewModel : DisposableViewModel
     {
+        private readonly IEventBus _eventBus;
         private readonly IInsureeManagementAppService _insureeManagementAppService;
+        private readonly INavigationAppService _navigationAppService;
         private readonly ILogger<InsureeListViewModel> _logger;
+
         private ObservableObject<int> _pageSize;
         private ListInsuree _selectedInsuree;
 
@@ -21,10 +25,12 @@ namespace Content.ViewModels
         private ObservableObject<int> _totalPages;
 
         public InsureeListViewModel(IInsureeManagementAppService insureeManagementAppService,
-            ILogger<InsureeListViewModel> logger)
+            ILogger<InsureeListViewModel> logger, IEventBus eventBus, INavigationAppService navigationAppService)
         {
             _insureeManagementAppService = insureeManagementAppService;
             _logger = logger;
+            _eventBus = eventBus;
+            _navigationAppService = navigationAppService;
 
             InsureeData = new ObservableCollection<ListInsuree>();
             _selectedPage = new ObservableObject<int> {Value = 1};
@@ -32,11 +38,13 @@ namespace Content.ViewModels
             _totalPages = new ObservableObject<int>();
 
             UpdateListCommand = new DelegateCommand(UpdateListExecute);
+            ShowDetailsCommand = new DelegateCommand(ShowDetailsExecute);
 
             UpdateListExecute();
         }
 
         public ICommand UpdateListCommand { get; }
+        public ICommand ShowDetailsCommand { get; }
 
         public ObservableCollection<ListInsuree> InsureeData { get; }
 
@@ -47,6 +55,7 @@ namespace Content.ViewModels
             {
                 _logger.Debug(value != null ? $"Selecting Insuree with Id: {value.Id}" : "Deselecting Insuree.");
                 SetProperty(ref _selectedInsuree, value);
+                _eventBus.Publish(_selectedInsuree);
             }
         }
 
@@ -75,6 +84,12 @@ namespace Content.ViewModels
 
             UpdateInsureeData(pagedInsurees.Data);
             TotalPages.Value = pagedInsurees.TotalPages;
+        }
+
+        private void ShowDetailsExecute()
+        {
+            _logger.Debug("Executing ShowDetailsCommand");
+            _navigationAppService.NavigateTo(new Uri("InsureeDetailsView", UriKind.Relative));
         }
 
         private void UpdateInsureeData(IEnumerable<ListInsuree> insureeData)

@@ -28,6 +28,9 @@
                     <DataGridTextColumn Header="Vorname" Width="250" Binding="{Binding FirstName}" />
                     <DataGridTextColumn Header="Nachname" Width="250" Binding="{Binding LastName}" />
                 </DataGrid.Columns>
+                <DataGrid.InputBindings>
+                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding ShowDetailsCommand}" />
+                </DataGrid.InputBindings>
             </DataGrid>
             <Grid>
                 <Grid.ColumnDefinitions>

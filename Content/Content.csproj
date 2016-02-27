@@ -71,8 +71,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\InsureeDetailsViewModel.cs" />
     <Compile Include="ViewModels\InsureeListViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="Views\InsureeDetailsView.xaml.cs">
+      <DependentUpon>InsureeDetailsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\InsureeListView.xaml.cs">
       <DependentUpon>InsureeListView.xaml</DependentUpon>
     </Compile>
@@ -92,6 +96,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Page Include="Views\InsureeDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\InsureeListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

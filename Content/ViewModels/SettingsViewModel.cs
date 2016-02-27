@@ -1,8 +1,8 @@
-﻿using Prism.Mvvm;
+﻿using InsuranceV2.Common.MVVM;
 
 namespace Content.ViewModels
 {
-    public class SettingsViewModel : BindableBase
+    public class SettingsViewModel : DisposableViewModel
     {
     }
 }

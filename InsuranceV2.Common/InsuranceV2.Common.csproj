@@ -59,6 +59,9 @@
     <Compile Include="DependencyResolution\CommonRegistry.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\Logger.cs" />
+    <Compile Include="MVVM\DisposableViewModel.cs" />
+    <Compile Include="MVVM\EventBus.cs" />
+    <Compile Include="MVVM\IEventBus.cs" />
     <Compile Include="MVVM\RegionNames.cs" />
     <Compile Include="DomainEntity.cs" />
     <Compile Include="Enums\ContactType.cs" />

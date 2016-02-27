@@ -17,6 +17,7 @@ namespace Content
         public void Initialize()
         {
             _regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof (InsureeListView));
+            _regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof (InsureeDetailsView));
             _regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof (SettingsView));
         }
     }
