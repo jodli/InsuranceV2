@@ -1,9 +1,65 @@
 ﻿<UserControl x:Class="Content.Views.InsureeDetailsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:prism="http://prismlibrary.com/"             
-             prism:ViewModelLocator.AutoWireViewModel="True">
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:Content.ViewModels"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d"
+             d:DataContext="{Binding Source={d:DesignInstance Type=viewModels:InsureeDetailsViewModel, IsDesignTimeCreatable=True}}">
     <Grid>
-           <Label Content="DetailsView" FontSize="32"></Label> 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="Mitarbeiter" />
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Content="{Binding Insuree.Value.FullName}" />
+                <Label Grid.Row="1" Content="Adresse" />
+                <Label Grid.Row="2" Content="bla" />
+                <Label Grid.Row="3" Content="Geburtsdatum" />
+            </Grid>
+
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Content="Telefonnummer" />
+                <Label Grid.Row="1" Content="Handynummer" />
+                <Label Grid.Row="2" Content="Email Adresse" />
+                <Label Grid.Row="3" Content="Bankdaten" />
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <DataGrid AutoGenerateColumns="False"
+                      VerticalAlignment="Top" ColumnWidth="*"
+                      IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow"
+                      CanUserReorderColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Gainsboro"
+                      AlternationCount="2" Margin="5">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Id" Width="50" />
+                    <DataGridTextColumn Header="Versicherung" Width="250" />
+                    <DataGridTextColumn Header="Versicherungsnr." Width="250" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
     </Grid>
 </UserControl>

@@ -2,6 +2,7 @@
 using InsuranceV2.Application.Services;
 using InsuranceV2.Common.Logging;
 using InsuranceV2.Common.MVVM;
+using Prism.Common;
 
 namespace Content.ViewModels
 {
@@ -18,10 +19,12 @@ namespace Content.ViewModels
             _logger = logger;
             _eventBus = eventBus;
 
+            Insuree = new ObservableObject<DetailInsuree>();
+
             SubscribeEvents();
         }
 
-        public DetailInsuree Insuree { get; set; }
+        public ObservableObject<DetailInsuree> Insuree { get; set; }
 
         private void SelectedInsureeChanged(ListInsuree listInsuree)
         {
@@ -30,7 +33,7 @@ namespace Content.ViewModels
                 : "Unselected Insuree.");
             if (listInsuree != null)
             {
-                Insuree = _insureeManagementAppService.GetDetailInsuree(listInsuree.Id);
+                Insuree.Value = _insureeManagementAppService.GetDetailInsuree(listInsuree.Id);
             }
         }
 

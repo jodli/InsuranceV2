@@ -33,14 +33,14 @@ namespace InsuranceV2.Common.Models
         {
             get
             {
-                var ret = FirstName ?? string.Empty;
-                if (!string.IsNullOrEmpty(LastName))
+                var ret = LastName ?? string.Empty;
+                if (!string.IsNullOrEmpty(FirstName))
                 {
                     if (ret.Length > 0)
                     {
-                        ret += " ";
+                        ret += ", ";
                     }
-                    ret += LastName;
+                    ret += FirstName;
                 }
                 return ret;
             }
