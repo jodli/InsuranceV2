@@ -85,6 +85,7 @@ namespace InsuranceV2.Infrastructure.Database.Context
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new InsureeConfiguration());
+            modelBuilder.Configurations.Add(new AddressConfiguration());
             modelBuilder.Configurations.Add(new EmailAddressConfiguration());
             modelBuilder.Configurations.Add(new PhoneNumberConfiguration());
         }

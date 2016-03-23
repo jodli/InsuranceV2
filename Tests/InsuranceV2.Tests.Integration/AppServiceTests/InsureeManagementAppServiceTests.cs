@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using FluentAssertions;
 using InsuranceV2.Application.Services;
 using InsuranceV2.Common.Enums;
@@ -35,24 +36,32 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
 
                 for (var i = 0; i < 15; i++)
                 {
-                    allInsurees.Add(new Insuree
+                    var insuree = new Insuree
                     {
                         Id = i + 1,
                         FirstName = i.ToString(),
                         LastName = i.ToString(),
                         DateOfBirth = DateTime.Now.AddYears(-10 - i)
-                    });
+                    };
+                    insuree.Addresses.Add("street " + i, "123", "12345", "city", "country", ContactType.Personal);
+
+                    allInsurees.Add(insuree);
                 }
 
                 return allInsurees.AsQueryable();
             });
 
-            _insureeRepositoryMock.Setup(x => x.FindById(It.IsAny<int>())).Returns(() => new Insuree
+            _insureeRepositoryMock.Setup(x => x.FindById(It.IsAny<int>())).Returns(() =>
             {
-                Id = Id,
-                FirstName = "first",
-                LastName = "last",
-                HomeAddress = new Address("street", "123", "12345", "city", "country", ContactType.Personal)
+                var insuree = new Insuree
+                {
+                    Id = Id,
+                    FirstName = "first",
+                    LastName = "last"
+                };
+                insuree.Addresses.Add("street", "123", "12345", "city", "country", ContactType.Personal);
+
+                return insuree;
             });
 
             _insureeManagementAppService = new InsureeManagementAppService(_insureeRepositoryMock.Object,
@@ -126,7 +135,7 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
 
             pagedInsurees.Data.Count().ShouldBeEquivalentTo(10);
 
-            pagedInsurees.Data.First().FullName.ShouldBeEquivalentTo("9 9");
+            pagedInsurees.Data.First().FullName.ShouldBeEquivalentTo("9, 9");
         }
     }
 }

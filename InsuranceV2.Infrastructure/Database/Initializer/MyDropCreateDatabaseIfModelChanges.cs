@@ -16,30 +16,18 @@ namespace InsuranceV2.Infrastructure.Database.Initializer
                 {
                     FirstName = "FirstName " + i,
                     LastName = "LastName " + i,
-                    DateOfBirth = DateTime.Now.AddYears(-30 + i),
-                    HomeAddress = CreateAddress(),
-                    WorkAddress = CreateAddress()
+                    DateOfBirth = DateTime.Now.AddYears(-30 + i)
                 };
+
+                insuree.Addresses.Add("street " + i, "123", "12345", "city " + i, "country " + i, ContactType.Personal);
 
                 insuree.EmailAddresses.Add("first" + i + "@test.com", ContactType.Personal);
                 insuree.EmailAddresses.Add("second" + i + "@test.com", ContactType.Business);
 
-                insuree.PhoneNumbers.Add("1234567890" + i, ContactType.Personal);
+                insuree.PhoneNumbers.Add("1234567890" + i, PhoneType.Phone, ContactType.Personal);
 
                 context.Insurees.Add(insuree);
             }
-        }
-
-        private static Address CreateAddress()
-        {
-            return new Address(
-                "Street",
-                "123",
-                "12345",
-                "City",
-                "Country",
-                ContactType.Personal
-                );
         }
     }
 }

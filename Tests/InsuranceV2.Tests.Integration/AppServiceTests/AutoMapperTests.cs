@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Linq;
 using FluentAssertions;
 using InsuranceV2.Application.Models;
 using InsuranceV2.Application.Models.Address;
@@ -12,6 +12,29 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
     [TestFixture]
     public class AutoMapperTests : AppServiceTestBase
     {
+        private static Address CreateAddress()
+        {
+            return new Address
+            {
+                Street = "street",
+                StreetNumber = "123",
+                ZipCode = "12345",
+                City = "city",
+                Country = "country",
+                ContactType = ContactType.Personal
+            };
+        }
+
+        private static Insuree CreateInsuree()
+        {
+            return new Insuree
+            {
+                Id = 1,
+                FirstName = "firstName",
+                LastName = "lastName"
+            };
+        }
+
         [Test]
         public void AllMappingIsValid()
         {
@@ -21,11 +44,12 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
         [Test]
         public void MappingAddressToDetailAddressIsValid()
         {
-            var address = new Address("street", "123", "12345", "city", "country", ContactType.Personal);
+            var address = CreateAddress();
             var detailAddress = new DetailAddress();
 
             Mapper.Map(address, detailAddress);
 
+            detailAddress.Id.ShouldBeEquivalentTo(address.Id);
             detailAddress.Street.ShouldBeEquivalentTo(address.Street);
             detailAddress.StreetNumber.ShouldBeEquivalentTo(address.StreetNumber);
             detailAddress.ZipCode.ShouldBeEquivalentTo(address.ZipCode);
@@ -37,12 +61,7 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
         [Test]
         public void MappingInsureeToCreateOrEditInsureeIsValid()
         {
-            var insuree = new Insuree
-            {
-                FirstName = "firstName",
-                LastName = "lastName",
-                DateOfBirth = DateTime.Now.AddYears(-20)
-            };
+            var insuree = CreateInsuree();
             var createOrEditInsuree = new CreateOrEditInsuree();
 
             Mapper.Map(insuree, createOrEditInsuree);
@@ -54,14 +73,25 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
         }
 
         [Test]
+        public void MappingInsureeToDetailInsureeIsValid()
+        {
+            var insuree = CreateInsuree();
+            insuree.Addresses.Add(CreateAddress());
+            var detailInsuree = new DetailInsuree();
+
+            Mapper.Map(insuree, detailInsuree);
+
+            detailInsuree.Id.ShouldBeEquivalentTo(insuree.Id);
+            detailInsuree.FirstName.ShouldBeEquivalentTo(insuree.FirstName);
+            detailInsuree.LastName.ShouldBeEquivalentTo(insuree.LastName);
+
+            detailInsuree.Addresses.Count().ShouldBeEquivalentTo(insuree.Addresses.Count());
+        }
+
+        [Test]
         public void MappingInsureeToListInsureeIsValid()
         {
-            var insuree = new Insuree
-            {
-                Id = 1,
-                FirstName = "firstName",
-                LastName = "lastName"
-            };
+            var insuree = CreateInsuree();
             var listInsuree = new ListInsuree();
 
             Mapper.Map(insuree, listInsuree);

@@ -4,30 +4,18 @@ using InsuranceV2.Common.Enums;
 
 namespace InsuranceV2.Common.Models
 {
-    public class Address : ValueObject<Address>
+    public class Address : DomainEntity<int>, IHasOwner<Insuree>
     {
-        private Address()
-        {
-        }
+        public string Street { get; set; }
+        public string StreetNumber { get; set; }
+        public string ZipCode { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
 
-        public Address(string street, string streetNumber, string zipCode, string city, string country,
-            ContactType contactType)
-        {
-            Street = street;
-            StreetNumber = streetNumber;
-            ZipCode = zipCode;
-            City = city;
-            Country = country;
-            ContactType = contactType;
-        }
+        public ContactType ContactType { get; set; }
 
-        public string Street { get; private set; }
-        public string StreetNumber { get; private set; }
-        public string ZipCode { get; private set; }
-        public string City { get; private set; }
-        public string Country { get; private set; }
-
-        public ContactType ContactType { get; private set; }
+        public int OwnerId { get; set; }
+        public Insuree Owner { get; set; }
 
         public bool IsNull => string.IsNullOrEmpty(Street) &&
                               string.IsNullOrEmpty(StreetNumber) &&

@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\Configurations\AddressConfiguration.cs" />
     <Compile Include="Database\Configurations\EmailAddressConfiguration.cs" />
     <Compile Include="Database\Configurations\InsureeConfiguration.cs" />
     <Compile Include="Database\Configurations\PhoneNumberConfiguration.cs" />

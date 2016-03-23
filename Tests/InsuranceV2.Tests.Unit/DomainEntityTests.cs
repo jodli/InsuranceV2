@@ -117,32 +117,32 @@ namespace InsuranceV2.Tests.Unit
         }
 
         [Test]
-        public void NewPersonWithGuidAsIdIsTransient()
+        public void NewInsureeWithGuidAsIdIsTransient()
         {
-            var person = new InsureeWithGuidAsId();
-            person.Id.Should().Be(Guid.Empty);
-            person.IsTransient().Should().BeTrue();
+            var insuree = new InsureeWithGuidAsId();
+            insuree.Id.Should().Be(Guid.Empty);
+            insuree.IsTransient().Should().BeTrue();
         }
 
         [Test]
-        public void NewPersonWithIntAsIdIsTransient()
+        public void NewInsureeWithIntAsIdIsTransient()
         {
-            var person = new InsureeWithIntAsId();
-            person.IsTransient().Should().BeTrue();
+            var insuree = new InsureeWithIntAsId();
+            insuree.IsTransient().Should().BeTrue();
         }
 
         [Test]
-        public void PersonWithGuidAsIdWithValueIsNotTransient()
+        public void InsureeWithGuidAsIdWithValueIsNotTransient()
         {
-            var person = new InsureeWithGuidAsId {Id = Guid.NewGuid()};
-            person.IsTransient().Should().BeFalse();
+            var insuree = new InsureeWithGuidAsId {Id = Guid.NewGuid()};
+            insuree.IsTransient().Should().BeFalse();
         }
 
         [Test]
-        public void PersonWithIntAsIdWithValueIsNotTransient()
+        public void InsureeWithIntAsIdWithValueIsNotTransient()
         {
-            var person = new InsureeWithIntAsId {Id = 4};
-            person.IsTransient().Should().BeFalse();
+            var insuree = new InsureeWithIntAsId {Id = 4};
+            insuree.IsTransient().Should().BeFalse();
         }
 
         [Test]

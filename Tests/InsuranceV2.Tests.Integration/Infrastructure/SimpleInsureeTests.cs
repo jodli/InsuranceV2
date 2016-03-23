@@ -1,6 +1,5 @@
 ﻿using System;
 using FluentAssertions;
-using InsuranceV2.Common.Enums;
 using InsuranceV2.Common.Models;
 using InsuranceV2.Infrastructure.Database;
 using InsuranceV2.Infrastructure.Repositories;
@@ -17,9 +16,7 @@ namespace InsuranceV2.Tests.Integration.Infrastructure
             {
                 FirstName = "TestFirstName",
                 LastName = "TestLastName",
-                DateOfBirth = DateTime.Now.AddYears(-20),
-                HomeAddress = AddressTests.CreateAddress(ContactType.Personal),
-                WorkAddress = AddressTests.CreateAddress(ContactType.Business)
+                DateOfBirth = DateTime.Now.AddYears(-20)
             };
         }
 
@@ -27,14 +24,18 @@ namespace InsuranceV2.Tests.Integration.Infrastructure
         public void CanGetBasicInsuree()
         {
             var insuree = CreateInsuree();
-            var repository = new InsureeRepository();
             using (new UnitOfWorkFactory().Create())
             {
+                var repository = new InsureeRepository();
                 repository.Add(insuree);
             }
-            var repositoryConfirm = new InsureeRepository();
-            var check = repositoryConfirm.FindById(insuree.Id);
-            check.Id.Should().Be(insuree.Id);
+
+            using (new UnitOfWorkFactory().Create())
+            {
+                var repository = new InsureeRepository();
+                var check = repository.FindById(insuree.Id);
+                check.Id.Should().Be(insuree.Id);
+            }
         }
     }
 }

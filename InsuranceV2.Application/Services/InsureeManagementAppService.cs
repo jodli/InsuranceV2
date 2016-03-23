@@ -57,7 +57,7 @@ namespace InsuranceV2.Application.Services
 
         public DetailInsuree GetDetailInsuree(int id)
         {
-            var insuree = _insureeRepository.FindById(id);
+            var insuree = _insureeRepository.FindById(id, i => i.Addresses);
             var detailInsuree = new DetailInsuree();
 
             _mapper.Map(insuree, detailInsuree);

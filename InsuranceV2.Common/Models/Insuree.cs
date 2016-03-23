@@ -10,24 +10,26 @@ namespace InsuranceV2.Common.Models
     {
         public Insuree()
         {
-            HomeAddress = new Address(null, null, null, null, null, ContactType.Personal);
-            WorkAddress = new Address(null, null, null, null, null, ContactType.Business);
+            Addresses = new Addresses();
             EmailAddresses = new EmailAddresses();
             PhoneNumbers = new PhoneNumbers();
         }
 
         [Required]
         public string FirstName { get; set; }
+
         [Required]
         public string LastName { get; set; }
 
         public DateTime DateOfBirth { get; set; }
 
-        public Address HomeAddress { get; set; }
-        public Address WorkAddress { get; set; }
-
+        public Addresses Addresses { get; set; }
         public EmailAddresses EmailAddresses { get; }
         public PhoneNumbers PhoneNumbers { get; set; }
+
+        //Todo: married to
+        //Todo: married since
+        //Todo: divorced since
 
         public string FullName
         {
@@ -46,7 +48,6 @@ namespace InsuranceV2.Common.Models
             }
         }
 
-
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
 
@@ -59,11 +60,7 @@ namespace InsuranceV2.Common.Models
                         $"Invalid range for date of birth; must be between {0} and {Constants.MaxAgeInsuree} years.",
                         new[] {"DateOfBirth"});
             }
-            foreach (var validationResult in HomeAddress.Validate())
-            {
-                yield return validationResult;
-            }
-            foreach (var validationResult in WorkAddress.Validate())
+            foreach (var validationResult in Addresses.Validate())
             {
                 yield return validationResult;
             }

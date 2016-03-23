@@ -19,11 +19,12 @@ namespace InsuranceV2.Common.Collections
         {
         }
 
-        public void Add(string number, ContactType contactType)
+        public void Add(string number, PhoneType phoneType, ContactType contactType)
         {
             Add(new PhoneNumber
             {
                 Number = number,
+                PhoneType = phoneType,
                 ContactType = contactType
             });
         }

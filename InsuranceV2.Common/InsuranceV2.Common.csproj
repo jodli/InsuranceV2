@@ -34,6 +34,7 @@
       <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="Prism, Version=6.1.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Core.6.1.0\lib\net45\Prism.dll</HintPath>
       <Private>True</Private>
@@ -51,12 +52,14 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\Addresses.cs" />
     <Compile Include="Collections\CollectionBase.cs" />
     <Compile Include="Collections\PhoneNumbers.cs" />
     <Compile Include="Collections\EmailAddresses.cs" />
     <Compile Include="Collections\Insurees.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DependencyResolution\CommonRegistry.cs" />
+    <Compile Include="Enums\PhoneType.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="MVVM\DisposableViewModel.cs" />

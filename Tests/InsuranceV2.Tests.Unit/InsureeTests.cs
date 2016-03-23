@@ -58,14 +58,15 @@ namespace InsuranceV2.Tests.Unit
         public void DetectInvalidAddress()
         {
             var insuree = CreateInsuree();
-            insuree.HomeAddress = new Address("Street", "", "", "", "", ContactType.None);
+            insuree.Addresses.Add("Street", "", "", "", "", ContactType.None);
             var errors = insuree.Validate();
-            errors.Should().NotContain(x => x.MemberNames.Contains("Street"));
-            errors.Should().Contain(x => x.MemberNames.Contains("StreetNumber"));
-            errors.Should().Contain(x => x.MemberNames.Contains("ZipCode"));
-            errors.Should().Contain(x => x.MemberNames.Contains("City"));
-            errors.Should().Contain(x => x.MemberNames.Contains("Country"));
-            errors.Should().Contain(x => x.MemberNames.Contains("ContactType"));
+            errors.Should()
+                .NotContain(x => x.MemberNames.Contains("Street"))
+                .And.Contain(x => x.MemberNames.Contains("StreetNumber"))
+                .And.Contain(x => x.MemberNames.Contains("ZipCode"))
+                .And.Contain(x => x.MemberNames.Contains("City"))
+                .And.Contain(x => x.MemberNames.Contains("Country"))
+                .And.Contain(x => x.MemberNames.Contains("ContactType"));
         }
 
         [Test]
@@ -75,7 +76,6 @@ namespace InsuranceV2.Tests.Unit
             insuree.EmailAddresses.Add("", ContactType.Personal);
             var errors = insuree.Validate();
             errors.Should().Contain(x => x.MemberNames.Contains("EmailAddressText"));
-            errors.Should().Contain(x => x.ErrorMessage.Contains("field is not a valid e-mail address"));
         }
 
         [Test]
@@ -96,17 +96,19 @@ namespace InsuranceV2.Tests.Unit
         public void DetectInvalidPhoneNumber()
         {
             var insuree = CreateInsuree();
-            insuree.PhoneNumbers.Add("", ContactType.Personal);
+            insuree.PhoneNumbers.Add("", PhoneType.None, ContactType.None);
             var errors = insuree.Validate();
-            errors.Should().Contain(x => x.MemberNames.Contains("Number"));
-            errors.Should().Contain(x => x.ErrorMessage.Contains("Number can't be null or empty"));
+            errors.Should()
+                .Contain(x => x.MemberNames.Contains("Number"))
+                .And.Contain(x => x.MemberNames.Contains("PhoneType"))
+                .And.Contain(x => x.MemberNames.Contains("ContactType"));
         }
 
         [Test]
         public void FullNameIsFirstNameAndLastName()
         {
             var insuree = new Insuree {FirstName = "First", LastName = "Last"};
-            insuree.FullName.Should().Be("First Last");
+            insuree.FullName.Should().Be("Last, First");
         }
 
         [Test]
@@ -154,7 +156,7 @@ namespace InsuranceV2.Tests.Unit
         public void NewInsureeHasHomeAddress()
         {
             var insuree = new Insuree();
-            insuree.HomeAddress.Should().NotBeNull();
+            insuree.Addresses.Should().NotBeNull();
         }
 
         [Test]
@@ -174,10 +176,11 @@ namespace InsuranceV2.Tests.Unit
         }
 
         [Test]
-        public void NewInsureeHasWorkAddress()
+        public void NewInsureeHasListOfAddresses()
         {
             var insuree = new Insuree();
-            insuree.WorkAddress.Should().NotBeNull();
+            insuree.Addresses.Should().NotBeNull();
+            insuree.Addresses.Should().BeEmpty();
         }
 
         [Test]

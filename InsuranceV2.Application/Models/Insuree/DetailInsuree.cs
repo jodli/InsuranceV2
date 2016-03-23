@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using InsuranceV2.Application.Models.Address;
 
 namespace InsuranceV2.Application.Models.Insuree
 {
@@ -13,5 +15,7 @@ namespace InsuranceV2.Application.Models.Insuree
         public string FullName { get; set; }
 
         public DateTime DateOfBirth { get; set; }
+
+        public IEnumerable<DetailAddress> Addresses { get; set; }
     }
 }

@@ -4,6 +4,8 @@ namespace InsuranceV2.Application.Models.Address
 {
     public class DetailAddress
     {
+        public int Id { get; set; }
+
         public string Street { get; set; }
 
         public string StreetNumber { get; set; }

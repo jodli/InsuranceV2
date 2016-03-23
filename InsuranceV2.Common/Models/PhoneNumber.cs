@@ -8,6 +8,7 @@ namespace InsuranceV2.Common.Models
     {
         public string Number { get; set; }
         public ContactType ContactType { get; set; }
+        public PhoneType PhoneType { get; set; }
         public int OwnerId { get; set; }
         public Insuree Owner { get; set; }
 
@@ -20,6 +21,10 @@ namespace InsuranceV2.Common.Models
             if (ContactType == ContactType.None)
             {
                 yield return new ValidationResult("ContactType can't be None.", new[] {"ContactType"});
+            }
+            if (PhoneType == PhoneType.None)
+            {
+                yield return new ValidationResult("PhoneType can't be None.", new[] {"PhoneType"});
             }
         }
     }

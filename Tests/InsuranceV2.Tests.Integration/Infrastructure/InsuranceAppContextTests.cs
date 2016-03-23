@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using FluentAssertions;
-using InsuranceV2.Common.Enums;
 using InsuranceV2.Common.Exceptions;
 using InsuranceV2.Common.Models;
 using InsuranceV2.Infrastructure.Database;
@@ -23,8 +22,7 @@ namespace InsuranceV2.Tests.Integration.Infrastructure
                 DateCreated = DateTime.Now,
                 FirstName = "TestFirstName",
                 LastName = "TestLastName",
-                DateModified = DateTime.Now,
-                HomeAddress = AddressTests.CreateAddress(ContactType.Personal)
+                DateModified = DateTime.Now
             };
 
             var context = new InsuranceAppContext();
@@ -52,8 +50,7 @@ namespace InsuranceV2.Tests.Integration.Infrastructure
                 DateCreated = DateTime.Now,
                 FirstName = "TestFirstName",
                 LastName = lastName,
-                DateModified = DateTime.Now,
-                HomeAddress = AddressTests.CreateAddress(ContactType.Personal)
+                DateModified = DateTime.Now
             };
 
             context.Insurees.Add(insuree);

@@ -90,7 +90,6 @@
     <Compile Include="AppServiceTests\AppServiceTestBase.cs" />
     <Compile Include="AppServiceTests\AutoMapperTests.cs" />
     <Compile Include="AppServiceTests\InsureeManagementAppServiceTests.cs" />
-    <Compile Include="Infrastructure\AddressTests.cs" />
     <Compile Include="Infrastructure\InsuranceAppContextTests.cs" />
     <Compile Include="Infrastructure\InsureeRepositoryTests.cs" />
     <Compile Include="Infrastructure\IntegrationTestBase.cs" />

@@ -20,9 +20,7 @@ namespace InsuranceV2.Tests.Integration.Infrastructure
             {
                 DateOfBirth = DateTime.Now,
                 FirstName = "TestFirstName",
-                LastName = "TestLastName",
-                HomeAddress = AddressTests.CreateAddress(ContactType.Personal),
-                WorkAddress = AddressTests.CreateAddress(ContactType.Business)
+                LastName = "TestLastName"
             };
         }
 
@@ -42,6 +40,98 @@ namespace InsuranceV2.Tests.Integration.Infrastructure
             return result;
         }
 
+        public static Address CreateAddress(ContactType contactType)
+        {
+            return new Address
+            {
+                Street = "street",
+                StreetNumber = "123",
+                ZipCode = "12345",
+                City = "city",
+                Country = "country",
+                ContactType = contactType
+            };
+        }
+
+        [Test]
+        public void AddressTypeRoundtripsToDatabase()
+        {
+            var newInsureeId = 0;
+            var insuree = SimpleInsureeTests.CreateInsuree();
+
+            var address = CreateAddress(ContactType.Personal);
+            insuree.Addresses.Add(address);
+
+            address = CreateAddress(ContactType.Business);
+            insuree.Addresses.Add(address);
+
+            using (new UnitOfWorkFactory().Create())
+            {
+                var repository = new InsureeRepository();
+                repository.Add(insuree);
+            }
+            insuree.Id.Should().BePositive();
+            newInsureeId = insuree.Id;
+
+            using (new UnitOfWorkFactory().Create())
+            {
+                var repository = new InsureeRepository();
+                var check = repository.FindById(newInsureeId);
+                check.Id.Should().Be(newInsureeId);
+
+                check.Addresses.Count().Should().Be(2);
+                check.Addresses[0].ContactType.Should().Be(ContactType.Personal);
+                check.Addresses[1].ContactType.Should().Be(ContactType.Business);
+            }
+        }
+
+        [Test]
+        public void ClearingAddressCollectionDeletesAddresses()
+        {
+            var street1 = Guid.NewGuid().ToString().Substring(0, 25);
+            var street2 = Guid.NewGuid().ToString().Substring(0, 25);
+            string sql = $"SELECT * FROM Addresses WHERE Street = '{street1}'";
+
+            var insuree = CreateInsuree();
+            insuree.Addresses.Add(new Address
+            {
+                Street = street1,
+                StreetNumber = "123",
+                ZipCode = "12345",
+                City = "city",
+                Country = "country",
+                ContactType = ContactType.Personal
+            });
+            insuree.Addresses.Add(new Address
+            {
+                Street = street2,
+                StreetNumber = "123",
+                ZipCode = "12345",
+                City = "city",
+                Country = "country",
+                ContactType = ContactType.Personal
+            });
+
+            using (new UnitOfWorkFactory().Create())
+            {
+                var repository = new InsureeRepository();
+                repository.Add(insuree);
+            }
+
+            CheckIfExists(sql).Should().BeTrue();
+
+            var insureeId = insuree.Id;
+            insureeId.Should().BeGreaterThan(0);
+
+            using (new UnitOfWorkFactory().Create(true))
+            {
+                var checkRepository = new InsureeRepository();
+                var checkInsuree = checkRepository.FindById(insureeId, x => x.Addresses);
+                checkInsuree.Addresses.Clear();
+            }
+            CheckIfExists(sql).Should().BeFalse();
+        }
+
         [Test]
         public void ClearingPhoneNumbersCollectionDeletesPhoneNumbers()
         {
@@ -50,8 +140,8 @@ namespace InsuranceV2.Tests.Integration.Infrastructure
             string sql = $"SELECT * FROM PhoneNumbers WHERE Number = '{number1}'";
 
             var insuree = CreateInsuree();
-            insuree.PhoneNumbers.Add(number1, ContactType.Personal);
-            insuree.PhoneNumbers.Add(number2, ContactType.Personal);
+            insuree.PhoneNumbers.Add(number1, PhoneType.Phone, ContactType.Personal);
+            insuree.PhoneNumbers.Add(number2, PhoneType.Mobile, ContactType.Personal);
 
             using (new UnitOfWorkFactory().Create())
             {
@@ -74,15 +164,61 @@ namespace InsuranceV2.Tests.Integration.Infrastructure
         }
 
         [Test]
-        public void DeletingPersonDeletesPhoneNumbers()
+        public void DeletingInsureeDeletesAddresses()
+        {
+            var street1 = Guid.NewGuid().ToString().Substring(0, 25);
+            var street2 = Guid.NewGuid().ToString().Substring(0, 25);
+            string sql = $"SELECT * FROM Addresses WHERE Street = '{street1}'";
+
+            var insuree = CreateInsuree();
+            insuree.Addresses.Add(new Address
+            {
+                Street = street1,
+                StreetNumber = "123",
+                ZipCode = "12345",
+                City = "city",
+                Country = "country",
+                ContactType = ContactType.Personal
+            });
+            insuree.Addresses.Add(new Address
+            {
+                Street = street2,
+                StreetNumber = "123",
+                ZipCode = "12345",
+                City = "city",
+                Country = "country",
+                ContactType = ContactType.Personal
+            });
+
+            using (new UnitOfWorkFactory().Create())
+            {
+                var repository = new InsureeRepository();
+                repository.Add(insuree);
+            }
+
+            CheckIfExists(sql).Should().BeTrue();
+
+            var insureeId = insuree.Id;
+            insureeId.Should().BeGreaterThan(0);
+
+            using (new UnitOfWorkFactory().Create(true))
+            {
+                var checkRepository = new InsureeRepository();
+                checkRepository.Remove(insureeId);
+            }
+            CheckIfExists(sql).Should().BeFalse();
+        }
+
+        [Test]
+        public void DeletingInsureeDeletesPhoneNumbers()
         {
             var number1 = Guid.NewGuid().ToString().Substring(0, 25);
             var number2 = Guid.NewGuid().ToString().Substring(0, 25);
             string sql = $"SELECT * FROM PhoneNumbers WHERE Number = '{number1}'";
 
             var insuree = CreateInsuree();
-            insuree.PhoneNumbers.Add(number1, ContactType.Personal);
-            insuree.PhoneNumbers.Add(number2, ContactType.Personal);
+            insuree.PhoneNumbers.Add(number1, PhoneType.Mobile, ContactType.Personal);
+            insuree.PhoneNumbers.Add(number2, PhoneType.Fax, ContactType.Personal);
 
             using (new UnitOfWorkFactory().Create())
             {
@@ -133,10 +269,12 @@ namespace InsuranceV2.Tests.Integration.Infrastructure
         public void FindAllInsureesWithPredicateEager()
         {
             var insuree1 = CreateInsuree();
+            insuree1.Addresses.Add("street1", "1", "12345", "city1", "country1", ContactType.Personal);
+            insuree1.Addresses.Add("street2", "2", "12345", "city2", "country2", ContactType.Business);
             insuree1.EmailAddresses.Add("1@example.com", ContactType.Personal);
             insuree1.EmailAddresses.Add("2@example.com", ContactType.Business);
-            insuree1.PhoneNumbers.Add("555-123", ContactType.Personal);
-            insuree1.PhoneNumbers.Add("555-456", ContactType.Business);
+            insuree1.PhoneNumbers.Add("555-123", PhoneType.Fax, ContactType.Personal);
+            insuree1.PhoneNumbers.Add("555-456", PhoneType.Phone, ContactType.Business);
             var insuree2 = CreateInsuree();
             var insuree3 = CreateInsuree();
 
@@ -192,16 +330,20 @@ namespace InsuranceV2.Tests.Integration.Infrastructure
         public void FindInsureeById()
         {
             var insuree = CreateInsuree();
-            var repository = new InsureeRepository();
 
             using (new UnitOfWorkFactory().Create())
             {
+                var repository = new InsureeRepository();
                 repository.Add(insuree);
             }
             insuree.Id.Should().BePositive();
 
-            var insureeCheck = repository.FindById(insuree.Id);
-            insureeCheck.Id.Should().Be(insuree.Id);
+            using (new UnitOfWorkFactory().Create())
+            {
+                var repository = new InsureeRepository();
+                var insureeCheck = repository.FindById(insuree.Id);
+                insureeCheck.Id.Should().Be(insuree.Id);
+            }
         }
 
         [Test]
@@ -215,23 +357,29 @@ namespace InsuranceV2.Tests.Integration.Infrastructure
                 DateOfBirth = DateTime.Now
             };
 
-            var repository = new InsureeRepository();
-
             using (new UnitOfWorkFactory().Create())
             {
+                var repository = new InsureeRepository();
                 repository.Add(insuree);
             }
             insuree.Id.Should().BePositive();
 
-            var insureeCheck = repository.FindByLastName(lastName);
-            insureeCheck.Count(x => x.Id == insuree.Id).Should().BePositive();
+            using (new UnitOfWorkFactory().Create())
+            {
+                var repository = new InsureeRepository();
+                var insureeCheck = repository.FindByLastName(lastName);
+                insureeCheck.Count(x => x.Id == insuree.Id).Should().BePositive();
+            }
         }
 
         [Test]
         public void FindInsureeByUnknownIdReturnsNull()
         {
-            var repository = new InsureeRepository();
-            repository.FindById(-1).Should().BeNull();
+            using (new UnitOfWorkFactory().Create())
+            {
+                var repository = new InsureeRepository();
+                repository.FindById(-1).Should().BeNull();
+            }
         }
     }
 }

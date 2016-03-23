@@ -4,6 +4,7 @@
     {
         None,
         Personal,
-        Business
+        Business,
+        Partner
     }
 }

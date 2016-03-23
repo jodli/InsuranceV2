@@ -41,16 +41,16 @@ namespace InsuranceV2.Tests.Unit
         {
             var insurees = new Insurees
             {
-                new Insuree {FirstName = "aTestFirstName1", LastName = "TestLastName1"},
-                new Insuree {FirstName = "cTestFirstName2", LastName = "TestLastName2"},
-                new Insuree {FirstName = "bTestFirstName3", LastName = "TestLastName3"}
+                new Insuree {FirstName = "TestFirstName1", LastName = "aTestLastName1"},
+                new Insuree {FirstName = "TestFirstName2", LastName = "cTestLastName2"},
+                new Insuree {FirstName = "TestFirstName3", LastName = "bTestLastName3"}
             };
 
             insurees.Sort(new InsureeComparer());
 
-            insurees[0].FullName.Should().Be("aTestFirstName1 TestLastName1");
-            insurees[1].FullName.Should().Be("bTestFirstName3 TestLastName3");
-            insurees[2].FullName.Should().Be("cTestFirstName2 TestLastName2");
+            insurees[0].FullName.Should().Be("aTestLastName1, TestFirstName1");
+            insurees[1].FullName.Should().Be("bTestLastName3, TestFirstName3");
+            insurees[2].FullName.Should().Be("cTestLastName2, TestFirstName2");
         }
 
         [Test]

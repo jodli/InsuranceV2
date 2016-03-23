@@ -12,37 +12,62 @@ namespace InsuranceV2.Tests.Unit
         [Test]
         public void AddressWithValuesIsNotNull()
         {
-            var address = new Address("Street", "StreetNumber", "City", "ZipCode", "Country", ContactType.Business);
+            var address = new Address
+            {
+                Street = "street",
+                StreetNumber = "123",
+                ZipCode = "12345",
+                City = "city",
+                Country = "country",
+                ContactType = ContactType.Personal
+            };
             address.IsNull.Should().BeFalse();
         }
 
         [Test]
         public void EmptyAddressIsNull()
         {
-            var address = new Address(null, null, null, null, null, ContactType.Personal);
+            var address = new Address
+            {
+                Street = null,
+                StreetNumber = null,
+                ZipCode = null,
+                City = null,
+                Country = null,
+                ContactType = ContactType.Personal
+            };
             address.IsNull.Should().BeTrue();
         }
 
         [Test]
         public void EmptyAddressIsValid()
         {
-            var address = new Address(null, null, null, null, null, ContactType.Personal);
+            var address = new Address
+            {
+                Street = null,
+                StreetNumber = null,
+                ZipCode = null,
+                City = null,
+                Country = null,
+                ContactType = ContactType.Personal
+            };
             address.Validate().Count().Should().Be(0);
         }
 
         [Test]
         public void PartialAddressIsInvalid()
         {
-            var address = new Address(null, null, null, null, "Country", ContactType.Personal);
+            var address = new Address
+            {
+                Street = null,
+                StreetNumber = null,
+                ZipCode = null,
+                City = null,
+                Country = "country",
+                ContactType = ContactType.Personal
+            };
+            address.Validate().Count().Should().NotBe(0);
             address.Validate().Should().NotContain(x => x.MemberNames.Contains("Country"));
-        }
-
-        [Test]
-        public void TwoSameAddressesShouldBeSame()
-        {
-            var address1 = new Address("Street", "StreetNumber", "City", "ZipCode", "Country", ContactType.Personal);
-            var address2 = new Address("Street", "StreetNumber", "City", "ZipCode", "Country", ContactType.Personal);
-            (address1 == address2).Should().BeTrue();
         }
     }
 }
