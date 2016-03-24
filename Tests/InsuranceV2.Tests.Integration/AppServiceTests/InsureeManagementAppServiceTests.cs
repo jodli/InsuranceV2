@@ -51,18 +51,19 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
                 return allInsurees.AsQueryable();
             });
 
-            _insureeRepositoryMock.Setup(x => x.FindById(It.IsAny<int>())).Returns(() =>
-            {
-                var insuree = new Insuree
+            _insureeRepositoryMock.Setup(x => x.FindById(It.IsAny<int>(), It.IsAny<Expression<Func<Insuree, object>>[]>()))
+                .Returns(() =>
                 {
-                    Id = Id,
-                    FirstName = "first",
-                    LastName = "last"
-                };
-                insuree.Addresses.Add("street", "123", "12345", "city", "country", ContactType.Personal);
+                    var insuree = new Insuree
+                    {
+                        Id = Id,
+                        FirstName = "first",
+                        LastName = "last"
+                    };
+                    insuree.Addresses.Add("street", "123", "12345", "city", "country", ContactType.Personal);
 
-                return insuree;
-            });
+                    return insuree;
+                });
 
             _insureeManagementAppService = new InsureeManagementAppService(_insureeRepositoryMock.Object,
                 _unitOfWorkFactoryMock.Object, _logger.Object, Mapper);
@@ -76,6 +77,8 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
             insuree.Id.ShouldBeEquivalentTo(Id);
             insuree.FirstName.Should().NotBeNullOrEmpty();
             insuree.LastName.Should().NotBeNullOrEmpty();
+
+            insuree.Addresses.Count().ShouldBeEquivalentTo(1);
         }
 
         [Test]

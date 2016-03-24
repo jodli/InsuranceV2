@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using InsuranceV2.Application.Models.Address;
+using InsuranceV2.Application.Models.PhoneNumber;
 
 namespace InsuranceV2.Application.Models.Insuree
 {
@@ -17,5 +18,6 @@ namespace InsuranceV2.Application.Models.Insuree
         public DateTime DateOfBirth { get; set; }
 
         public IEnumerable<DetailAddress> Addresses { get; set; }
+        public IEnumerable<DetailPhoneNumber> PhoneNumbers { get; set; }
     }
 }

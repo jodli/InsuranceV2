@@ -1,7 +1,5 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
-using InsuranceV2.Application.Models.Address;
 using InsuranceV2.Application.Models.Insuree;
 using InsuranceV2.Application.Services;
 using InsuranceV2.Common.Logging;
@@ -18,6 +16,7 @@ namespace Content.ViewModels
         private readonly ILogger<InsureeDetailsViewModel> _logger;
 
         private ObservableObject<Visibility> _showAddressesVisibility;
+        private ObservableObject<Visibility> _showPhoneNumbersVisibility;
 
         public InsureeDetailsViewModel(IInsureeManagementAppService insureeManagementAppService,
             ILogger<InsureeDetailsViewModel> logger, IEventBus eventBus)
@@ -30,6 +29,9 @@ namespace Content.ViewModels
 
             ToggleShowAddressesCommand = new DelegateCommand(ToggleShowAddressesExecute);
             _showAddressesVisibility = new ObservableObject<Visibility> {Value = Visibility.Collapsed};
+
+            ToggleShowPhoneNumbersCommand = new DelegateCommand(ToggleShowPhoneNumbersExecute);
+            _showPhoneNumbersVisibility = new ObservableObject<Visibility> {Value = Visibility.Collapsed};
 
             SubscribeEvents();
         }
@@ -44,6 +46,14 @@ namespace Content.ViewModels
             set { SetProperty(ref _showAddressesVisibility, value); }
         }
 
+        public ObservableObject<Visibility> ShowPhoneNumbersVisibility
+        {
+            get { return _showPhoneNumbersVisibility; }
+            set { SetProperty(ref _showPhoneNumbersVisibility, value); }
+        }
+
+        public ICommand ToggleShowPhoneNumbersCommand { get; }
+
         private void ToggleShowAddressesExecute()
         {
             _logger.Debug("Executing ToggleShowAddressesCommand");
@@ -51,6 +61,15 @@ namespace Content.ViewModels
                 ? Visibility.Visible
                 : Visibility.Collapsed;
             _logger.Info($"Detailed addresses are {ShowAddressesVisibility.Value.ToString("G")}.");
+        }
+
+        private void ToggleShowPhoneNumbersExecute()
+        {
+            _logger.Debug("Executing ToggleShowPhoneNumbersExecute");
+            ShowPhoneNumbersVisibility.Value = ShowPhoneNumbersVisibility.Value == Visibility.Collapsed
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+            _logger.Info($"Detailed phone numbers are {ShowPhoneNumbersVisibility.Value.ToString("G")}.");
         }
 
         private void SelectedInsureeChanged(ListInsuree listInsuree)

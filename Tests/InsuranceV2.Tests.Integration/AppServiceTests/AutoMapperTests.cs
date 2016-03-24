@@ -3,6 +3,7 @@ using FluentAssertions;
 using InsuranceV2.Application.Models;
 using InsuranceV2.Application.Models.Address;
 using InsuranceV2.Application.Models.Insuree;
+using InsuranceV2.Application.Models.PhoneNumber;
 using InsuranceV2.Common.Enums;
 using InsuranceV2.Common.Models;
 using NUnit.Framework;
@@ -21,6 +22,16 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
                 ZipCode = "12345",
                 City = "city",
                 Country = "country",
+                ContactType = ContactType.Personal
+            };
+        }
+
+        private static PhoneNumber CreatePhoneNumber()
+        {
+            return new PhoneNumber
+            {
+                Number = "05728583729",
+                PhoneType = PhoneType.Phone,
                 ContactType = ContactType.Personal
             };
         }
@@ -77,6 +88,7 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
         {
             var insuree = CreateInsuree();
             insuree.Addresses.Add(CreateAddress());
+            insuree.PhoneNumbers.Add(CreatePhoneNumber());
             var detailInsuree = new DetailInsuree();
 
             Mapper.Map(insuree, detailInsuree);
@@ -85,7 +97,8 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
             detailInsuree.FirstName.ShouldBeEquivalentTo(insuree.FirstName);
             detailInsuree.LastName.ShouldBeEquivalentTo(insuree.LastName);
 
-            detailInsuree.Addresses.Count().ShouldBeEquivalentTo(insuree.Addresses.Count());
+            detailInsuree.Addresses.Count().ShouldBeEquivalentTo(insuree.Addresses.Count);
+            detailInsuree.PhoneNumbers.Count().ShouldBeEquivalentTo(insuree.PhoneNumbers.Count);
         }
 
         [Test]
@@ -99,6 +112,20 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
             listInsuree.Id.ShouldBeEquivalentTo(insuree.Id);
             listInsuree.FirstName.ShouldBeEquivalentTo(insuree.FirstName);
             listInsuree.LastName.ShouldBeEquivalentTo(insuree.LastName);
+        }
+
+        [Test]
+        public void MappingPhoneNumberToDetailPhoneNumberIsValid()
+        {
+            var phoneNumber = CreatePhoneNumber();
+            var detailPhoneNumber = new DetailPhoneNumber();
+
+            Mapper.Map(phoneNumber, detailPhoneNumber);
+
+            detailPhoneNumber.Id.ShouldBeEquivalentTo(phoneNumber.Id);
+            detailPhoneNumber.Number.ShouldBeEquivalentTo(phoneNumber.Number);
+            detailPhoneNumber.PhoneType.ShouldBeEquivalentTo(phoneNumber.PhoneType);
+            detailPhoneNumber.ContactType.ShouldBeEquivalentTo(phoneNumber.ContactType);
         }
     }
 }

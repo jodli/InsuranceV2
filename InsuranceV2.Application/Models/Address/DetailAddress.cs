@@ -17,5 +17,10 @@ namespace InsuranceV2.Application.Models.Address
         public string Country { get; set; }
 
         public ContactType ContactType { get; set; }
+
+        public override string ToString()
+        {
+            return $"{ContactType.ToString("G")}: {Street} {StreetNumber}, {ZipCode} {City}, {Country}";
+        }
     }
 }

@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System.Configuration;
+using System.Globalization;
+using System.Threading;
+using System.Windows;
 using InsuranceV2.IoC;
 
 namespace InsuranceV2

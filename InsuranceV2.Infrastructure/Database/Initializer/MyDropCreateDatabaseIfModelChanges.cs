@@ -14,12 +14,12 @@ namespace InsuranceV2.Infrastructure.Database.Initializer
             {
                 var insuree = new Insuree
                 {
-                    FirstName = "FirstName " + i,
-                    LastName = "LastName " + i,
+                    FirstName = "FirstName" + i,
+                    LastName = "LastName" + i,
                     DateOfBirth = DateTime.Now.AddYears(-30 + i)
                 };
 
-                insuree.Addresses.Add("street " + i, "123", "12345", "city " + i, "country " + i, ContactType.Personal);
+                insuree.Addresses.Add("street" + i, "123", "12345", "city" + i, "country" + i, ContactType.Personal);
 
                 insuree.EmailAddresses.Add("first" + i + "@test.com", ContactType.Personal);
                 insuree.EmailAddresses.Add("second" + i + "@test.com", ContactType.Business);

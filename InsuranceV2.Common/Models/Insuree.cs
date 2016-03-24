@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using InsuranceV2.Common.Collections;
-using InsuranceV2.Common.Enums;
 
 namespace InsuranceV2.Common.Models
 {

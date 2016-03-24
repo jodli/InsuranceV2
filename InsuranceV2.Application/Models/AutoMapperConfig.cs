@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using InsuranceV2.Application.Models.Address;
 using InsuranceV2.Application.Models.Insuree;
+using InsuranceV2.Application.Models.PhoneNumber;
 
 namespace InsuranceV2.Application.Models
 {
@@ -15,6 +16,7 @@ namespace InsuranceV2.Application.Models
                     configuration.CreateMap<Common.Models.Insuree, DetailInsuree>();
                     configuration.CreateMap<Common.Models.Insuree, CreateOrEditInsuree>();
                     configuration.CreateMap<Common.Models.Address, DetailAddress>();
+                    configuration.CreateMap<Common.Models.PhoneNumber, DetailPhoneNumber>();
                 });
             mapperConfiguration.AssertConfigurationIsValid();
 
