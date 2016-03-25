@@ -75,6 +75,7 @@
     <Compile Include="DependencyResolution\ApplicationRegistry.cs" />
     <Compile Include="Models\Address\DetailAddress.cs" />
     <Compile Include="Models\AutoMapperConfig.cs" />
+    <Compile Include="Models\EmailAddress\DetailEmailAddress.cs" />
     <Compile Include="Models\Insuree\CreateOrEditInsuree.cs" />
     <Compile Include="Models\Insuree\DetailInsuree.cs" />
     <Compile Include="Models\Insuree\ListInsuree.cs" />

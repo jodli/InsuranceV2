@@ -61,6 +61,8 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
                         LastName = "last"
                     };
                     insuree.Addresses.Add("street", "123", "12345", "city", "country", ContactType.Personal);
+                    insuree.PhoneNumbers.Add("1234567890", PhoneType.Fax, ContactType.Partner);
+                    insuree.EmailAddresses.Add("asdf@asdf.asdf", ContactType.Business);
 
                     return insuree;
                 });
@@ -79,6 +81,8 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
             insuree.LastName.Should().NotBeNullOrEmpty();
 
             insuree.Addresses.Count().ShouldBeEquivalentTo(1);
+            insuree.PhoneNumbers.Count().ShouldBeEquivalentTo(1);
+            insuree.EmailAddresses.Count().ShouldBeEquivalentTo(1);
         }
 
         [Test]

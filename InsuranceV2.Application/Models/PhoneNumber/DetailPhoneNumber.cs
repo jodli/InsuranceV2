@@ -11,10 +11,5 @@ namespace InsuranceV2.Application.Models.PhoneNumber
         public ContactType ContactType { get; set; }
 
         public PhoneType PhoneType { get; set; }
-
-        public override string ToString()
-        {
-            return $"{ContactType.ToString("G")} {PhoneType.ToString("G")}: {Number}";
-        }
     }
 }

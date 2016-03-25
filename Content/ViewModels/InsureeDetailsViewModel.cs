@@ -16,6 +16,7 @@ namespace Content.ViewModels
         private readonly ILogger<InsureeDetailsViewModel> _logger;
 
         private ObservableObject<Visibility> _showAddressesVisibility;
+        private ObservableObject<Visibility> _showEmailAddressesVisibility;
         private ObservableObject<Visibility> _showPhoneNumbersVisibility;
 
         public InsureeDetailsViewModel(IInsureeManagementAppService insureeManagementAppService,
@@ -32,6 +33,9 @@ namespace Content.ViewModels
 
             ToggleShowPhoneNumbersCommand = new DelegateCommand(ToggleShowPhoneNumbersExecute);
             _showPhoneNumbersVisibility = new ObservableObject<Visibility> {Value = Visibility.Collapsed};
+
+            ToggleShowEmailAddressesCommand = new DelegateCommand(ToggleShowEmailAddressesExecute);
+            _showEmailAddressesVisibility = new ObservableObject<Visibility> {Value = Visibility.Collapsed};
 
             SubscribeEvents();
         }
@@ -53,6 +57,23 @@ namespace Content.ViewModels
         }
 
         public ICommand ToggleShowPhoneNumbersCommand { get; }
+
+        public ICommand ToggleShowEmailAddressesCommand { get; }
+
+        public ObservableObject<Visibility> ShowEmailAddressesVisibility
+        {
+            get { return _showEmailAddressesVisibility; }
+            set { SetProperty(ref _showEmailAddressesVisibility, value); }
+        }
+
+        private void ToggleShowEmailAddressesExecute()
+        {
+            _logger.Debug("Executing ToggleShowEmailAddressesCommand");
+            ShowEmailAddressesVisibility.Value = ShowEmailAddressesVisibility.Value == Visibility.Collapsed
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+            _logger.Info($"Detailed email addresses are {ShowEmailAddressesVisibility.Value.ToString("G")}.");
+        }
 
         private void ToggleShowAddressesExecute()
         {

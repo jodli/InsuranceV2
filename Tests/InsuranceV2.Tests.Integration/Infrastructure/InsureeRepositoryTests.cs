@@ -133,6 +133,37 @@ namespace InsuranceV2.Tests.Integration.Infrastructure
         }
 
         [Test]
+        public void ClearingEmailAddressCollectionDeletesEmailAddresses()
+        {
+            var emailAddress1 = Guid.NewGuid().ToString().Substring(0, 25) + "@example.com";
+            var emailAddress2 = Guid.NewGuid().ToString().Substring(0, 25) + "@example.com";
+            string sql = $"SELECT * FROM EmailAddresses WHERE EmailAddressText = '{emailAddress1}'";
+
+            var insuree = CreateInsuree();
+            insuree.EmailAddresses.Add(emailAddress1, ContactType.Personal);
+            insuree.EmailAddresses.Add(emailAddress2, ContactType.Business);
+
+            using (new UnitOfWorkFactory().Create())
+            {
+                var repository = new InsureeRepository();
+                repository.Add(insuree);
+            }
+
+            CheckIfExists(sql).Should().BeTrue();
+
+            var insureeId = insuree.Id;
+            insureeId.Should().BeGreaterThan(0);
+
+            using (new UnitOfWorkFactory().Create(true))
+            {
+                var checkRepository = new InsureeRepository();
+                var checkInsuree = checkRepository.FindById(insureeId, x => x.EmailAddresses);
+                checkInsuree.EmailAddresses.Clear();
+            }
+            CheckIfExists(sql).Should().BeFalse();
+        }
+
+        [Test]
         public void ClearingPhoneNumbersCollectionDeletesPhoneNumbers()
         {
             var number1 = Guid.NewGuid().ToString().Substring(0, 25);
@@ -189,6 +220,36 @@ namespace InsuranceV2.Tests.Integration.Infrastructure
                 Country = "country",
                 ContactType = ContactType.Personal
             });
+
+            using (new UnitOfWorkFactory().Create())
+            {
+                var repository = new InsureeRepository();
+                repository.Add(insuree);
+            }
+
+            CheckIfExists(sql).Should().BeTrue();
+
+            var insureeId = insuree.Id;
+            insureeId.Should().BeGreaterThan(0);
+
+            using (new UnitOfWorkFactory().Create(true))
+            {
+                var checkRepository = new InsureeRepository();
+                checkRepository.Remove(insureeId);
+            }
+            CheckIfExists(sql).Should().BeFalse();
+        }
+
+        [Test]
+        public void DeletingInsureeDeletesEmailAddresses()
+        {
+            var emailAddress1 = Guid.NewGuid().ToString().Substring(0, 25) + "@example.com";
+            var emailAddress2 = Guid.NewGuid().ToString().Substring(0, 25) + "@example.com";
+            string sql = $"SELECT * FROM EmailAddresses WHERE EmailAddressText = '{emailAddress1}'";
+
+            var insuree = CreateInsuree();
+            insuree.EmailAddresses.Add(emailAddress1, ContactType.Personal);
+            insuree.EmailAddresses.Add(emailAddress2, ContactType.Business);
 
             using (new UnitOfWorkFactory().Create())
             {

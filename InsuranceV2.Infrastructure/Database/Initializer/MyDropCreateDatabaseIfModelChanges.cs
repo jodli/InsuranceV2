@@ -20,11 +20,15 @@ namespace InsuranceV2.Infrastructure.Database.Initializer
                 };
 
                 insuree.Addresses.Add("street" + i, "123", "12345", "city" + i, "country" + i, ContactType.Personal);
+                insuree.Addresses.Add("street" + i, "123", "12345", "city" + i, "country" + i, ContactType.Business);
+                insuree.Addresses.Add("street" + i, "123", "12345", "city" + i, "country" + i, ContactType.Partner);
 
                 insuree.EmailAddresses.Add("first" + i + "@test.com", ContactType.Personal);
                 insuree.EmailAddresses.Add("second" + i + "@test.com", ContactType.Business);
 
                 insuree.PhoneNumbers.Add("1234567890" + i, PhoneType.Phone, ContactType.Personal);
+                insuree.PhoneNumbers.Add("1234567890" + i, PhoneType.Mobile, ContactType.Partner);
+                insuree.PhoneNumbers.Add("1234567890" + i, PhoneType.Fax, ContactType.Business);
 
                 context.Insurees.Add(insuree);
             }

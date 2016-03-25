@@ -2,6 +2,7 @@
 using FluentAssertions;
 using InsuranceV2.Application.Models;
 using InsuranceV2.Application.Models.Address;
+using InsuranceV2.Application.Models.EmailAddress;
 using InsuranceV2.Application.Models.Insuree;
 using InsuranceV2.Application.Models.PhoneNumber;
 using InsuranceV2.Common.Enums;
@@ -32,6 +33,15 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
             {
                 Number = "05728583729",
                 PhoneType = PhoneType.Phone,
+                ContactType = ContactType.Personal
+            };
+        }
+
+        private static EmailAddress CreateEmailAddress()
+        {
+            return new EmailAddress
+            {
+                EmailAddressText = "asdf@asdf.asdf",
                 ContactType = ContactType.Personal
             };
         }
@@ -126,6 +136,19 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
             detailPhoneNumber.Number.ShouldBeEquivalentTo(phoneNumber.Number);
             detailPhoneNumber.PhoneType.ShouldBeEquivalentTo(phoneNumber.PhoneType);
             detailPhoneNumber.ContactType.ShouldBeEquivalentTo(phoneNumber.ContactType);
+        }
+
+        [Test]
+        public void MappingEmailAddressToDetailEmailAddressIsValid()
+        {
+            var emailAddress = CreateEmailAddress();
+            var detailEmailAddress = new DetailEmailAddress();
+
+            Mapper.Map(emailAddress, detailEmailAddress);
+
+            detailEmailAddress.Id.ShouldBeEquivalentTo(emailAddress.Id);
+            detailEmailAddress.EmailAddressText.ShouldBeEquivalentTo(emailAddress.EmailAddressText);
+            detailEmailAddress.ContactType.ShouldBeEquivalentTo(emailAddress.ContactType);
         }
     }
 }
