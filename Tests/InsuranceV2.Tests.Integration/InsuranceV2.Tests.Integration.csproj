@@ -97,15 +97,15 @@
     <Compile Include="Infrastructure\SimpleInsureeTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\InsuranceV2.Application\InsuranceV2.Application.csproj">
+    <ProjectReference Include="..\..\Source\InsuranceV2.Application\InsuranceV2.Application.csproj">
       <Project>{BBF3FB58-F10E-45F3-9756-37CF106A2DDF}</Project>
       <Name>InsuranceV2.Application</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\InsuranceV2.Common\InsuranceV2.Common.csproj">
+    <ProjectReference Include="..\..\Source\InsuranceV2.Common\InsuranceV2.Common.csproj">
       <Project>{5AD9F2E1-8E86-4487-BDF4-10AEC79A09B0}</Project>
       <Name>InsuranceV2.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\InsuranceV2.Infrastructure\InsuranceV2.Infrastructure.csproj">
+    <ProjectReference Include="..\..\Source\InsuranceV2.Infrastructure\InsuranceV2.Infrastructure.csproj">
       <Project>{CC09FB36-526B-4FB3-BC40-CCCF1319DD1D}</Project>
       <Name>InsuranceV2.Infrastructure</Name>
     </ProjectReference>
