@@ -15,8 +15,8 @@ namespace Content.ViewModels
     {
         private readonly IEventBus _eventBus;
         private readonly IInsureeManagementAppService _insureeManagementAppService;
-        private readonly INavigationAppService _navigationAppService;
         private readonly ILogger<InsureeListViewModel> _logger;
+        private readonly INavigationAppService _navigationAppService;
 
         private ObservableObject<int> _pageSize;
         private ListInsuree _selectedInsuree;
@@ -96,6 +96,16 @@ namespace Content.ViewModels
         {
             InsureeData.Clear();
             InsureeData.AddRange(insureeData);
+        }
+
+        protected override void OnActivate()
+        {
+            _logger.Debug("Activating InsureeListView.");
+        }
+
+        protected override void OnDeactivate()
+        {
+            _logger.Debug("Deactivating InsureeListView.");
         }
     }
 }

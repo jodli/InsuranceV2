@@ -26,8 +26,9 @@ namespace InsuranceV2.Common.Models
         public EmailAddresses EmailAddresses { get; }
         public PhoneNumbers PhoneNumbers { get; set; }
 
-        //Todo: married to
-        //Todo: married since
+        public Insuree Partner { get; set; }
+        public DateTime DateOfMarriage { get; set; }
+
         //Todo: divorced since
 
         public string FullName

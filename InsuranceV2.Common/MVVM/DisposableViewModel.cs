@@ -1,10 +1,43 @@
 ﻿using System;
+using Prism;
 using Prism.Mvvm;
 
 namespace InsuranceV2.Common.MVVM
 {
-    public abstract class DisposableViewModel : BindableBase, IDisposable
+    public abstract class DisposableViewModel : BindableBase, IActiveAware, IDisposable
     {
+        #region IActiveAware
+
+        private bool _isActive;
+
+        public bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (value)
+                {
+                    OnActivate();
+                }
+                else
+                {
+                    OnDeactivate();
+                }
+                IsActiveChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        protected abstract void OnDeactivate();
+
+        protected abstract void OnActivate();
+
+        public event EventHandler IsActiveChanged;
+
+        #endregion
+
+        #region IDisposable
+
         public bool IsDisposed { get; private set; }
 
         public void Dispose()
@@ -40,5 +73,7 @@ namespace InsuranceV2.Common.MVVM
                 IsDisposed = true;
             }
         }
+
+        #endregion
     }
 }

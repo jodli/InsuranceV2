@@ -56,6 +56,16 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
             };
         }
 
+        private static Insuree CreatePartner()
+        {
+            return new Insuree
+            {
+                Id = 2,
+                FirstName = "partnerFirstName",
+                LastName = "partnerLastName"
+            };
+        }
+
         [Test]
         public void AllMappingIsValid()
         {
@@ -99,6 +109,7 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
             var insuree = CreateInsuree();
             insuree.Addresses.Add(CreateAddress());
             insuree.PhoneNumbers.Add(CreatePhoneNumber());
+            insuree.Partner = CreatePartner();
             var detailInsuree = new DetailInsuree();
 
             Mapper.Map(insuree, detailInsuree);
@@ -109,6 +120,10 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
 
             detailInsuree.Addresses.Count().ShouldBeEquivalentTo(insuree.Addresses.Count);
             detailInsuree.PhoneNumbers.Count().ShouldBeEquivalentTo(insuree.PhoneNumbers.Count);
+
+            detailInsuree.Partner.Id.ShouldBeEquivalentTo(insuree.Partner.Id);
+            detailInsuree.Partner.FirstName.ShouldBeEquivalentTo(insuree.Partner.FirstName);
+            detailInsuree.Partner.LastName.ShouldBeEquivalentTo(insuree.Partner.LastName);
         }
 
         [Test]

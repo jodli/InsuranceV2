@@ -27,34 +27,36 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.ColumnSpan="2" Content="{Binding Insuree.Value.FullName}" FontSize="16" />
-                <Button Grid.Row="1" Grid.Column="0" Content="Adresse"
-                        Command="{Binding ToggleShowAddressesCommand}" />
-                <TreeView Grid.Row="1" Grid.Column="1"
-                          Visibility="{Binding ShowAddressesVisibility.Value}"
-                          ItemsSource="{Binding Insuree.Value.Addresses}">
-                    <TreeView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="{Binding Id}" />
-                                <Label Content="{Binding Street}" />
-                                <Label Content="{Binding StreetNumber}" />
-                                <Label Content="{Binding ZipCode}" />
-                                <Label Content="{Binding City}" />
-                                <Label Content="{Binding Country}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </TreeView.ItemTemplate>
-                </TreeView>
+                <Expander Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Header="Adressen"
+                          IsExpanded="{Binding IsAddressExpanded.Value}">
+                    <TreeView ItemsSource="{Binding Insuree.Value.Addresses}">
+                        <TreeView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="{Binding Id}" />
+                                    <Label Content="{Binding Street}" />
+                                    <Label Content="{Binding StreetNumber}" />
+                                    <Label Content="{Binding ZipCode}" />
+                                    <Label Content="{Binding City}" />
+                                    <Label Content="{Binding Country}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+                </Expander>
                 <Label Grid.Row="2" Grid.Column="0" Content="Geburtsdatum: " />
                 <Label Grid.Row="2" Grid.Column="1" Content="{Binding Insuree.Value.DateOfBirth.Date}" />
-                <Label Grid.Row="3" Grid.Column="0" Content="Partner: " />
-                <Label Grid.Row="3" Grid.Column="1" Content="{Binding Insuree.Value.DateOfBirth.Date}" />
+                <Label Grid.Row="3" Grid.Column="0" Content="Verheiratet seit: " />
+                <Label Grid.Row="3" Grid.Column="1" Content="{Binding Insuree.Value.DateOfMarriage.Date}" />
+                <Label Grid.Row="4" Grid.Column="0" Content="mit Partner: " />
+                <Label Grid.Row="4" Grid.Column="1" Content="{Binding Insuree.Value.Partner.FullName}" />
             </Grid>
 
             <Grid Grid.Column="2">
@@ -68,37 +70,35 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button Grid.Row="0" Grid.Column="0" Content="Telefonnummer"
-                        Command="{Binding ToggleShowPhoneNumbersCommand}" />
-                <TreeView Grid.Row="0" Grid.Column="1"
-                          Visibility="{Binding ShowPhoneNumbersVisibility.Value}"
-                          ItemsSource="{Binding Insuree.Value.PhoneNumbers}">
-                    <TreeView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="{Binding Id}" />
-                                <Label Content="{Binding Number}" />
-                                <Label Content="{Binding PhoneType}" />
-                                <Label Content="{Binding ContactType}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </TreeView.ItemTemplate>
-                </TreeView>
-                <Button Grid.Row="2" Grid.Column="0" Content="Email Adresse"
-                        Command="{Binding ToggleShowEmailAddressesCommand}" />
-                <TreeView Grid.Row="2" Grid.Column="1"
-                          Visibility="{Binding ShowEmailAddressesVisibility.Value}"
-                          ItemsSource="{Binding Path=Insuree.Value.EmailAddresses}">
-                    <TreeView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="{Binding Id}" />
-                                <Label Content="{Binding EmailAddressText}" />
-                                <Label Content="{Binding ContactType}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </TreeView.ItemTemplate>
-                </TreeView>
+                <Expander Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Header="Telefonnummern"
+                          IsExpanded="{Binding IsPhoneNumberExpanded.Value}">
+                    <TreeView ItemsSource="{Binding Insuree.Value.PhoneNumbers}">
+                        <TreeView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="{Binding Id}" />
+                                    <Label Content="{Binding Number}" />
+                                    <Label Content="{Binding PhoneType}" />
+                                    <Label Content="{Binding ContactType}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+                </Expander>
+                <Expander Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Header="Email Adressen"
+                          IsExpanded="{Binding IsEmailAddressExpanded.Value}">
+                    <TreeView ItemsSource="{Binding Path=Insuree.Value.EmailAddresses}">
+                        <TreeView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="{Binding Id}" />
+                                    <Label Content="{Binding EmailAddressText}" />
+                                    <Label Content="{Binding ContactType}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+                </Expander>
                 <Label Grid.Row="3" Grid.Column="0" Content="Bankdaten" />
                 <Label Grid.Row="3" Grid.Column="1" Content="12347890" />
             </Grid>

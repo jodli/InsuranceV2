@@ -18,6 +18,7 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
     public class InsureeManagementAppServiceTests : AppServiceTestBase
     {
         private const int Id = 1;
+        private const int PartnerId = 2;
         private Mock<IInsureeRepository> _insureeRepositoryMock;
         private Mock<IUnitOfWorkFactory> _unitOfWorkFactoryMock;
         private Mock<ILogger<InsureeManagementAppService>> _logger;
@@ -64,6 +65,13 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
                     insuree.PhoneNumbers.Add("1234567890", PhoneType.Fax, ContactType.Partner);
                     insuree.EmailAddresses.Add("asdf@asdf.asdf", ContactType.Business);
 
+                    insuree.Partner = new Insuree
+                    {
+                        Id = PartnerId,
+                        FirstName = "partnerFirst",
+                        LastName = "partnerLast"
+                    };
+
                     return insuree;
                 });
 
@@ -83,6 +91,10 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
             insuree.Addresses.Count().ShouldBeEquivalentTo(1);
             insuree.PhoneNumbers.Count().ShouldBeEquivalentTo(1);
             insuree.EmailAddresses.Count().ShouldBeEquivalentTo(1);
+
+            insuree.Partner.Id.ShouldBeEquivalentTo(PartnerId);
+            insuree.Partner.FirstName.Should().NotBeNullOrEmpty();
+            insuree.Partner.LastName.Should().NotBeNullOrEmpty();
         }
 
         [Test]

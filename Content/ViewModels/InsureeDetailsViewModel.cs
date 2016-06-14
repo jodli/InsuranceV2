@@ -1,10 +1,7 @@
-﻿using System.Windows;
-using System.Windows.Input;
-using InsuranceV2.Application.Models.Insuree;
+﻿using InsuranceV2.Application.Models.Insuree;
 using InsuranceV2.Application.Services;
 using InsuranceV2.Common.Logging;
 using InsuranceV2.Common.MVVM;
-using Prism.Commands;
 using Prism.Common;
 
 namespace Content.ViewModels
@@ -15,9 +12,9 @@ namespace Content.ViewModels
         private readonly IInsureeManagementAppService _insureeManagementAppService;
         private readonly ILogger<InsureeDetailsViewModel> _logger;
 
-        private ObservableObject<Visibility> _showAddressesVisibility;
-        private ObservableObject<Visibility> _showEmailAddressesVisibility;
-        private ObservableObject<Visibility> _showPhoneNumbersVisibility;
+        private ObservableObject<bool> _isAddressExpanded;
+        private ObservableObject<bool> _isEmailAddressExpanded;
+        private ObservableObject<bool> _isPhoneNumberExpanded;
 
         public InsureeDetailsViewModel(IInsureeManagementAppService insureeManagementAppService,
             ILogger<InsureeDetailsViewModel> logger, IEventBus eventBus)
@@ -27,70 +24,31 @@ namespace Content.ViewModels
             _eventBus = eventBus;
 
             Insuree = new ObservableObject<DetailInsuree>();
-
-            ToggleShowAddressesCommand = new DelegateCommand(ToggleShowAddressesExecute);
-            _showAddressesVisibility = new ObservableObject<Visibility> {Value = Visibility.Collapsed};
-
-            ToggleShowPhoneNumbersCommand = new DelegateCommand(ToggleShowPhoneNumbersExecute);
-            _showPhoneNumbersVisibility = new ObservableObject<Visibility> {Value = Visibility.Collapsed};
-
-            ToggleShowEmailAddressesCommand = new DelegateCommand(ToggleShowEmailAddressesExecute);
-            _showEmailAddressesVisibility = new ObservableObject<Visibility> {Value = Visibility.Collapsed};
+            _isAddressExpanded = new ObservableObject<bool> {Value = false};
+            _isPhoneNumberExpanded = new ObservableObject<bool> {Value = false};
+            _isEmailAddressExpanded = new ObservableObject<bool> {Value = false};
 
             SubscribeEvents();
         }
 
         public ObservableObject<DetailInsuree> Insuree { get; set; }
 
-        public ICommand ToggleShowAddressesCommand { get; }
-
-        public ObservableObject<Visibility> ShowAddressesVisibility
+        public ObservableObject<bool> IsAddressExpanded
         {
-            get { return _showAddressesVisibility; }
-            set { SetProperty(ref _showAddressesVisibility, value); }
+            get { return _isAddressExpanded; }
+            set { SetProperty(ref _isAddressExpanded, value); }
         }
 
-        public ObservableObject<Visibility> ShowPhoneNumbersVisibility
+        public ObservableObject<bool> IsPhoneNumberExpanded
         {
-            get { return _showPhoneNumbersVisibility; }
-            set { SetProperty(ref _showPhoneNumbersVisibility, value); }
+            get { return _isPhoneNumberExpanded; }
+            set { SetProperty(ref _isPhoneNumberExpanded, value); }
         }
 
-        public ICommand ToggleShowPhoneNumbersCommand { get; }
-
-        public ICommand ToggleShowEmailAddressesCommand { get; }
-
-        public ObservableObject<Visibility> ShowEmailAddressesVisibility
+        public ObservableObject<bool> IsEmailAddressExpanded
         {
-            get { return _showEmailAddressesVisibility; }
-            set { SetProperty(ref _showEmailAddressesVisibility, value); }
-        }
-
-        private void ToggleShowEmailAddressesExecute()
-        {
-            _logger.Debug("Executing ToggleShowEmailAddressesCommand");
-            ShowEmailAddressesVisibility.Value = ShowEmailAddressesVisibility.Value == Visibility.Collapsed
-                ? Visibility.Visible
-                : Visibility.Collapsed;
-            _logger.Info($"Detailed email addresses are {ShowEmailAddressesVisibility.Value.ToString("G")}.");
-        }
-
-        private void ToggleShowAddressesExecute()
-        {
-            _logger.Debug("Executing ToggleShowAddressesCommand");
-            ShowAddressesVisibility.Value = ShowAddressesVisibility.Value == Visibility.Collapsed
-                ? Visibility.Visible
-                : Visibility.Collapsed;
-            _logger.Info($"Detailed addresses are {ShowAddressesVisibility.Value.ToString("G")}.");
-        }
-
-        private void ToggleShowPhoneNumbersExecute()
-        {
-            _logger.Debug("Executing ToggleShowPhoneNumbersExecute");
-            ShowPhoneNumbersVisibility.Value = ShowPhoneNumbersVisibility.Value == Visibility.Collapsed
-                ? Visibility.Visible
-                : Visibility.Collapsed;
-            _logger.Info($"Detailed phone numbers are {ShowPhoneNumbersVisibility.Value.ToString("G")}.");
+            get { return _isEmailAddressExpanded; }
+            set { SetProperty(ref _isEmailAddressExpanded, value); }
         }
 
         private void SelectedInsureeChanged(ListInsuree listInsuree)
@@ -102,6 +60,19 @@ namespace Content.ViewModels
             {
                 Insuree.Value = _insureeManagementAppService.GetDetailInsuree(listInsuree.Id);
             }
+        }
+
+        protected override void OnActivate()
+        {
+            _logger.Debug("Activating InsureeDetailsView.");
+            IsAddressExpanded.Value = false;
+            IsPhoneNumberExpanded.Value = false;
+            IsEmailAddressExpanded.Value = false;
+        }
+
+        protected override void OnDeactivate()
+        {
+            _logger.Debug("Deactivating InsureeDetailsView.");
         }
 
         #region EventBus

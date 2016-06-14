@@ -30,6 +30,15 @@ namespace InsuranceV2.Infrastructure.Database.Initializer
                 insuree.PhoneNumbers.Add("1234567890" + i, PhoneType.Mobile, ContactType.Partner);
                 insuree.PhoneNumbers.Add("1234567890" + i, PhoneType.Fax, ContactType.Business);
 
+                insuree.DateOfMarriage = DateTime.Today;
+
+                insuree.Partner = new Insuree
+                {
+                    FirstName = "PartnerFirstName" + i,
+                    LastName = "PartnerLastName" + i,
+                    DateOfBirth = DateTime.Now.AddYears(-30 + i)
+                };
+
                 context.Insurees.Add(insuree);
             }
         }

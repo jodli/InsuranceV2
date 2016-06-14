@@ -18,6 +18,9 @@ namespace InsuranceV2.Application.Models.Insuree
 
         public DateTime DateOfBirth { get; set; }
 
+        public DateTime DateOfMarriage { get; set; }
+        public DetailInsuree Partner { get; set; }
+
         public IEnumerable<DetailAddress> Addresses { get; set; }
         public IEnumerable<DetailPhoneNumber> PhoneNumbers { get; set; }
         public IEnumerable<DetailEmailAddress> EmailAddresses { get; set; }
