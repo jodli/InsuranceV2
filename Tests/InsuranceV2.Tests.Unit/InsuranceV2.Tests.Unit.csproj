@@ -70,11 +70,11 @@
     <Compile Include="UnitTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\InsuranceV2.Application\InsuranceV2.Application.csproj">
+    <ProjectReference Include="..\..\Source\InsuranceV2.Application\InsuranceV2.Application.csproj">
       <Project>{bbf3fb58-f10e-45f3-9756-37cf106a2ddf}</Project>
       <Name>InsuranceV2.Application</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\InsuranceV2.Common\InsuranceV2.Common.csproj">
+    <ProjectReference Include="..\..\Source\InsuranceV2.Common\InsuranceV2.Common.csproj">
       <Project>{5AD9F2E1-8E86-4487-BDF4-10AEC79A09B0}</Project>
       <Name>InsuranceV2.Common</Name>
     </ProjectReference>

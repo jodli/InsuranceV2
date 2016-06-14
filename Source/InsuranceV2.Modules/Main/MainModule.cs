@@ -1,22 +1,22 @@
 ﻿using InsuranceV2.Common.MVVM;
+using Main.Views;
 using Prism.Modularity;
 using Prism.Regions;
-using Settings.Views;
 
-namespace Settings
+namespace Main
 {
-    public class SettingsModule : IModule
+    public class MainModule : IModule
     {
         private readonly IRegionManager _regionManager;
 
-        public SettingsModule(IRegionManager regionManager)
+        public MainModule(IRegionManager regionManager)
         {
             _regionManager = regionManager;
         }
 
         public void Initialize()
         {
-            _regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof (SettingsView));
+            _regionManager.RegisterViewWithRegion(RegionNames.MainRegion, typeof (MainView));
         }
     }
 }

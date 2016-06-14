@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\Build\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -26,18 +26,18 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\..\Build\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Prism, Version=6.1.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
-      <HintPath>..\packages\Prism.Core.6.1.0\lib\net45\Prism.dll</HintPath>
+      <HintPath>..\..\..\packages\Prism.Core.6.1.0\lib\net45\Prism.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Prism.Wpf, Version=6.1.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
-      <HintPath>..\packages\Prism.Wpf.6.1.1-pre1\lib\net45\Prism.Wpf.dll</HintPath>
+      <HintPath>..\..\..\packages\Prism.Wpf.6.1.1-pre1\lib\net45\Prism.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -94,7 +94,16 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\InsuranceV2.Application\InsuranceV2.Application.csproj">
+      <Project>{bbf3fb58-f10e-45f3-9756-37cf106a2ddf}</Project>
+      <Name>InsuranceV2.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\InsuranceV2.Common\InsuranceV2.Common.csproj">
+      <Project>{5ad9f2e1-8e86-4487-bdf4-10aec79a09b0}</Project>
+      <Name>InsuranceV2.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Views\InsureeDetailsView.xaml">
       <SubType>Designer</SubType>
@@ -108,16 +117,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\InsuranceV2.Application\InsuranceV2.Application.csproj">
-      <Project>{bbf3fb58-f10e-45f3-9756-37cf106a2ddf}</Project>
-      <Name>InsuranceV2.Application</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\InsuranceV2.Common\InsuranceV2.Common.csproj">
-      <Project>{5ad9f2e1-8e86-4487-bdf4-10aec79a09b0}</Project>
-      <Name>InsuranceV2.Common</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
