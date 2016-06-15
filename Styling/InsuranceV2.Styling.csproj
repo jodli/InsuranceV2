@@ -7,8 +7,8 @@
     <ProjectGuid>{A85E09F3-F9E0-4BA7-BF0D-167ADB6075CA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Styling</RootNamespace>
-    <AssemblyName>Styling</AssemblyName>
+    <RootNamespace>InsuranceV2.Styling</RootNamespace>
+    <AssemblyName>InsuranceV2.Styling</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

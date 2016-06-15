@@ -7,8 +7,8 @@
     <ProjectGuid>{D85B6BBE-B29A-4752-B816-6DD58792FA60}</ProjectGuid>
     <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Content</RootNamespace>
-    <AssemblyName>Content</AssemblyName>
+    <RootNamespace>InsuranceV2.Modules.Content</RootNamespace>
+    <AssemblyName>InsuranceV2.Modules.Content</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -95,9 +95,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Styling\Styling.csproj">
+    <ProjectReference Include="..\..\..\Styling\InsuranceV2.Styling.csproj">
       <Project>{a85e09f3-f9e0-4ba7-bf0d-167adb6075ca}</Project>
-      <Name>Styling</Name>
+      <Name>InsuranceV2.Styling</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\InsuranceV2.Application\InsuranceV2.Application.csproj">
       <Project>{bbf3fb58-f10e-45f3-9756-37cf106a2ddf}</Project>
