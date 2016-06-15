@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsuranceV2.Tests.Integrati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsuranceV2.Tests.Unit", "Tests\InsuranceV2.Tests.Unit\InsuranceV2.Tests.Unit.csproj", "{A3BE1222-C068-4916-9B04-80162511A632}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Styling", "Styling\Styling.csproj", "{A85E09F3-F9E0-4BA7-BF0D-167ADB6075CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{A3BE1222-C068-4916-9B04-80162511A632}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3BE1222-C068-4916-9B04-80162511A632}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3BE1222-C068-4916-9B04-80162511A632}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A85E09F3-F9E0-4BA7-BF0D-167ADB6075CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A85E09F3-F9E0-4BA7-BF0D-167ADB6075CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A85E09F3-F9E0-4BA7-BF0D-167ADB6075CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A85E09F3-F9E0-4BA7-BF0D-167ADB6075CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,5 +104,6 @@ Global
 		{CC09FB36-526B-4FB3-BC40-CCCF1319DD1D} = {BACFF0EF-117B-42D5-9260-3C08769CE7B7}
 		{E471380C-6F94-4689-BD22-2E8AF79178E1} = {AB86EFB5-9AE9-4053-A59F-99CE36374776}
 		{A3BE1222-C068-4916-9B04-80162511A632} = {AB86EFB5-9AE9-4053-A59F-99CE36374776}
+		{A85E09F3-F9E0-4BA7-BF0D-167ADB6075CA} = {E060102D-C1A0-4D80-8A7D-C9501B2F6CC6}
 	EndGlobalSection
 EndGlobal

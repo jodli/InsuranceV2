@@ -1,7 +1,9 @@
-﻿using InsuranceV2.Application.Models.Insuree;
+﻿using System.Windows.Input;
+using InsuranceV2.Application.Models.Insuree;
 using InsuranceV2.Application.Services;
 using InsuranceV2.Common.Logging;
 using InsuranceV2.Common.MVVM;
+using Prism.Commands;
 using Prism.Common;
 
 namespace Content.ViewModels
@@ -28,8 +30,12 @@ namespace Content.ViewModels
             _isPhoneNumberExpanded = new ObservableObject<bool> {Value = false};
             _isEmailAddressExpanded = new ObservableObject<bool> {Value = false};
 
+            ShowPartnerDetailsCommand = new DelegateCommand(ShowPartnerDetailsExecute);
+
             SubscribeEvents();
         }
+
+        public ICommand ShowPartnerDetailsCommand { get; }
 
         public ObservableObject<DetailInsuree> Insuree { get; set; }
 
@@ -60,6 +66,12 @@ namespace Content.ViewModels
             {
                 Insuree.Value = _insureeManagementAppService.GetDetailInsuree(listInsuree.Id);
             }
+        }
+
+        private void ShowPartnerDetailsExecute()
+        {
+            _logger.Debug("Executing ShowPartnerDetailsCommand");
+            Insuree.Value = Insuree.Value.Partner;
         }
 
         protected override void OnActivate()

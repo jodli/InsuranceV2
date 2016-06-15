@@ -95,6 +95,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Styling\Styling.csproj">
+      <Project>{a85e09f3-f9e0-4ba7-bf0d-167adb6075ca}</Project>
+      <Name>Styling</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\InsuranceV2.Application\InsuranceV2.Application.csproj">
       <Project>{bbf3fb58-f10e-45f3-9756-37cf106a2ddf}</Project>
       <Name>InsuranceV2.Application</Name>

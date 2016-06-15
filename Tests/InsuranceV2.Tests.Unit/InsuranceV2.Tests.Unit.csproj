@@ -47,6 +47,8 @@
       <HintPath>..\..\packages\NUnit.3.0.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Xml" />
@@ -65,6 +67,7 @@
     <Compile Include="CollectionBaseTests.cs" />
     <Compile Include="DomainEntityTests.cs" />
     <Compile Include="InsureeTests.cs" />
+    <Compile Include="MVVM\ConverterTests.cs" />
     <Compile Include="MVVM\ObservableObjectTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTestBase.cs" />

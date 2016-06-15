@@ -8,6 +8,13 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d"
              d:DataContext="{Binding Source={d:DesignInstance Type=viewModels:InsureeDetailsViewModel, IsDesignTimeCreatable=True}}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Styling;component/InsuranceV2Design.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -56,7 +63,9 @@
                 <Label Grid.Row="3" Grid.Column="0" Content="Verheiratet seit: " />
                 <Label Grid.Row="3" Grid.Column="1" Content="{Binding Insuree.Value.DateOfMarriage.Date}" />
                 <Label Grid.Row="4" Grid.Column="0" Content="mit Partner: " />
-                <Label Grid.Row="4" Grid.Column="1" Content="{Binding Insuree.Value.Partner.FullName}" />
+                <Button Grid.Row="4" Grid.Column="1" Content="{Binding Insuree.Value.Partner.FullName}"
+                        Command="{Binding ShowPartnerDetailsCommand}"
+                        Visibility="{Binding Insuree.Value.Partner, Converter={StaticResource NotNullToVisibilityConverter}}" />
             </Grid>
 
             <Grid Grid.Column="2">
