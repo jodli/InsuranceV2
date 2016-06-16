@@ -68,6 +68,7 @@
     <Compile Include="Database\Context\InsuranceAppContext.cs" />
     <Compile Include="Database\Context\ThreadDataContextStorageContainer.cs" />
     <Compile Include="Database\Context\IDataContextStorageContainer.cs" />
+    <Compile Include="Database\EfCommandInterceptor.cs" />
     <Compile Include="Database\Initializer\InsuranceAppContextInitializer.cs" />
     <Compile Include="Database\Initializer\MyDropCreateDatabaseIfModelChanges.cs" />
     <Compile Include="Database\IUnitOfWork.cs" />
