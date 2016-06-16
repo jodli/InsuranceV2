@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Content.Views
+namespace InsuranceV2.Modules.Content.Views
 {
     /// <summary>
     /// Interaction logic for InsureeListView

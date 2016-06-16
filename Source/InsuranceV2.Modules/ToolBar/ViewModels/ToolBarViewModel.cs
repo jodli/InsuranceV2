@@ -4,7 +4,7 @@ using InsuranceV2.Application.Services;
 using Prism.Commands;
 using Prism.Mvvm;
 
-namespace ToolBar.ViewModels
+namespace InsuranceV2.Modules.ToolBar.ViewModels
 {
     public class ToolBarViewModel : BindableBase
     {

@@ -1,5 +1,4 @@
-﻿using System.Data.Entity.Infrastructure;
-using StructureMap.Configuration.DSL;
+﻿using StructureMap.Configuration.DSL;
 using StructureMap.Graph;
 
 namespace InsuranceV2.Infrastructure.DependencyResolution

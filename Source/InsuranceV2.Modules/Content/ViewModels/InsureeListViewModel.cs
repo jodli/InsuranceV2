@@ -9,7 +9,7 @@ using InsuranceV2.Common.MVVM;
 using Prism.Commands;
 using Prism.Common;
 
-namespace Content.ViewModels
+namespace InsuranceV2.Modules.Content.ViewModels
 {
     public class InsureeListViewModel : DisposableViewModel
     {

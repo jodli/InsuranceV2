@@ -1,9 +1,9 @@
 ﻿using InsuranceV2.Common.MVVM;
+using InsuranceV2.Modules.StatusBar.Views;
 using Prism.Modularity;
 using Prism.Regions;
-using StatusBar.Views;
 
-namespace StatusBar
+namespace InsuranceV2.Modules.StatusBar
 {
     public class StatusBarModule : IModule
     {

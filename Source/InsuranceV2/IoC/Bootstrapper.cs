@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Markup;
-using Content;
 using InsuranceV2.Application.DependencyResolution;
 using InsuranceV2.Common.DependencyResolution;
 using InsuranceV2.Common.Logging;
 using InsuranceV2.Domain.DependencyResolution;
 using InsuranceV2.Infrastructure.DependencyResolution;
+using InsuranceV2.Modules.Content;
+using InsuranceV2.Modules.Main;
+using InsuranceV2.Modules.StatusBar;
+using InsuranceV2.Modules.ToolBar;
 using InsuranceV2.Views;
-using Main;
 using Prism.Logging;
 using Prism.Modularity;
 using Prism.StructureMap;
-using StatusBar;
 using StructureMap.Graph;
-using ToolBar;
 
 namespace InsuranceV2.IoC
 {

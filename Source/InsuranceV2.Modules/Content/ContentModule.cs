@@ -1,9 +1,9 @@
-﻿using Content.Views;
-using InsuranceV2.Common.MVVM;
+﻿using InsuranceV2.Common.MVVM;
+using InsuranceV2.Modules.Content.Views;
 using Prism.Modularity;
 using Prism.Regions;
 
-namespace Content
+namespace InsuranceV2.Modules.Content
 {
     public class ContentModule : IModule
     {

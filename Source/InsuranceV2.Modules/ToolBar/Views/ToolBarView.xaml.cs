@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace ToolBar.Views
+namespace InsuranceV2.Modules.ToolBar.Views
 {
     /// <summary>
     /// Interaction logic for ToolBarView

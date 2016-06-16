@@ -1,6 +1,6 @@
 ﻿using Prism.Mvvm;
 
-namespace StatusBar.ViewModels
+namespace InsuranceV2.Modules.StatusBar.ViewModels
 {
     public class StatusBarViewModel : BindableBase
     {

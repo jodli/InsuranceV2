@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Main.Views
+namespace InsuranceV2.Modules.Main.Views
 {
     /// <summary>
     /// Interaction logic for MainView

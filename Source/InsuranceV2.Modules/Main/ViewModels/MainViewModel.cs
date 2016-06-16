@@ -3,7 +3,7 @@ using InsuranceV2.Application.Services;
 using Prism.Commands;
 using Prism.Mvvm;
 
-namespace Main.ViewModels
+namespace InsuranceV2.Modules.Main.ViewModels
 {
     public class MainViewModel : BindableBase
     {

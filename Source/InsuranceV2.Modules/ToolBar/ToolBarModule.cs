@@ -1,9 +1,9 @@
 ﻿using InsuranceV2.Common.MVVM;
+using InsuranceV2.Modules.ToolBar.Views;
 using Prism.Modularity;
 using Prism.Regions;
-using ToolBar.Views;
 
-namespace ToolBar
+namespace InsuranceV2.Modules.ToolBar
 {
     public class ToolBarModule : IModule
     {

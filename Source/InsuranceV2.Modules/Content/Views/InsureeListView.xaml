@@ -1,10 +1,10 @@
-﻿<UserControl x:Class="Content.Views.InsureeListView"
+﻿<UserControl x:Class="InsuranceV2.Modules.Content.Views.InsureeListView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewModels="clr-namespace:Content.ViewModels"
+             xmlns:viewModels="clr-namespace:InsuranceV2.Modules.Content.ViewModels"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d"
              d:DataContext="{Binding Source={d:DesignInstance Type=viewModels:InsureeListViewModel, IsDesignTimeCreatable=True}}">

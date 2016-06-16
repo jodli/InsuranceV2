@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace StatusBar.Views
+namespace InsuranceV2.Modules.StatusBar.Views
 {
     /// <summary>
     /// Interaction logic for StatusBarView

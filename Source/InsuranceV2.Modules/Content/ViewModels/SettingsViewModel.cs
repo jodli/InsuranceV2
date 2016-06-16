@@ -1,7 +1,7 @@
 ﻿using InsuranceV2.Common.Logging;
 using InsuranceV2.Common.MVVM;
 
-namespace Content.ViewModels
+namespace InsuranceV2.Modules.Content.ViewModels
 {
     public class SettingsViewModel : DisposableViewModel
     {

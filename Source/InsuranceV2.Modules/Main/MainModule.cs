@@ -1,9 +1,9 @@
 ﻿using InsuranceV2.Common.MVVM;
-using Main.Views;
+using InsuranceV2.Modules.Main.Views;
 using Prism.Modularity;
 using Prism.Regions;
 
-namespace Main
+namespace InsuranceV2.Modules.Main
 {
     public class MainModule : IModule
     {
