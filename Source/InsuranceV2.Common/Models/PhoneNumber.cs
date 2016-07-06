@@ -14,9 +14,9 @@ namespace InsuranceV2.Common.Models
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (string.IsNullOrEmpty(Number))
+            if (string.IsNullOrWhiteSpace(Number))
             {
-                yield return new ValidationResult("Number can't be null or empty", new[] {"Number"});
+                yield return new ValidationResult("Number can't be null or empty.", new[] {"Number"});
             }
             if (ContactType == ContactType.None)
             {

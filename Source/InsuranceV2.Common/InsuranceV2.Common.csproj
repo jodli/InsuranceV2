@@ -60,9 +60,12 @@
     <Compile Include="Collections\Insurees.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DependencyResolution\CommonRegistry.cs" />
+    <Compile Include="Enums\InsuranceCompany.cs"/>
+    <Compile Include="Enums\InsuranceType.cs"/>
     <Compile Include="Enums\PhoneType.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Models\Insurance.cs"/>
     <Compile Include="MVVM\DisposableViewModel.cs" />
     <Compile Include="MVVM\EventBus.cs" />
     <Compile Include="MVVM\IEventBus.cs" />

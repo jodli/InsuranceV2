@@ -66,6 +66,7 @@
     <Compile Include="AddressTests.cs" />
     <Compile Include="CollectionBaseTests.cs" />
     <Compile Include="DomainEntityTests.cs" />
+    <Compile Include="InsuranceTests.cs"/>
     <Compile Include="InsureeTests.cs" />
     <Compile Include="MVVM\ConverterTests.cs" />
     <Compile Include="MVVM\ObservableObjectTests.cs" />
