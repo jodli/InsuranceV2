@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.25428.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{BACFF0EF-117B-42D5-9260-3C08769CE7B7}"
 EndProject
@@ -31,7 +31,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsuranceV2.Tests.Integrati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsuranceV2.Tests.Unit", "Tests\InsuranceV2.Tests.Unit\InsuranceV2.Tests.Unit.csproj", "{A3BE1222-C068-4916-9B04-80162511A632}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsuranceV2.Styling", "Styling\InsuranceV2.Styling.csproj", "{A85E09F3-F9E0-4BA7-BF0D-167ADB6075CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsuranceV2.Styling", "Source\InsuranceV2.Styling\InsuranceV2.Styling.csproj", "{A85E09F3-F9E0-4BA7-BF0D-167ADB6075CA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{C2FE33AB-0A6B-4276-99F5-337A22484653}"
 	ProjectSection(SolutionItems) = preProject

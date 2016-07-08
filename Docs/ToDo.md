@@ -8,7 +8,7 @@
 
 ### 2. GUI
 
-#### 1. Create Views
+#### 1. StartupView
 - [ ] Add Main / Startup Screen
 
 #### 2. ListInsureeView

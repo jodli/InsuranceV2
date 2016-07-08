@@ -51,6 +51,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ObjectModel"/>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\Addresses.cs" />
