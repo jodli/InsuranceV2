@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Management.Instrumentation;
+using System.Linq;
 using FluentAssertions;
 using InsuranceV2.Common.Enums;
 using InsuranceV2.Common.Models;
@@ -52,9 +52,9 @@ namespace InsuranceV2.Tests.Unit
         {
             var insurance = new Insurance();
 
-            insurance.Insurer = InsuranceCompany.VHV;
+            insurance.Company = InsuranceCompany.VHV;
 
-            insurance.Insurer.ShouldBeEquivalentTo(InsuranceCompany.VHV);
+            insurance.Company.ShouldBeEquivalentTo(InsuranceCompany.VHV);
         }
 
         [Test]
@@ -62,9 +62,9 @@ namespace InsuranceV2.Tests.Unit
         {
             var insurance = new Insurance();
 
-            insurance.Type = InsuranceType.PHP;
+            insurance.Type = InsuranceType.Php;
 
-            insurance.Type.ShouldBeEquivalentTo(InsuranceType.PHP);
+            insurance.Type.ShouldBeEquivalentTo(InsuranceType.Php);
         }
 
         [Test]
@@ -95,6 +95,67 @@ namespace InsuranceV2.Tests.Unit
             insurance.Cancelled = true;
 
             insurance.Cancelled.ShouldBeEquivalentTo(true);
+        }
+
+        [Test]
+        public void CanSetEmployeeToInsurance()
+        {
+            var insurance = new Insurance();
+
+            insurance.Employee = new Employee();
+
+            insurance.Employee.Should().NotBeNull();
+        }
+
+        [Test]
+        public void CanSetLicensePlateToInsurance()
+        {
+            var insurance = new Insurance();
+
+            insurance.LicensePlate = "AB-ABC 123";
+
+            insurance.LicensePlate.ShouldBeEquivalentTo("AB-ABC 123");
+        }
+
+        [Test]
+        public void NewInsuranceIsCancelled()
+        {
+            var insurance = new Insurance();
+
+            insurance.Cancelled.ShouldBeEquivalentTo(false);
+        }
+
+        [Test]
+        public void DetectNullInsuranceNumber()
+        {
+            var insurance = new Insurance();
+
+            insurance.InsuranceNumber = null;
+
+            var errors = insurance.Validate();
+            errors.Should().Contain(x => x.MemberNames.Contains("InsuranceNumber"));
+        }
+
+        [Test]
+        public void DetectEmptyInsuranceNumber()
+        {
+            var insurance = new Insurance();
+
+            insurance.InsuranceNumber = "";
+
+            var errors = insurance.Validate();
+            errors.Should().Contain(x => x.MemberNames.Contains("InsuranceNumber"));
+        }
+
+        [Test]
+        public void DetectStartDateInThePast()
+        {
+            var insurance = new Insurance();
+
+            insurance.StartDate = DateTime.Now.AddDays(-1);
+
+            var errors = insurance.Validate();
+            errors.Should().Contain(x => x.MemberNames.Contains("StartDate"));
         }
     }
 }

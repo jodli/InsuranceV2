@@ -22,9 +22,9 @@ namespace InsuranceV2.Common.Models
 
         public DateTime DateOfBirth { get; set; }
 
-        public Addresses Addresses { get; set; }
+        public Addresses Addresses { get; }
         public EmailAddresses EmailAddresses { get; }
-        public PhoneNumbers PhoneNumbers { get; set; }
+        public PhoneNumbers PhoneNumbers { get; }
 
         public Insuree Partner { get; set; }
         public DateTime DateOfMarriage { get; set; }
