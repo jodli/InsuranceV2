@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using FluentAssertions;
 using InsuranceV2.Application.Models;
 using InsuranceV2.Application.Models.Address;
 using InsuranceV2.Application.Models.EmailAddress;
+using InsuranceV2.Application.Models.Insurance;
 using InsuranceV2.Application.Models.Insuree;
 using InsuranceV2.Application.Models.PhoneNumber;
 using InsuranceV2.Common.Enums;
@@ -56,6 +58,15 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
             };
         }
 
+        private static Insurance CreateInsurance()
+        {
+            return new Insurance
+            {
+                InsuranceNumber = "ABC 1234",
+                StartDate = DateTime.Now.AddDays(1)
+            };
+        }
+
         private static Insuree CreatePartner()
         {
             return new Insuree
@@ -70,23 +81,6 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
         public void AllMappingIsValid()
         {
             AutoMapperConfig.Start();
-        }
-
-        [Test]
-        public void MappingAddressToDetailAddressIsValid()
-        {
-            var address = CreateAddress();
-            var detailAddress = new DetailAddress();
-
-            Mapper.Map(address, detailAddress);
-
-            detailAddress.Id.ShouldBeEquivalentTo(address.Id);
-            detailAddress.Street.ShouldBeEquivalentTo(address.Street);
-            detailAddress.StreetNumber.ShouldBeEquivalentTo(address.StreetNumber);
-            detailAddress.ZipCode.ShouldBeEquivalentTo(address.ZipCode);
-            detailAddress.City.ShouldBeEquivalentTo(address.City);
-            detailAddress.Country.ShouldBeEquivalentTo(address.Country);
-            detailAddress.ContactType.ShouldBeEquivalentTo(address.ContactType);
         }
 
         [Test]
@@ -110,6 +104,7 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
             insuree.Addresses.Add(CreateAddress());
             insuree.PhoneNumbers.Add(CreatePhoneNumber());
             insuree.Partner = CreatePartner();
+            insuree.Insurances.Add(CreateInsurance());
             var detailInsuree = new DetailInsuree();
 
             Mapper.Map(insuree, detailInsuree);
@@ -120,6 +115,7 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
 
             detailInsuree.Addresses.Count().ShouldBeEquivalentTo(insuree.Addresses.Count);
             detailInsuree.PhoneNumbers.Count().ShouldBeEquivalentTo(insuree.PhoneNumbers.Count);
+            detailInsuree.Insurances.Count().ShouldBeEquivalentTo(insuree.Insurances.Count);
 
             detailInsuree.Partner.Id.ShouldBeEquivalentTo(insuree.Partner.Id);
             detailInsuree.Partner.FirstName.ShouldBeEquivalentTo(insuree.Partner.FirstName);
@@ -164,6 +160,35 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
             detailEmailAddress.Id.ShouldBeEquivalentTo(emailAddress.Id);
             detailEmailAddress.EmailAddressText.ShouldBeEquivalentTo(emailAddress.EmailAddressText);
             detailEmailAddress.ContactType.ShouldBeEquivalentTo(emailAddress.ContactType);
+        }
+
+        [Test]
+        public void MappingAddressToDetailAddressIsValid()
+        {
+            var address = CreateAddress();
+            var detailAddress = new DetailAddress();
+
+            Mapper.Map(address, detailAddress);
+
+            detailAddress.Id.ShouldBeEquivalentTo(address.Id);
+            detailAddress.Street.ShouldBeEquivalentTo(address.Street);
+            detailAddress.StreetNumber.ShouldBeEquivalentTo(address.StreetNumber);
+            detailAddress.ZipCode.ShouldBeEquivalentTo(address.ZipCode);
+            detailAddress.City.ShouldBeEquivalentTo(address.City);
+            detailAddress.Country.ShouldBeEquivalentTo(address.Country);
+            detailAddress.ContactType.ShouldBeEquivalentTo(address.ContactType);
+        }
+
+        [Test]
+        public void MappingInsuranceToDetailInsuranceIsValid()
+        {
+            var insurance = CreateInsurance();
+            var detailInsurance = new DetailInsurance();
+
+            Mapper.Map(insurance, detailInsurance);
+            detailInsurance.Id.ShouldBeEquivalentTo(insurance.Id);
+            detailInsurance.InsuranceNumber.ShouldBeEquivalentTo(insurance.InsuranceNumber);
+            detailInsurance.StartDate.ShouldBeEquivalentTo(insurance.StartDate);
         }
     }
 }

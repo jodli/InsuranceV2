@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using InsuranceV2.Application.Models.Address;
 using InsuranceV2.Application.Models.EmailAddress;
+using InsuranceV2.Application.Models.Insurance;
 using InsuranceV2.Application.Models.PhoneNumber;
 
 namespace InsuranceV2.Application.Models.Insuree
@@ -24,5 +25,6 @@ namespace InsuranceV2.Application.Models.Insuree
         public IEnumerable<DetailAddress> Addresses { get; set; }
         public IEnumerable<DetailPhoneNumber> PhoneNumbers { get; set; }
         public IEnumerable<DetailEmailAddress> EmailAddresses { get; set; }
+        public IEnumerable<ListInsurance> Insurances { get; set; }
     }
 }

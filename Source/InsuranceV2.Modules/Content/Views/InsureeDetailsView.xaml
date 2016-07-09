@@ -114,15 +114,14 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <DataGrid AutoGenerateColumns="False"
+            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Path=Insuree.Value.Insurances, Mode=OneWay}"
                       VerticalAlignment="Top" ColumnWidth="*"
                       IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow"
                       CanUserReorderColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Gainsboro"
                       AlternationCount="2" Margin="5">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Id" Width="50" />
-                    <DataGridTextColumn Header="Versicherung" Width="250" />
-                    <DataGridTextColumn Header="Versicherungsnr." Width="250" />
+                    <DataGridTextColumn Header="Id" Width="50" Binding="{Binding Id}"/>
+                    <DataGridTextColumn Header="Versicherungsnr." Width="250" Binding="{Binding InsuranceNumber}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
