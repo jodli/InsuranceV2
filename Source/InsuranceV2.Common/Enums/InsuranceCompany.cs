@@ -2,6 +2,6 @@
 {
     public enum InsuranceCompany
     {
-        VHV
+        Vhv
     }
 }

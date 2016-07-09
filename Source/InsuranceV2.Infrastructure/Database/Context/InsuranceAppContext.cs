@@ -20,6 +20,7 @@ namespace InsuranceV2.Infrastructure.Database.Context
         }
 
         public DbSet<Insuree> Insurees { get; set; }
+        public DbSet<Insurance> Insurances { get; set; }
 
         public override int SaveChanges()
         {
@@ -27,7 +28,7 @@ namespace InsuranceV2.Infrastructure.Database.Context
                 e =>
                     (e.State == EntityState.Modified || e.State == EntityState.Added) &&
                     e.Entity.GetType().GetInterfaces().Any(x =>
-                        x.IsGenericType && x.GetGenericTypeDefinition() == typeof (IHasOwner<>)) &&
+                            x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IHasOwner<>)) &&
                     e.Reference("Owner").CurrentValue == null);
 
             foreach (var orphanedObject in orphanedObjects)
@@ -88,6 +89,7 @@ namespace InsuranceV2.Infrastructure.Database.Context
             modelBuilder.Configurations.Add(new AddressConfiguration());
             modelBuilder.Configurations.Add(new EmailAddressConfiguration());
             modelBuilder.Configurations.Add(new PhoneNumberConfiguration());
+            modelBuilder.Configurations.Add(new InsuranceConfiguration());
         }
     }
 }

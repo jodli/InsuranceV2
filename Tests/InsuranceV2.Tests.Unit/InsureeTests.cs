@@ -105,6 +105,19 @@ namespace InsuranceV2.Tests.Unit
         }
 
         [Test]
+        public void DetectInvalidInsurance()
+        {
+            var insuree = CreateInsuree();
+            insuree.Insurances.Add("", DateTime.Now.AddDays(-1), DateTime.Now.AddDays(-10), false, InsuranceCompany.Vhv,
+                "", "", InsuranceType.Kfz);
+            var errors = insuree.Validate();
+            errors.Should()
+                .Contain(x => x.MemberNames.Contains("InsuranceNumber"))
+                .And.Contain(x => x.MemberNames.Contains("StartDate"))
+                .And.Contain(x => x.MemberNames.Contains("LicensePlate"));
+        }
+
+        [Test]
         public void FullNameIsFirstNameAndLastName()
         {
             var insuree = new Insuree {FirstName = "First", LastName = "Last"};

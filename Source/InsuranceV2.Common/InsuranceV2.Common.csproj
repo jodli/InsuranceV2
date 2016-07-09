@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="Collections\Addresses.cs" />
     <Compile Include="Collections\CollectionBase.cs" />
+      <Compile Include="Collections\Insurances.cs"/>
     <Compile Include="Collections\PhoneNumbers.cs" />
     <Compile Include="Collections\EmailAddresses.cs" />
     <Compile Include="Collections\Insurees.cs" />

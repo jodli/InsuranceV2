@@ -52,9 +52,9 @@ namespace InsuranceV2.Tests.Unit
         {
             var insurance = new Insurance();
 
-            insurance.Company = InsuranceCompany.VHV;
+            insurance.Company = InsuranceCompany.Vhv;
 
-            insurance.Company.ShouldBeEquivalentTo(InsuranceCompany.VHV);
+            insurance.Company.ShouldBeEquivalentTo(InsuranceCompany.Vhv);
         }
 
         [Test]
@@ -102,7 +102,7 @@ namespace InsuranceV2.Tests.Unit
         {
             var insurance = new Insurance();
 
-            insurance.Employee = new Employee();
+            insurance.Employee = "";
 
             insurance.Employee.Should().NotBeNull();
         }

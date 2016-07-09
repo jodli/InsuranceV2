@@ -12,6 +12,8 @@ namespace InsuranceV2.Common.Models
             Addresses = new Addresses();
             EmailAddresses = new EmailAddresses();
             PhoneNumbers = new PhoneNumbers();
+
+            Insurances = new Insurances();
         }
 
         [Required]
@@ -29,7 +31,7 @@ namespace InsuranceV2.Common.Models
         public Insuree Partner { get; set; }
         public DateTime DateOfMarriage { get; set; }
 
-        //Todo: divorced since
+        public Insurances Insurances { get; }
 
         public string FullName
         {
@@ -69,6 +71,10 @@ namespace InsuranceV2.Common.Models
                 yield return validationResult;
             }
             foreach (var validationResult in PhoneNumbers.Validate())
+            {
+                yield return validationResult;
+            }
+            foreach (var validationResult in Insurances.Validate())
             {
                 yield return validationResult;
             }

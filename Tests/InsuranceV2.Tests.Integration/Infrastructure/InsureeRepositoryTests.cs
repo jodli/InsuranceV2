@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Data.SqlClient;
 using System.Linq;
 using FluentAssertions;
 using InsuranceV2.Common.Enums;
 using InsuranceV2.Common.Models;
 using InsuranceV2.Infrastructure.Database;
-using InsuranceV2.Infrastructure.Database.Context;
 using InsuranceV2.Infrastructure.Repositories;
 using NUnit.Framework;
 
@@ -24,23 +22,7 @@ namespace InsuranceV2.Tests.Integration.Infrastructure
             };
         }
 
-        private bool CheckIfExists(string sql)
-        {
-            var connection = new SqlConnection(new InsuranceAppContext().Database.Connection.ConnectionString);
-            var command = new SqlCommand(sql, connection);
-
-            connection.Open();
-
-            var reader = command.ExecuteReader();
-            var result = reader.Read();
-            reader.Close();
-
-            connection.Close();
-
-            return result;
-        }
-
-        public static Address CreateAddress(ContactType contactType)
+        private static Address CreateAddress(ContactType contactType)
         {
             return new Address
             {
@@ -50,6 +32,15 @@ namespace InsuranceV2.Tests.Integration.Infrastructure
                 City = "city",
                 Country = "country",
                 ContactType = contactType
+            };
+        }
+
+        private static Insurance CreateInsurance()
+        {
+            return new Insurance
+            {
+                InsuranceNumber = "ABC 12345",
+                StartDate = DateTime.Now
             };
         }
 
@@ -82,6 +73,36 @@ namespace InsuranceV2.Tests.Integration.Infrastructure
                 check.Addresses.Count().Should().Be(2);
                 check.Addresses[0].ContactType.Should().Be(ContactType.Personal);
                 check.Addresses[1].ContactType.Should().Be(ContactType.Business);
+            }
+        }
+
+        [Test]
+        public void InsuranceRoundTripsToDatabase()
+        {
+            var newInsureeId = 0;
+            var insuree = SimpleInsureeTests.CreateInsuree();
+
+            var insurance = CreateInsurance();
+            insuree.Insurances.Add(insurance);
+
+            using (new UnitOfWorkFactory().Create())
+            {
+                var repository = new InsureeRepository();
+                repository.Add(insuree);
+            }
+            insuree.Id.Should().BePositive();
+            newInsureeId = insuree.Id;
+
+            using (new UnitOfWorkFactory().Create())
+            {
+                var repository = new InsureeRepository();
+                var check = repository.FindById(newInsureeId);
+                check.Id.Should().Be(newInsureeId);
+
+                check.Insurances.Count.Should().Be(1);
+                check.Insurances[0].Id.Should().Be(insurance.Id);
+                check.Insurances[0].InsuranceNumber.ShouldBeEquivalentTo(insurance.InsuranceNumber);
+                check.Insurances[0].StartDate.ShouldBeEquivalentTo(insurance.StartDate);
             }
         }
 

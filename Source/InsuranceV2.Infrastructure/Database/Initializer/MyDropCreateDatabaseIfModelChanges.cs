@@ -39,6 +39,22 @@ namespace InsuranceV2.Infrastructure.Database.Initializer
                     DateOfBirth = DateTime.Now.AddYears(-30 + i)
                 };
 
+                for (var j = 0; j < 2; j++)
+                {
+                    var insurance = new Insurance
+                    {
+                        InsuranceNumber = "ABC " + j,
+                        Cancelled = j == 0,
+                        Company = InsuranceCompany.Vhv,
+                        Type = j == 0 ? InsuranceType.Php : InsuranceType.Kfz,
+                        ContractDate = DateTime.Now.AddDays(j * 10),
+                        LicensePlate = j == 0 ? "" : "AB-ABC 123",
+                        StartDate = DateTime.Now.AddDays(j * 5)
+                    };
+
+                    insuree.Insurances.Add(insurance);
+                }
+
                 context.Insurees.Add(insuree);
             }
         }

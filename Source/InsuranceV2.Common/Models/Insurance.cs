@@ -5,7 +5,7 @@ using InsuranceV2.Common.Enums;
 
 namespace InsuranceV2.Common.Models
 {
-    public class Insurance : DomainEntity<int>, IHasOwner<Insuree>, IDateTracking
+    public class Insurance : DomainEntity<int>, IHasOwner<Insuree>
     {
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -16,6 +16,10 @@ namespace InsuranceV2.Common.Models
             if (StartDate < DateTime.Today)
             {
                 yield return new ValidationResult("StartDate can't be in the past.", new[] {"StartDate"});
+            }
+            if (Type == InsuranceType.Kfz && string.IsNullOrWhiteSpace(LicensePlate))
+            {
+                yield return new ValidationResult("LicensePlate can't be null or empty.", new[] {"LicensePlate"});
             }
         }
 
@@ -33,9 +37,6 @@ namespace InsuranceV2.Common.Models
         public int OwnerId { get; set; }
         public Insuree Owner { get; set; }
 
-        public Employee Employee { get; set; }
-
-        public DateTime DateCreated { get; set; }
-        public DateTime DateModified { get; set; }
+        public string Employee { get; set; }
     }
 }
