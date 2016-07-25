@@ -18,6 +18,7 @@ namespace InsuranceV2.Modules.Content
         {
             _regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof (InsureeListView));
             _regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof (InsureeDetailsView));
+            _regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof (InsureeAddOrEditView));
             _regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof (SettingsView));
         }
     }
