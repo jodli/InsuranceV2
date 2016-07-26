@@ -84,10 +84,10 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
         }
 
         [Test]
-        public void MappingInsureeToCreateOrEditInsureeIsValid()
+        public void MappingInsureeToAddOrEditInsureeIsValid()
         {
             var insuree = CreateInsuree();
-            var createOrEditInsuree = new CreateOrEditInsuree();
+            var createOrEditInsuree = new AddOrEditInsuree();
 
             Mapper.Map(insuree, createOrEditInsuree);
 

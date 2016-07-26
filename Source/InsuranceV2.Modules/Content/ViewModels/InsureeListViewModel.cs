@@ -8,6 +8,7 @@ using InsuranceV2.Common.Logging;
 using InsuranceV2.Common.MVVM;
 using Prism.Commands;
 using Prism.Common;
+using Prism.Regions;
 
 namespace InsuranceV2.Modules.Content.ViewModels
 {
@@ -38,13 +39,15 @@ namespace InsuranceV2.Modules.Content.ViewModels
             _totalPages = new ObservableObject<int>();
 
             UpdateListCommand = new DelegateCommand(UpdateListExecute);
-            ShowDetailsCommand = new DelegateCommand(ShowDetailsExecute);
+            ShowDetailsCommand = new DelegateCommand(ShowDetailsExecute, HasSelectedInsuree);
+            EditInsureeCommand = new DelegateCommand(EditInsureeExecute, HasSelectedInsuree);
 
             UpdateListExecute();
         }
 
         public ICommand UpdateListCommand { get; }
         public ICommand ShowDetailsCommand { get; }
+        public ICommand EditInsureeCommand { get; }
 
         public ObservableCollection<ListInsuree> InsureeData { get; }
 
@@ -55,7 +58,6 @@ namespace InsuranceV2.Modules.Content.ViewModels
             {
                 _logger.Debug(value != null ? $"Selecting Insuree with Id: {value.Id}" : "Deselecting Insuree.");
                 SetProperty(ref _selectedInsuree, value);
-                _eventBus.Publish(_selectedInsuree);
             }
         }
 
@@ -89,7 +91,20 @@ namespace InsuranceV2.Modules.Content.ViewModels
         private void ShowDetailsExecute()
         {
             _logger.Debug("Executing ShowDetailsCommand");
-            _navigationAppService.NavigateTo(new Uri("InsureeDetailsView", UriKind.Relative));
+            var parameters = new NavigationParameters {{"SelectedInsuree", SelectedInsuree}};
+            _navigationAppService.NavigateTo("InsureeDetailsView", parameters);
+        }
+
+        private void EditInsureeExecute()
+        {
+            _logger.Debug("Executing EditInsureeCommand");
+            var parameters = new NavigationParameters {{"SelectedInsuree", SelectedInsuree}};
+            _navigationAppService.NavigateTo("InsureeAddOrEditView", parameters);
+        }
+
+        private bool HasSelectedInsuree()
+        {
+            return SelectedInsuree != null;
         }
 
         private void UpdateInsureeData(IEnumerable<ListInsuree> insureeData)

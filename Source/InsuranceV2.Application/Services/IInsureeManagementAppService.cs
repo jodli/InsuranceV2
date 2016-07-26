@@ -5,11 +5,11 @@ namespace InsuranceV2.Application.Services
 {
     public interface IInsureeManagementAppService
     {
-        CreateOrEditInsuree GetExistingInsureeToEdit(int id);
+        AddOrEditInsuree GetExistingInsureeToEdit(int id);
         DetailInsuree GetDetailInsuree(int id);
-        CreateOrEditInsuree GetNewInsuree();
-        void CreateInsuree(CreateOrEditInsuree createInsuree);
-        void EditInsuree(CreateOrEditInsuree editInsuree);
+        AddOrEditInsuree GetNewInsuree();
+        void AddInsuree(AddOrEditInsuree addInsuree);
+        void EditInsuree(AddOrEditInsuree editInsuree);
         void DeleteInsuree(int id);
         PagerModel<ListInsuree> GetPagedInsurees(int page = 1, int pageSize = 5, string sort = "Id", string sortDir = "ASC");
     }

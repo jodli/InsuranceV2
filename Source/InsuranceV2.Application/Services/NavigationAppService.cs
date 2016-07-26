@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Dynamic;
 using InsuranceV2.Common.Logging;
 using InsuranceV2.Common.MVVM;
 using Prism.Regions;
@@ -16,10 +17,25 @@ namespace InsuranceV2.Application.Services
             _logger = logger;
         }
 
-        public void NavigateTo(Uri uri)
+        private void NavigateTo(Uri uri)
         {
-            _logger.Info($"Navigating the {RegionNames.ContentRegion} to {uri}.");
-            _regionManager.RequestNavigate(RegionNames.ContentRegion, uri, NavigationCompleted);
+            NavigateTo(uri, new NavigationParameters());
+        }
+
+        private void NavigateTo(Uri uri, NavigationParameters parameters)
+        {
+            _logger.Info($"Navigating the {RegionNames.ContentRegion} to {uri} with {parameters.Count()} parameters.");
+            _regionManager.RequestNavigate(RegionNames.ContentRegion, uri, NavigationCompleted, parameters);
+        }
+
+        public void NavigateTo(string uri)
+        {
+            NavigateTo(new Uri(uri, UriKind.Relative));
+        }
+
+        public void NavigateTo(string uri, NavigationParameters parameters)
+        {
+            NavigateTo(new Uri(uri, UriKind.Relative), parameters);
         }
 
         private void NavigationCompleted(NavigationResult navigationResult)

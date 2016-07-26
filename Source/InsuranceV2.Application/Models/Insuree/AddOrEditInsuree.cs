@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace InsuranceV2.Application.Models.Insuree
 {
-    public class CreateOrEditInsuree : IValidatableObject
+    public class AddOrEditInsuree : IValidatableObject
     {
         public int Id { get; set; }
 

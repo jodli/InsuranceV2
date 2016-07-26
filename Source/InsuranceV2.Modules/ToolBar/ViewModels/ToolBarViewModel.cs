@@ -19,7 +19,7 @@ namespace InsuranceV2.Modules.ToolBar.ViewModels
 
         private void NavigateExecute(string uri)
         {
-            _navigationAppService.NavigateTo(new Uri(uri, UriKind.Relative));
+            _navigationAppService.NavigateTo(uri);
         }
 
         public ICommand NavigateCommand { get; }

@@ -66,31 +66,31 @@ namespace InsuranceV2.Application.Services
             return detailInsuree;
         }
 
-        public CreateOrEditInsuree GetNewInsuree()
+        public AddOrEditInsuree GetNewInsuree()
         {
-            var createOrEditInsuree = new CreateOrEditInsuree();
+            var createOrEditInsuree = new AddOrEditInsuree();
 
             return createOrEditInsuree;
         }
 
-        public CreateOrEditInsuree GetExistingInsureeToEdit(int id)
+        public AddOrEditInsuree GetExistingInsureeToEdit(int id)
         {
             var insuree = _insureeRepository.FindById(id);
-            var createOrEditInsuree = new CreateOrEditInsuree();
+            var createOrEditInsuree = new AddOrEditInsuree();
 
             _mapper.Map(insuree, createOrEditInsuree);
 
             return createOrEditInsuree;
         }
 
-        public void CreateInsuree(CreateOrEditInsuree createInsuree)
+        public void AddInsuree(AddOrEditInsuree addInsuree)
         {
             try
             {
                 using (_unitOfWorkFactory.Create())
                 {
                     var insuree = new Insuree();
-                    _mapper.Map(createInsuree, insuree);
+                    _mapper.Map(addInsuree, insuree);
                     _insureeRepository.Add(insuree);
                     _logger.Info($"Created insuree with id: {insuree.Id}");
                 }
@@ -101,7 +101,7 @@ namespace InsuranceV2.Application.Services
             }
         }
 
-        public void EditInsuree(CreateOrEditInsuree editInsuree)
+        public void EditInsuree(AddOrEditInsuree editInsuree)
         {
             try
             {
@@ -109,7 +109,7 @@ namespace InsuranceV2.Application.Services
                 {
                     _logger.Info($"Update insuree with id: {editInsuree.Id}");
                     var insureeToUpdate = _insureeRepository.FindById(editInsuree.Id);
-                    _mapper.Map(editInsuree, insureeToUpdate, typeof (CreateOrEditInsuree), typeof (Insuree));
+                    _mapper.Map(editInsuree, insureeToUpdate, typeof (AddOrEditInsuree), typeof (Insuree));
                 }
             }
             catch (ModelValidationException e)

@@ -16,7 +16,7 @@ namespace InsuranceV2.Application.Models
                 {
                     configuration.CreateMap<Common.Models.Insuree, ListInsuree>();
                     configuration.CreateMap<Common.Models.Insuree, DetailInsuree>();
-                    configuration.CreateMap<Common.Models.Insuree, CreateOrEditInsuree>();
+                    configuration.CreateMap<Common.Models.Insuree, AddOrEditInsuree>();
                     configuration.CreateMap<Common.Models.Address, DetailAddress>();
                     configuration.CreateMap<Common.Models.PhoneNumber, DetailPhoneNumber>();
                     configuration.CreateMap<Common.Models.EmailAddress, DetailEmailAddress>();

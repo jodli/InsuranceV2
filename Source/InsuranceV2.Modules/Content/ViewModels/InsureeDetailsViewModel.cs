@@ -1,14 +1,17 @@
-﻿using System.Windows.Input;
+﻿using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Windows.Input;
 using InsuranceV2.Application.Models.Insuree;
 using InsuranceV2.Application.Services;
 using InsuranceV2.Common.Logging;
 using InsuranceV2.Common.MVVM;
 using Prism.Commands;
 using Prism.Common;
+using Prism.Regions;
 
 namespace InsuranceV2.Modules.Content.ViewModels
 {
-    public class InsureeDetailsViewModel : DisposableViewModel
+    public class InsureeDetailsViewModel : DisposableViewModel, INavigationAware
     {
         private readonly IEventBus _eventBus;
         private readonly IInsureeManagementAppService _insureeManagementAppService;
@@ -59,13 +62,8 @@ namespace InsuranceV2.Modules.Content.ViewModels
 
         private void SelectedInsureeChanged(ListInsuree listInsuree)
         {
-            _logger.Debug(listInsuree != null
-                ? $"Getting DetailInsuree with Id: {listInsuree.Id}."
-                : "Unselected Insuree.");
-            if (listInsuree != null)
-            {
-                Insuree.Value = _insureeManagementAppService.GetDetailInsuree(listInsuree.Id);
-            }
+            _logger.Debug($"Getting DetailInsuree with Id: {listInsuree.Id}.");
+            Insuree.Value = _insureeManagementAppService.GetDetailInsuree(listInsuree.Id);
         }
 
         private void ShowPartnerDetailsExecute()
@@ -87,6 +85,25 @@ namespace InsuranceV2.Modules.Content.ViewModels
         {
             _logger.Debug("Deactivating InsureeDetailsView.");
         }
+
+        #region INavigationAware
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            var selectedInsuree = navigationContext.Parameters["SelectedInsuree"] as ListInsuree;
+            Insuree.Value = _insureeManagementAppService.GetDetailInsuree(selectedInsuree.Id);
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return navigationContext.Parameters["SelectedInsuree"] != null;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+        }
+
+        #endregion
 
         #region EventBus
 

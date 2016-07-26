@@ -20,7 +20,7 @@ namespace InsuranceV2.Modules.Main.ViewModels
 
         private void Navigate(string uri)
         {
-            _navigationAppService.NavigateTo(new Uri(uri, UriKind.Relative));
+            _navigationAppService.NavigateTo(uri);
         }
     }
 }

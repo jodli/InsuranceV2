@@ -6,7 +6,7 @@
     <StackPanel Orientation="Horizontal">
         <Button Content="Navigate to InsureeList" Command="{Binding NavigateCommand}"
                 CommandParameter="InsureeListView" />
-        <Button Content="Navigate to Add or edit" Command="{Binding NavigateCommand}"
+        <Button Content="Navigate to Add" Command="{Binding NavigateCommand}"
                 CommandParameter="InsureeAddOrEditView" />
         <Button Content="Navigate to Settings" Command="{Binding NavigateCommand}"
                 CommandParameter="SettingsView" />
