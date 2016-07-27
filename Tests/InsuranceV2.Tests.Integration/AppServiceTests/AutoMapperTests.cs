@@ -16,6 +16,8 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
     [TestFixture]
     public class AutoMapperTests : AppServiceTestBase
     {
+        #region Create Models
+
         private static Address CreateAddress()
         {
             return new Address
@@ -58,6 +60,16 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
             };
         }
 
+        private static AddOrEditInsuree CreateAddOrEditInsuree()
+        {
+            return new AddOrEditInsuree
+            {
+                Id = 1,
+                FirstName = "editedFirstName",
+                LastName = "editedLastName"
+            };
+        }
+
         private static Insurance CreateInsurance()
         {
             return new Insurance
@@ -77,6 +89,8 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
             };
         }
 
+        #endregion
+
         [Test]
         public void AllMappingIsValid()
         {
@@ -95,6 +109,39 @@ namespace InsuranceV2.Tests.Integration.AppServiceTests
             createOrEditInsuree.FirstName.ShouldBeEquivalentTo(insuree.FirstName);
             createOrEditInsuree.LastName.ShouldBeEquivalentTo(insuree.LastName);
             createOrEditInsuree.DateOfBirth.ShouldBeEquivalentTo(insuree.DateOfBirth);
+        }
+
+        [Test]
+        public void MappingAddOrEditInsureeToNewInsureeIsValid()
+        {
+            var addOrEditInsuree = CreateAddOrEditInsuree();
+            var insuree = new Insuree();
+
+            Mapper.Map(addOrEditInsuree, insuree);
+
+            insuree.Id.ShouldBeEquivalentTo(addOrEditInsuree.Id);
+            insuree.FirstName.ShouldBeEquivalentTo(addOrEditInsuree.FirstName);
+            insuree.LastName.ShouldBeEquivalentTo(addOrEditInsuree.LastName);
+            insuree.DateOfBirth.ShouldBeEquivalentTo(addOrEditInsuree.DateOfBirth);
+        }
+
+        [Test]
+        public void MappingAddOrEditInsureeToExistingInsureeIsValid()
+        {
+            var addOrEditInsuree = CreateAddOrEditInsuree();
+            var insuree = CreateInsuree();
+
+            Mapper.Map(addOrEditInsuree, insuree);
+
+            insuree.Id.ShouldBeEquivalentTo(addOrEditInsuree.Id);
+
+            insuree.FirstName.ShouldBeEquivalentTo(addOrEditInsuree.FirstName);
+            insuree.FirstName.Should().NotBe("firstName");
+
+            insuree.LastName.ShouldBeEquivalentTo(addOrEditInsuree.LastName);
+            insuree.FirstName.Should().NotBe("lastName");
+
+            insuree.DateOfBirth.ShouldBeEquivalentTo(insuree.DateOfBirth);
         }
 
         [Test]
