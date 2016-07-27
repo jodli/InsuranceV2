@@ -32,11 +32,12 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Content="Vorname" FontSize="16" />
+                <Label Grid.Row="0" Grid.Column="0" Content="Vorname" />
                 <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Insuree.Value.FirstName}" />
 
-                <Label Grid.Row="1" Grid.Column="0" Content="Geburtsdatum" FontSize="16" />
-                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Insuree.Value.DateOfBirth}" />
+                <Label Grid.Row="1" Grid.Column="0" Content="Geburtsdatum" />
+                <DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding Insuree.Value.DateOfBirth}"
+                            SelectedDateFormat="Short" />
             </Grid>
 
             <Grid Grid.Column="2">
@@ -58,7 +59,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="Save" />
+            <Button Grid.Column="0" Content="Save" Command="{Binding SaveInsureeCommand}" />
         </Grid>
     </Grid>
 </UserControl>

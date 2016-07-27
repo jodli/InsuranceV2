@@ -37,7 +37,7 @@ namespace InsuranceV2.Application.Services
             var insurees =
                 _insureeRepository.FindAll()
                     .OrderBy(BuildOrderBy(sort, sortDir))
-                    .Skip(page*pageSize - pageSize)
+                    .Skip(page * pageSize - pageSize)
                     .Take(pageSize);
 
             _mapper.Map(insurees, data);
@@ -47,7 +47,7 @@ namespace InsuranceV2.Application.Services
                 Data = data,
                 PageNumber = page,
                 PageSize = pageSize,
-                TotalPages = (int) Math.Ceiling(totalRecords/(double) pageSize)
+                TotalPages = (int) Math.Ceiling(totalRecords / (double) pageSize)
             };
 
             _logger.Info($"Returning PagerModel: {model}");
@@ -92,7 +92,7 @@ namespace InsuranceV2.Application.Services
                     var insuree = new Insuree();
                     _mapper.Map(addInsuree, insuree);
                     _insureeRepository.Add(insuree);
-                    _logger.Info($"Created insuree with id: {insuree.Id}");
+                    _logger.Info("Created new insuree.");
                 }
             }
             catch (ModelValidationException e)
@@ -107,9 +107,9 @@ namespace InsuranceV2.Application.Services
             {
                 using (_unitOfWorkFactory.Create())
                 {
-                    _logger.Info($"Update insuree with id: {editInsuree.Id}");
                     var insureeToUpdate = _insureeRepository.FindById(editInsuree.Id);
-                    _mapper.Map(editInsuree, insureeToUpdate, typeof (AddOrEditInsuree), typeof (Insuree));
+                    _mapper.Map(editInsuree, insureeToUpdate, typeof(AddOrEditInsuree), typeof(Insuree));
+                    _logger.Info($"Updated insuree with id: {editInsuree.Id}");
                 }
             }
             catch (ModelValidationException e)
