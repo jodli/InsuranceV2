@@ -14,7 +14,6 @@ namespace InsuranceV2.Modules.Content.ViewModels
 {
     public class InsureeListViewModel : DisposableViewModel
     {
-        private readonly IEventBus _eventBus;
         private readonly IInsureeManagementAppService _insureeManagementAppService;
         private readonly ILogger<InsureeListViewModel> _logger;
         private readonly INavigationAppService _navigationAppService;
@@ -26,11 +25,10 @@ namespace InsuranceV2.Modules.Content.ViewModels
         private ObservableObject<int> _totalPages;
 
         public InsureeListViewModel(IInsureeManagementAppService insureeManagementAppService,
-            ILogger<InsureeListViewModel> logger, IEventBus eventBus, INavigationAppService navigationAppService)
+            ILogger<InsureeListViewModel> logger, INavigationAppService navigationAppService)
         {
             _insureeManagementAppService = insureeManagementAppService;
             _logger = logger;
-            _eventBus = eventBus;
             _navigationAppService = navigationAppService;
 
             InsureeData = new ObservableCollection<ListInsuree>();
@@ -64,7 +62,11 @@ namespace InsuranceV2.Modules.Content.ViewModels
         public ObservableObject<int> SelectedPage
         {
             get { return _selectedPage; }
-            set { SetProperty(ref _selectedPage, value); }
+            set
+            {
+                SetProperty(ref _selectedPage, value);
+                UpdateListExecute();
+            }
         }
 
         public ObservableObject<int> TotalPages
@@ -76,7 +78,11 @@ namespace InsuranceV2.Modules.Content.ViewModels
         public ObservableObject<int> PageSize
         {
             get { return _pageSize; }
-            set { SetProperty(ref _pageSize, value); }
+            set
+            {
+                SetProperty(ref _pageSize, value);
+                UpdateListExecute();
+            }
         }
 
         private void UpdateListExecute()
@@ -116,6 +122,7 @@ namespace InsuranceV2.Modules.Content.ViewModels
         protected override void OnActivate()
         {
             _logger.Debug("Activating InsureeListView.");
+            UpdateListExecute();
         }
 
         protected override void OnDeactivate()

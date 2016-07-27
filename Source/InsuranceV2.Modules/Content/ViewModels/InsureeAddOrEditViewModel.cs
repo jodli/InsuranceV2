@@ -12,13 +12,15 @@ namespace InsuranceV2.Modules.Content.ViewModels
     public class InsureeAddOrEditViewModel : DisposableViewModel, INavigationAware
     {
         private readonly IInsureeManagementAppService _insureeManagementAppService;
+        private readonly INavigationAppService _navigationAppService;
         private readonly ILogger<InsureeAddOrEditViewModel> _logger;
 
         public InsureeAddOrEditViewModel(ILogger<InsureeAddOrEditViewModel> logger,
-            IInsureeManagementAppService insureeManagementAppService)
+            IInsureeManagementAppService insureeManagementAppService, INavigationAppService navigationAppService)
         {
             _logger = logger;
             _insureeManagementAppService = insureeManagementAppService;
+            _navigationAppService = navigationAppService;
 
             Insuree = new ObservableObject<AddOrEditInsuree>();
 
@@ -42,6 +44,7 @@ namespace InsuranceV2.Modules.Content.ViewModels
                 _logger.Debug("Saving new insuree.");
                 _insureeManagementAppService.AddInsuree(Insuree.Value);
             }
+            _navigationAppService.NavigateTo("InsureeListView");
         }
 
         private bool IsExistingInsuree()
