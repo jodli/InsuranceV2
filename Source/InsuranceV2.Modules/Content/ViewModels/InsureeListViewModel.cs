@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Input;
 using InsuranceV2.Application.Models.Insuree;
 using InsuranceV2.Application.Services;
@@ -20,10 +21,6 @@ namespace InsuranceV2.Modules.Content.ViewModels
 
         private ListInsuree _selectedInsuree;
 
-        private ObservableObject<int> _selectedPage;
-        private ObservableObject<int> _pageSize;
-        private ObservableObject<int> _totalPages;
-
         public InsureeListViewModel(IInsureeManagementAppService insureeManagementAppService,
             ILogger<InsureeListViewModel> logger, INavigationAppService navigationAppService)
         {
@@ -32,16 +29,16 @@ namespace InsuranceV2.Modules.Content.ViewModels
             _navigationAppService = navigationAppService;
 
             InsureeData = new ObservableCollection<ListInsuree>();
-            _selectedPage = new ObservableObject<int> {Value = 1};
-            _pageSize = new ObservableObject<int> {Value = 5};
-            _totalPages = new ObservableObject<int>();
+            SelectedPage = new ObservableObject<int> {Value = 1};
+            PageSize = new ObservableObject<int> {Value = 5};
+            TotalPages = new ObservableObject<int>();
 
-            UpdateListCommand = new DelegateCommand(UpdateListExecute);
+            SubscribeEvents();
+
             ShowDetailsCommand = new DelegateCommand(ShowDetailsExecute, HasSelectedInsuree);
             EditInsureeCommand = new DelegateCommand(EditInsureeExecute, HasSelectedInsuree);
         }
 
-        public ICommand UpdateListCommand { get; }
         public ICommand ShowDetailsCommand { get; }
         public ICommand EditInsureeCommand { get; }
 
@@ -57,35 +54,15 @@ namespace InsuranceV2.Modules.Content.ViewModels
             }
         }
 
-        public ObservableObject<int> SelectedPage
-        {
-            get { return _selectedPage; }
-            set
-            {
-                SetProperty(ref _selectedPage, value);
-                UpdateListExecute();
-            }
-        }
+        public ObservableObject<int> SelectedPage { get; }
 
-        public ObservableObject<int> TotalPages
-        {
-            get { return _totalPages; }
-            set { SetProperty(ref _totalPages, value); }
-        }
+        public ObservableObject<int> TotalPages { get; }
 
-        public ObservableObject<int> PageSize
-        {
-            get { return _pageSize; }
-            set
-            {
-                SetProperty(ref _pageSize, value);
-                UpdateListExecute();
-            }
-        }
+        public ObservableObject<int> PageSize { get; }
 
-        private void UpdateListExecute()
+        private void RefreshInsureeList(object sender, PropertyChangedEventArgs args)
         {
-            _logger.Debug("Executing UpdateListCommand.");
+            _logger.Debug("Property changed: Refreshing list.");
             var pagedInsurees = _insureeManagementAppService.GetPagedInsurees(SelectedPage.Value, PageSize.Value);
 
             UpdateInsureeData(pagedInsurees.Data);
@@ -120,12 +97,36 @@ namespace InsuranceV2.Modules.Content.ViewModels
         protected override void OnActivate()
         {
             _logger.Debug("Activating InsureeListView.");
-            UpdateListExecute();
+            RefreshInsureeList(this, null);
         }
 
         protected override void OnDeactivate()
         {
             _logger.Debug("Deactivating InsureeListView.");
         }
+
+        #region EventHandling
+
+        private void SubscribeEvents()
+        {
+            SelectedPage.PropertyChanged += RefreshInsureeList;
+            PageSize.PropertyChanged += RefreshInsureeList;
+        }
+
+        private void UnsubscribeEvents()
+        {
+            SelectedPage.PropertyChanged -= RefreshInsureeList;
+            PageSize.PropertyChanged -= RefreshInsureeList;
+        }
+
+        protected override void DisposeUnmanaged()
+        {
+            if (SelectedPage != null && PageSize != null)
+            {
+                UnsubscribeEvents();
+            }
+        }
+
+        #endregion
     }
 }

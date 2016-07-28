@@ -45,16 +45,15 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="5">
                     <TextBlock Text="Seite" />
-                    <TextBox Text="{Binding SelectedPage.Value}" Margin="5,0" />
+                    <TextBox Text="{Binding SelectedPage.Value, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" />
                     <TextBlock Text="von" />
                     <TextBlock Text="{Binding TotalPages.Value}" Margin="5,0" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Grid.Column="2" Margin="5">
                     <TextBlock Text="PageSize" />
-                    <TextBox Text="{Binding PageSize.Value}" Margin="5,0" />
+                    <TextBox Text="{Binding PageSize.Value, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" />
                 </StackPanel>
             </Grid>
-            <Button Content="Update List" Command="{Binding UpdateListCommand}" />
         </StackPanel>
     </Grid>
 </UserControl>
