@@ -44,7 +44,7 @@ namespace InsuranceV2.Modules.Content.ViewModels
                 _logger.Debug("Saving new insuree.");
                 _insureeManagementAppService.AddInsuree(Insuree.Value);
             }
-            _navigationAppService.NavigateTo("InsureeListView");
+            _navigationAppService.NavigateTo(ContentNames.InsureeListView);
         }
 
         private bool IsExistingInsuree()

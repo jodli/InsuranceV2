@@ -1,5 +1,4 @@
-﻿using System;
-using Prism.Regions;
+﻿using Prism.Regions;
 
 namespace InsuranceV2.Application.Services
 {

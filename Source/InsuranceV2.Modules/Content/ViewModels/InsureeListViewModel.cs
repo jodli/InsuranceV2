@@ -18,10 +18,10 @@ namespace InsuranceV2.Modules.Content.ViewModels
         private readonly ILogger<InsureeListViewModel> _logger;
         private readonly INavigationAppService _navigationAppService;
 
-        private ObservableObject<int> _pageSize;
         private ListInsuree _selectedInsuree;
 
         private ObservableObject<int> _selectedPage;
+        private ObservableObject<int> _pageSize;
         private ObservableObject<int> _totalPages;
 
         public InsureeListViewModel(IInsureeManagementAppService insureeManagementAppService,
@@ -39,8 +39,6 @@ namespace InsuranceV2.Modules.Content.ViewModels
             UpdateListCommand = new DelegateCommand(UpdateListExecute);
             ShowDetailsCommand = new DelegateCommand(ShowDetailsExecute, HasSelectedInsuree);
             EditInsureeCommand = new DelegateCommand(EditInsureeExecute, HasSelectedInsuree);
-
-            UpdateListExecute();
         }
 
         public ICommand UpdateListCommand { get; }
@@ -98,14 +96,14 @@ namespace InsuranceV2.Modules.Content.ViewModels
         {
             _logger.Debug("Executing ShowDetailsCommand");
             var parameters = new NavigationParameters {{"SelectedInsuree", SelectedInsuree}};
-            _navigationAppService.NavigateTo("InsureeDetailsView", parameters);
+            _navigationAppService.NavigateTo(ContentNames.InsureeDetailsView, parameters);
         }
 
         private void EditInsureeExecute()
         {
             _logger.Debug("Executing EditInsureeCommand");
             var parameters = new NavigationParameters {{"SelectedInsuree", SelectedInsuree}};
-            _navigationAppService.NavigateTo("InsureeAddOrEditView", parameters);
+            _navigationAppService.NavigateTo(ContentNames.InsureeAddOrEditView, parameters);
         }
 
         private bool HasSelectedInsuree()
