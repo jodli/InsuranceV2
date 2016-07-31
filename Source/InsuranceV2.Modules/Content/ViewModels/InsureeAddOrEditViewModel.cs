@@ -1,10 +1,12 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using InsuranceV2.Application.Models.Insuree;
 using InsuranceV2.Application.Services;
 using InsuranceV2.Common.Logging;
 using InsuranceV2.Common.MVVM;
 using Prism.Commands;
 using Prism.Common;
+using Prism.Interactivity.InteractionRequest;
 using Prism.Regions;
 
 namespace InsuranceV2.Modules.Content.ViewModels
@@ -21,19 +23,24 @@ namespace InsuranceV2.Modules.Content.ViewModels
             _logger = logger;
             _insureeManagementAppService = insureeManagementAppService;
             _navigationAppService = navigationAppService;
+            ConfirmationRequest = new InteractionRequest<IConfirmation>();
 
             Insuree = new ObservableObject<AddOrEditInsuree>();
 
-            SaveInsureeCommand = new DelegateCommand(SaveInsureeExecute);
+            SaveAddOrEditInsureeCommand = new DelegateCommand(SaveAddOrEditInsureeExecute, CanSaveAddOrEditInsuree);
+            CancelAddOrEditInsureeCommand = new DelegateCommand(CancelAddOrEditInsureeExecute);
         }
 
         public ObservableObject<AddOrEditInsuree> Insuree { get; set; }
 
-        public ICommand SaveInsureeCommand { get; }
+        public ICommand SaveAddOrEditInsureeCommand { get; }
+        public ICommand CancelAddOrEditInsureeCommand { get; }
 
-        private void SaveInsureeExecute()
+        public InteractionRequest<IConfirmation> ConfirmationRequest { get; }
+
+        private void SaveAddOrEditInsureeExecute()
         {
-            _logger.Debug("Executing SaveInsureeCommand");
+            _logger.Debug("Executing SaveAddOrEditInsureeCommand");
             if (IsExistingInsuree())
             {
                 _logger.Debug($"Saving edited insuree with id: {Insuree.Value.Id}.");
@@ -45,6 +52,30 @@ namespace InsuranceV2.Modules.Content.ViewModels
                 _insureeManagementAppService.AddInsuree(Insuree.Value);
             }
             _navigationAppService.NavigateTo(ContentNames.InsureeListView);
+        }
+
+        private bool CanSaveAddOrEditInsuree()
+        {
+            return true;
+        }
+
+        private void CancelAddOrEditInsureeExecute()
+        {
+            _logger.Debug("Executing CancelAddOrEditInsureeCommand");
+            ConfirmationRequest.Raise(new Confirmation
+            {
+                Title = "Änderungen verwerfen?",
+                Content = "Möchten Sie die Änderungen wirklich verwerfen?"
+            }, NavigateToInsureeListView);
+        }
+
+        private void NavigateToInsureeListView(IConfirmation confirmation)
+        {
+            _logger.Debug($"Cancel AddOrEditInsuree confirmed: {confirmation.Confirmed}");
+            if (confirmation.Confirmed)
+            {
+                _navigationAppService.NavigateTo(ContentNames.InsureeListView);
+            }
         }
 
         private bool IsExistingInsuree()

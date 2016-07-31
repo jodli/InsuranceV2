@@ -5,9 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModels="clr-namespace:InsuranceV2.Modules.Content.ViewModels"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d"
              d:DataContext="{Binding Source={d:DesignInstance Type=viewModels:InsureeAddOrEditViewModel, IsDesignTimeCreatable=True}}">
+    <i:Interaction.Triggers>
+        <prism:InteractionRequestTrigger SourceObject="{Binding ConfirmationRequest, Mode=OneWay}">
+            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True" />
+        </prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -58,8 +64,10 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="Save" Command="{Binding SaveInsureeCommand}" />
+            <Button Grid.Column="0" Content="Save" Command="{Binding SaveAddOrEditInsureeCommand}" />
+            <Button Grid.Column="1" Content="Cancel" Command="{Binding CancelAddOrEditInsureeCommand}" />
         </Grid>
     </Grid>
 </UserControl>
