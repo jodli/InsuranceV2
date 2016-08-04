@@ -4,8 +4,8 @@
         xmlns:local="clr-namespace:InsuranceV2"
         xmlns:prism="http://prismlibrary.com/"
         xmlns:infrastructure="clr-namespace:InsuranceV2.Common.MVVM;assembly=InsuranceV2.Common"
-        Title="Shell" Height="350" Width="525">
-    <Grid>
-        <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.MainRegion}" />
-    </Grid>
+        Title="Shell" Height="600" Width="800">
+  <Grid>
+    <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.MainRegion}" />
+  </Grid>
 </Window>

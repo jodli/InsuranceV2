@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="InsuranceV2.Modules.Content.Views.SettingsView"
+﻿<UserControl x:Class="InsuranceV2.Modules.Content.Views.StartupView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"
@@ -7,9 +7,9 @@
              xmlns:viewModels="clr-namespace:InsuranceV2.Modules.Content.ViewModels"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d"
-             d:DataContext="{Binding Source={d:DesignInstance Type=viewModels:SettingsViewModel, IsDesignTimeCreatable=True}}">
+             d:DataContext="{Binding Source={d:DesignInstance Type=viewModels:StartupViewModel, IsDesignTimeCreatable=True}}">
     <Grid>
-        <TextBlock Text="Settings" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50"
+        <TextBlock Text="Startup" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50"
                    FontWeight="Bold" />
     </Grid>
 </UserControl>

@@ -4,12 +4,14 @@
              xmlns:prism="http://prismlibrary.com/"
              xmlns:infrastructure="clr-namespace:InsuranceV2.Common.MVVM;assembly=InsuranceV2.Common"
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <StackPanel Orientation="Horizontal">
-        <Button Content="Navigate to InsureeList" Command="{Binding NavigateCommand}"
-                CommandParameter="{x:Static infrastructure:ContentNames.InsureeListView}" />
-        <Button Content="Navigate to Add" Command="{Binding NavigateCommand}"
-                CommandParameter="{x:Static infrastructure:ContentNames.InsureeAddOrEditView}" />
-        <Button Content="Navigate to Settings" Command="{Binding NavigateCommand}"
-                CommandParameter="{x:Static infrastructure:ContentNames.SettingsView}" />
-    </StackPanel>
+  <StackPanel Orientation="Horizontal">
+    <Button Content="Navigate to Start" Command="{Binding NavigateCommand}"
+            CommandParameter="{x:Static infrastructure:ContentNames.StartupView}" />
+    <Button Content="Navigate to InsureeList" Command="{Binding NavigateCommand}"
+            CommandParameter="{x:Static infrastructure:ContentNames.InsureeListView}" />
+    <Button Content="Navigate to Add" Command="{Binding NavigateCommand}"
+            CommandParameter="{x:Static infrastructure:ContentNames.InsureeAddOrEditView}" />
+    <Button Content="Navigate to Settings" Command="{Binding NavigateCommand}"
+            CommandParameter="{x:Static infrastructure:ContentNames.SettingsView}" />
+  </StackPanel>
 </UserControl>
