@@ -9,19 +9,19 @@
 ### 2. GUI
 
 #### 1. StartupView
-- [ ] Add Main / Startup Screen
+- [x] Add Main / Startup Screen
 
 #### 2. ListInsureeView
 - [ ] Change DataGrid Display on ListInsureeView
-- [ ] Add context menu to list entry
+- [x] Add context menu to list entry
 - [ ] Add filter by date
 - [ ] Add sorting in data grid
-- [ ] Get rid of "Update List" command
+- [x] Get rid of "Update List" command
 
 #### 3. DetailInsureeView
 - [ ] Display readable data for addresses and numbers
 - [ ] Send mail by clicking on mail address
-- [ ] Display insurances for every insuree (Pull this into a separate view?)
+- [x] Display insurances for every insuree (Pull this into a separate view?)
 
 #### 4. AddEditInsureeView
 - [ ] Add validation for every field

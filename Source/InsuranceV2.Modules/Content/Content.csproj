@@ -86,6 +86,7 @@
     <Compile Include="ViewModels\InsureeDetailsViewModel.cs" />
     <Compile Include="ViewModels\InsureeListViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\StartupViewModel.cs" />
     <Compile Include="Views\InsureeDetailsView.xaml.cs">
       <DependentUpon>InsureeDetailsView.xaml</DependentUpon>
     </Compile>
@@ -94,6 +95,9 @@
     </Compile>
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StartupView.xaml.cs">
+      <DependentUpon>StartupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\InsureeAddOrEditView.xaml.cs">
       <DependentUpon>InsureeAddOrEditView.xaml</DependentUpon>
@@ -133,6 +137,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\StartupView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
