@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.25428.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{BACFF0EF-117B-42D5-9260-3C08769CE7B7}"
 EndProject
@@ -35,9 +35,24 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsuranceV2.Styling", "Sour
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{C2FE33AB-0A6B-4276-99F5-337A22484653}"
 	ProjectSection(SolutionItems) = preProject
+		Docs\InsuranceV2-Design.rp = Docs\InsuranceV2-Design.rp
 		LICENSE = LICENSE
 		README.md = README.md
 		Docs\ToDo.md = Docs\ToDo.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{E29446B7-6E12-4AFB-B05A-9A16CDAD9E31}"
+	ProjectSection(SolutionItems) = preProject
+		Docs\images\10_editinsurancedialog.png = Docs\images\10_editinsurancedialog.png
+		Docs\images\1_idea_1_splashscreen.png = Docs\images\1_idea_1_splashscreen.png
+		Docs\images\2_idea_1_home.png = Docs\images\2_idea_1_home.png
+		Docs\images\3_addclientdialog.png = Docs\images\3_addclientdialog.png
+		Docs\images\4_idea_1_klientendetails.png = Docs\images\4_idea_1_klientendetails.png
+		Docs\images\5_deletedialog.png = Docs\images\5_deletedialog.png
+		Docs\images\6_editclientdialog.png = Docs\images\6_editclientdialog.png
+		Docs\images\7_addinsurancedialog.png = Docs\images\7_addinsurancedialog.png
+		Docs\images\8_idea_1_versicherungsdetails.png = Docs\images\8_idea_1_versicherungsdetails.png
+		Docs\images\9_deletedialog.png = Docs\images\9_deletedialog.png
 	EndProjectSection
 EndProject
 Global
@@ -112,5 +127,6 @@ Global
 		{E471380C-6F94-4689-BD22-2E8AF79178E1} = {AB86EFB5-9AE9-4053-A59F-99CE36374776}
 		{A3BE1222-C068-4916-9B04-80162511A632} = {AB86EFB5-9AE9-4053-A59F-99CE36374776}
 		{A85E09F3-F9E0-4BA7-BF0D-167ADB6075CA} = {BACFF0EF-117B-42D5-9260-3C08769CE7B7}
+		{E29446B7-6E12-4AFB-B05A-9A16CDAD9E31} = {C2FE33AB-0A6B-4276-99F5-337A22484653}
 	EndGlobalSection
 EndGlobal

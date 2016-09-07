@@ -3,8 +3,67 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True">
-    
-    <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Statusbar" HorizontalAlignment="Center"></TextBlock>
-    </StackPanel>
+
+    <Grid Background="RoyalBlue"
+          Visibility="Visible">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="InformationEmployee" 
+              Grid.Column="0" 
+              Visibility="Visible">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Mitarbeiter" 
+                       Grid.Row="0"
+                       FontSize="18" 
+                       FontWeight="Bold"
+                       Foreground="White"
+                       Padding="5 5 5 5"
+                       HorizontalAlignment="Left"/>
+            <TextBlock x:Name="EmployeeName" 
+                       Text="Achim der Makler" 
+                       Grid.Row="1"
+                       FontSize="14"
+                       Foreground="White"
+                       Padding="5 0 5 5"
+                       HorizontalAlignment="Left"/>
+        </Grid>
+        <Grid x:Name="InformationContent" 
+              Grid.Column="1">
+            <TextBlock x:Name="ContentTitle" 
+                       Text="Stuff" 
+                       HorizontalAlignment="Center" 
+                       FontSize="32" 
+                       FontWeight="Bold"
+                       Foreground="White"
+                       Padding="5 5 5 5"/>
+        </Grid>
+        <Grid x:Name="InformationClient" 
+              Grid.Column="2" 
+              Visibility="Visible">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Klient" 
+                       Grid.Row="0"
+                       FontSize="18" 
+                       FontWeight="Bold"
+                       Foreground="White"
+                       Padding="5 5 5 5"
+                       HorizontalAlignment="Right"/>
+            <TextBlock x:Name="ClientName" 
+                       Text="Becker, Jan-Olaf" 
+                       Grid.Row="1"
+                       FontSize="14"
+                       Foreground="White"
+                       Padding="5 0 5 5"
+                       HorizontalAlignment="Right" />
+        </Grid>
+    </Grid>
 </UserControl>

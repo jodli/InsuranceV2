@@ -11,14 +11,14 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Grid x:Name="ToolBarRegion" Grid.Row="0">
-                <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.ToolBarRegion}" />
+            <Grid x:Name="StatusBarRegion" Grid.Row="0">
+                <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.StatusBarRegion}" />
             </Grid>
             <Grid x:Name="ContentRegion" Grid.Row="1">
                 <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.ContentRegion}" />
             </Grid>
-            <Grid x:Name="StatusBarRegion" Grid.Row="2">
-                <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.StatusBarRegion}" />
+            <Grid x:Name="ToolBarRegion" Grid.Row="2">
+                <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.ToolBarRegion}" />
             </Grid>
         </Grid>
     </DockPanel>
