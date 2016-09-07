@@ -5,11 +5,51 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:InsuranceV2.Modules.Content.ViewModels"
+             xmlns:views="clr-namespace:InsuranceV2.Modules.Content.Views"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d"
              d:DataContext="{Binding Source={d:DesignInstance Type=viewModels:StartupViewModel, IsDesignTimeCreatable=True}}">
     <Grid>
-        <TextBlock Text="Startup" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50"
-                   FontWeight="Bold" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock 
+            Grid.Row="0"
+            Text="Insurance V2" 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center" 
+            FontSize="32"
+            FontWeight="Bold" />
+        <TextBlock 
+            Grid.Row="1"
+            Text="by Jodli" 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center" 
+            FontSize="18"
+            FontWeight="Bold" />
+        <Image 
+            Grid.Row="2"
+            Source="/InsuranceV2.Modules.Content;component/Resources/logo.png"
+            Stretch="UniformToFill"
+            Width="150"
+            Height="150"
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center" />
+        <TextBlock 
+            Grid.Row="3"
+            Text="Loading data..." 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center" 
+            FontSize="18"
+            FontWeight="Bold" />
+        <views:Spinner
+            Grid.Row="4"
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center" />
     </Grid>
 </UserControl>

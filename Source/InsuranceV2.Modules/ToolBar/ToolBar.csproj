@@ -106,6 +106,16 @@
       <Name>InsuranceV2.Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\add.png" />
+    <Resource Include="Resources\edit.png" />
+    <Resource Include="Resources\export.png" />
+    <Resource Include="Resources\home.png" />
+    <Resource Include="Resources\info.png" />
+    <Resource Include="Resources\next.png" />
+    <Resource Include="Resources\prev.png" />
+    <Resource Include="Resources\trash.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

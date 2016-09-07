@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
 
 namespace InsuranceV2.Modules.StatusBar.Views
 {
@@ -10,6 +11,8 @@ namespace InsuranceV2.Modules.StatusBar.Views
         public StatusBarView()
         {
             InitializeComponent();
+
+            Console.WriteLine("Add bindings for visibility to statusbar!");
         }
     }
 }

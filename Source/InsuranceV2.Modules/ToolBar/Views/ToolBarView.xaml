@@ -4,14 +4,136 @@
              xmlns:prism="http://prismlibrary.com/"
              xmlns:infrastructure="clr-namespace:InsuranceV2.Common.MVVM;assembly=InsuranceV2.Common"
              prism:ViewModelLocator.AutoWireViewModel="True">
-  <StackPanel Orientation="Horizontal">
-    <Button Content="Navigate to Start" Command="{Binding NavigateCommand}"
-            CommandParameter="{x:Static infrastructure:ContentNames.StartupView}" />
-    <Button Content="Navigate to InsureeList" Command="{Binding NavigateCommand}"
-            CommandParameter="{x:Static infrastructure:ContentNames.InsureeListView}" />
-    <Button Content="Navigate to Add" Command="{Binding NavigateCommand}"
-            CommandParameter="{x:Static infrastructure:ContentNames.InsureeAddOrEditView}" />
-    <Button Content="Navigate to Settings" Command="{Binding NavigateCommand}"
-            CommandParameter="{x:Static infrastructure:ContentNames.SettingsView}" />
-  </StackPanel>
+    
+    <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+            <Button 
+                Content="Navigate to Start" 
+                Command="{Binding NavigateCommand}"
+                CommandParameter="{x:Static infrastructure:ContentNames.StartupView}" />
+            <Button 
+                Content="Navigate to InsureeList" 
+                Command="{Binding NavigateCommand}"
+                CommandParameter="{x:Static infrastructure:ContentNames.InsureeListView}" />
+            <Button 
+                Content="Navigate to Add" 
+                Command="{Binding NavigateCommand}"
+                CommandParameter="{x:Static infrastructure:ContentNames.InsureeAddOrEditView}" />
+            <Button 
+                Content="Navigate to Settings" 
+                Command="{Binding NavigateCommand}"
+                CommandParameter="{x:Static infrastructure:ContentNames.SettingsView}" />
+        </StackPanel>
+        
+        <Grid Background="RoyalBlue" 
+              Visibility="Visible"
+              Height="40">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.Resources>
+                <ImageBrush x:Key="ButtonBrushInformation" ImageSource="/InsuranceV2.Modules.ToolBar;component/Resources/info.png" Stretch="UniformToFill"/>
+                <ImageBrush x:Key="ButtonBrushExport" ImageSource="/InsuranceV2.Modules.ToolBar;component/Resources/export.png" Stretch="UniformToFill"/>
+                <ImageBrush x:Key="ButtonBrushPrevious" ImageSource="/InsuranceV2.Modules.ToolBar;component/Resources/prev.png" Stretch="UniformToFill"/>
+                <ImageBrush x:Key="ButtonBrushHome" ImageSource="/InsuranceV2.Modules.ToolBar;component/Resources/home.png" Stretch="UniformToFill"/>
+                <ImageBrush x:Key="ButtonBrushNext" ImageSource="/InsuranceV2.Modules.ToolBar;component/Resources/next.png" Stretch="UniformToFill"/>
+                <ImageBrush x:Key="ButtonBrushTrash" ImageSource="/InsuranceV2.Modules.ToolBar;component/Resources/trash.png" Stretch="UniformToFill"/>
+                <ImageBrush x:Key="ButtonBrushEdit" ImageSource="/InsuranceV2.Modules.ToolBar;component/Resources/edit.png" Stretch="UniformToFill"/>
+                <ImageBrush x:Key="ButtonBrushAdd" ImageSource="/InsuranceV2.Modules.ToolBar;component/Resources/add.png" Stretch="UniformToFill"/>
+            </Grid.Resources>
+
+            <StackPanel 
+                Grid.Column="0" 
+                Orientation="Horizontal" 
+                HorizontalAlignment="Left"
+                Height="40">
+                <Button 
+                    Width="30"
+                    Height="30"
+                    Padding="5 5 5 5"
+                    Margin="5"
+                    BorderBrush="#00000000"
+                    Background="{StaticResource ButtonBrushInformation}"/>
+                <Button
+                    Width="30"
+                    Height="30"
+                    Padding="5 5 5 5"
+                    Margin="5"
+                    BorderBrush="#00000000"
+                    Background="{StaticResource ButtonBrushExport}"/>
+            </StackPanel>
+            
+            <StackPanel 
+                Grid.Column="1" 
+                Orientation="Horizontal" 
+                HorizontalAlignment="Center"
+                Height="40">
+                <Button 
+                    x:Name="ButtonPrevious" 
+                    Visibility="Visible"
+                    Width="30"
+                    Height="30"
+                    Padding="5 5 5 5"
+                    Margin="5"
+                    BorderBrush="#00000000"
+                    Background="{StaticResource ButtonBrushPrevious}"/>
+                <Button 
+                    x:Name="ButtonHome" 
+                    Visibility="Visible"
+                    Width="30"
+                    Height="30"
+                    Padding="5 5 5 5"
+                    Margin="5"
+                    BorderBrush="#00000000"
+                    Background="{StaticResource ButtonBrushHome}"/>
+                <Button 
+                    x:Name="ButtonNext" 
+                    Visibility="Visible"
+                    Width="30"
+                    Height="30"
+                    Padding="5 5 5 5"
+                    Margin="5"
+                    BorderBrush="#00000000"
+                    Background="{StaticResource ButtonBrushNext}"/>
+            </StackPanel>
+            
+            <StackPanel 
+                Grid.Column="2" 
+                Orientation="Horizontal" 
+                HorizontalAlignment="Right"
+                Height="40">
+                <Button 
+                    x:Name="ButtonTrash" 
+                    Visibility="Visible"
+                    Width="30"
+                    Height="30"
+                    Padding="5 5 5 5"
+                    Margin="5"
+                    BorderBrush="#00000000"
+                    Background="{StaticResource ButtonBrushTrash}"/>
+                <Button 
+                    x:Name="ButtonEdit" 
+                    Visibility="Visible"
+                    Width="30"
+                    Height="30"
+                    Padding="5 5 5 5"
+                    Margin="5"
+                    BorderBrush="#00000000"
+                    Background="{StaticResource ButtonBrushEdit}"/>
+                <Button 
+                    x:Name="ButtonAdd" 
+                    Visibility="Visible"
+                    Width="30"
+                    Height="30"
+                    Padding="5 5 5 5"
+                    Margin="5"
+                    BorderBrush="#00000000"
+                    Background="{StaticResource ButtonBrushAdd}"/>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
 </UserControl>
