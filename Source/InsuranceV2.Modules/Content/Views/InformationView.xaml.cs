@@ -3,11 +3,11 @@
 namespace InsuranceV2.Modules.Content.Views
 {
     /// <summary>
-    /// Interaktionslogik für Spinner.xaml
+    /// Interaction logic for InformationView
     /// </summary>
-    public partial class Spinner : UserControl
+    public partial class InformationView : UserControl
     {
-        public Spinner()
+        public InformationView()
         {
             InitializeComponent();
         }

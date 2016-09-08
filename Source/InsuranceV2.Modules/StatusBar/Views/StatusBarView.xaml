@@ -5,7 +5,7 @@
              prism:ViewModelLocator.AutoWireViewModel="True">
 
     <Grid Background="RoyalBlue"
-          Visibility="Visible">
+          Visibility="{Binding StatusBarVisibility, UpdateSourceTrigger=PropertyChanged}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
@@ -13,7 +13,7 @@
         </Grid.ColumnDefinitions>
         <Grid x:Name="InformationEmployee" 
               Grid.Column="0" 
-              Visibility="Visible">
+              Visibility="{Binding EmployeeVisibility, UpdateSourceTrigger=PropertyChanged}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -26,7 +26,7 @@
                        Padding="5 5 5 5"
                        HorizontalAlignment="Left"/>
             <TextBlock x:Name="EmployeeName" 
-                       Text="Achim der Makler" 
+                       Text="{Binding EmployeeName, UpdateSourceTrigger=PropertyChanged}" 
                        Grid.Row="1"
                        FontSize="14"
                        Foreground="White"
@@ -36,7 +36,7 @@
         <Grid x:Name="InformationContent" 
               Grid.Column="1">
             <TextBlock x:Name="ContentTitle" 
-                       Text="Stuff" 
+                       Text="{Binding TitleName, UpdateSourceTrigger=PropertyChanged}" 
                        HorizontalAlignment="Center" 
                        FontSize="32" 
                        FontWeight="Bold"
@@ -45,7 +45,7 @@
         </Grid>
         <Grid x:Name="InformationClient" 
               Grid.Column="2" 
-              Visibility="Visible">
+              Visibility="{Binding ClientVisibility, UpdateSourceTrigger=PropertyChanged}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -58,7 +58,7 @@
                        Padding="5 5 5 5"
                        HorizontalAlignment="Right"/>
             <TextBlock x:Name="ClientName" 
-                       Text="Becker, Jan-Olaf" 
+                       Text="{Binding ClientName, UpdateSourceTrigger=PropertyChanged}" 
                        Grid.Row="1"
                        FontSize="14"
                        Foreground="White"

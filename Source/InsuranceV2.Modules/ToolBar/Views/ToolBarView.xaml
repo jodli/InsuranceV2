@@ -18,7 +18,7 @@
             <Button 
                 Content="Navigate to Add" 
                 Command="{Binding NavigateCommand}"
-                CommandParameter="{x:Static infrastructure:ContentNames.InsureeAddOrEditView}" />
+                CommandParameter="{Binding AddCommandParameter, UpdateSourceTrigger=PropertyChanged}" />
             <Button 
                 Content="Navigate to Settings" 
                 Command="{Binding NavigateCommand}"
@@ -26,7 +26,7 @@
         </StackPanel>
         
         <Grid Background="RoyalBlue" 
-              Visibility="Visible"
+              Visibility="{Binding ToolBarVisibility, UpdateSourceTrigger=PropertyChanged}"
               Height="40">
             
             <Grid.ColumnDefinitions>
@@ -52,19 +52,26 @@
                 HorizontalAlignment="Left"
                 Height="40">
                 <Button 
+                    Visibility="Visible"
+                    IsEnabled="True"
                     Width="30"
                     Height="30"
                     Padding="5 5 5 5"
                     Margin="5"
                     BorderBrush="#00000000"
-                    Background="{StaticResource ButtonBrushInformation}"/>
+                    Background="{StaticResource ButtonBrushInformation}"
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="{x:Static infrastructure:ContentNames.InformationView}"/>
                 <Button
+                    Visibility="Visible"
+                    IsEnabled="True"
                     Width="30"
                     Height="30"
                     Padding="5 5 5 5"
                     Margin="5"
                     BorderBrush="#00000000"
-                    Background="{StaticResource ButtonBrushExport}"/>
+                    Background="{StaticResource ButtonBrushExport}"
+                    Command="{Binding ExportCommand}"/>
             </StackPanel>
             
             <StackPanel 
@@ -74,31 +81,38 @@
                 Height="40">
                 <Button 
                     x:Name="ButtonPrevious" 
-                    Visibility="Visible"
+                    Visibility="{Binding PreviousButtonVisibility, UpdateSourceTrigger=PropertyChanged}"
+                    IsEnabled="True"
                     Width="30"
                     Height="30"
                     Padding="5 5 5 5"
                     Margin="5"
                     BorderBrush="#00000000"
-                    Background="{StaticResource ButtonBrushPrevious}"/>
+                    Background="{StaticResource ButtonBrushPrevious}"
+                    Command="{Binding NavigateToPreviousCommand}"/>
                 <Button 
                     x:Name="ButtonHome" 
-                    Visibility="Visible"
+                    Visibility="{Binding HomeButtonVisibility, UpdateSourceTrigger=PropertyChanged}"
+                    IsEnabled="True"
                     Width="30"
                     Height="30"
                     Padding="5 5 5 5"
                     Margin="5"
                     BorderBrush="#00000000"
-                    Background="{StaticResource ButtonBrushHome}"/>
+                    Background="{StaticResource ButtonBrushHome}"
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="{x:Static infrastructure:ContentNames.InsureeListView}"/>
                 <Button 
                     x:Name="ButtonNext" 
-                    Visibility="Visible"
+                    Visibility="{Binding NextButtonVisibility, UpdateSourceTrigger=PropertyChanged}"
+                    IsEnabled="True"
                     Width="30"
                     Height="30"
                     Padding="5 5 5 5"
                     Margin="5"
                     BorderBrush="#00000000"
-                    Background="{StaticResource ButtonBrushNext}"/>
+                    Background="{StaticResource ButtonBrushNext}"
+                    Command="{Binding NavigateToNextCommand}"/>
             </StackPanel>
             
             <StackPanel 
@@ -108,7 +122,8 @@
                 Height="40">
                 <Button 
                     x:Name="ButtonTrash" 
-                    Visibility="Visible"
+                    Visibility="{Binding TrashButtonVisibility, UpdateSourceTrigger=PropertyChanged}"
+                    IsEnabled="True"
                     Width="30"
                     Height="30"
                     Padding="5 5 5 5"
@@ -117,7 +132,8 @@
                     Background="{StaticResource ButtonBrushTrash}"/>
                 <Button 
                     x:Name="ButtonEdit" 
-                    Visibility="Visible"
+                    Visibility="{Binding EditButtonVisibility, UpdateSourceTrigger=PropertyChanged}"
+                    IsEnabled="True"
                     Width="30"
                     Height="30"
                     Padding="5 5 5 5"
@@ -126,13 +142,16 @@
                     Background="{StaticResource ButtonBrushEdit}"/>
                 <Button 
                     x:Name="ButtonAdd" 
-                    Visibility="Visible"
+                    Visibility="{Binding AddButtonVisibility, UpdateSourceTrigger=PropertyChanged}"
+                    IsEnabled="True"
                     Width="30"
                     Height="30"
                     Padding="5 5 5 5"
                     Margin="5"
                     BorderBrush="#00000000"
-                    Background="{StaticResource ButtonBrushAdd}"/>
+                    Background="{StaticResource ButtonBrushAdd}"
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="{Binding AddCommandParameter, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
         </Grid>
     </StackPanel>

@@ -2,10 +2,11 @@
 {
   public static class ContentNames
   {
-    public static string StartupView => "StartupView";
-    public static string SettingsView => "SettingsView";
-    public static string InsureeAddOrEditView => "InsureeAddOrEditView";
-    public static string InsureeListView => "InsureeListView";
-    public static string InsureeDetailsView => "InsureeDetailsView";
+    public const string StartupView = "StartupView";
+    public const string SettingsView = "SettingsView";
+    public const string InformationView = "InformationView";
+    public const string InsureeAddOrEditView = "InsureeAddOrEditView";
+    public const string InsureeListView = "InsureeListView";
+    public const string InsureeDetailsView = "InsureeDetailsView";
   }
 }
