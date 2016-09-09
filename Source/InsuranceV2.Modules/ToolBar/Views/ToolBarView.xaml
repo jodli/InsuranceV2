@@ -52,7 +52,7 @@
                 HorizontalAlignment="Left"
                 Height="40">
                 <Button 
-                    Visibility="Visible"
+                    Visibility="{Binding InformationButtonVisibility,UpdateSourceTrigger=PropertyChanged}"
                     IsEnabled="True"
                     Width="30"
                     Height="30"
@@ -63,7 +63,7 @@
                     Command="{Binding NavigateCommand}"
                     CommandParameter="{x:Static infrastructure:ContentNames.InformationView}"/>
                 <Button
-                    Visibility="Visible"
+                    Visibility="{Binding ExportButtonVisibility, UpdateSourceTrigger=PropertyChanged}"
                     IsEnabled="True"
                     Width="30"
                     Height="30"

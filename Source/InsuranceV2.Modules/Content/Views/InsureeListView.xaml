@@ -16,7 +16,6 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel>
-            <Label Content="Versicherte" HorizontalAlignment="Center" FontSize="32" />
             <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Path=InsureeData, Mode=OneWay}"
                       VerticalAlignment="Top" ColumnWidth="*"
                       SelectedItem="{Binding Path=SelectedInsuree, Mode=TwoWay}"

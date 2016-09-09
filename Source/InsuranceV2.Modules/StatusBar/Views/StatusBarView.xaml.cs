@@ -11,8 +11,6 @@ namespace InsuranceV2.Modules.StatusBar.Views
         public StatusBarView()
         {
             InitializeComponent();
-
-            Console.WriteLine("Add bindings for visibility to statusbar!");
         }
     }
 }

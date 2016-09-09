@@ -1,6 +1,4 @@
-﻿using System;
-using Prism.Commands;
-using Prism.Mvvm;
+﻿using Prism.Mvvm;
 
 namespace InsuranceV2.Modules.Main.ViewModels
 {

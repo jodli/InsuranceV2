@@ -1,10 +1,12 @@
 ﻿using System.Windows.Input;
 using InsuranceV2.Application.Models.Insuree;
 using InsuranceV2.Application.Services;
+using InsuranceV2.Common.Events;
 using InsuranceV2.Common.Logging;
 using InsuranceV2.Common.MVVM;
 using Prism.Commands;
 using Prism.Common;
+using Prism.Events;
 using Prism.Regions;
 
 namespace InsuranceV2.Modules.Content.ViewModels
@@ -13,18 +15,23 @@ namespace InsuranceV2.Modules.Content.ViewModels
     {
         private readonly IInsureeManagementAppService _insureeManagementAppService;
         private readonly ILogger<InsureeDetailsViewModel> _logger;
+        private readonly IEventAggregator _eventAggregator;
 
         private ObservableObject<bool> _isAddressExpanded;
         private ObservableObject<bool> _isEmailAddressExpanded;
         private ObservableObject<bool> _isPhoneNumberExpanded;
 
-        public InsureeDetailsViewModel(IInsureeManagementAppService insureeManagementAppService,
-            ILogger<InsureeDetailsViewModel> logger)
+        public InsureeDetailsViewModel(
+            IInsureeManagementAppService insureeManagementAppService,
+            ILogger<InsureeDetailsViewModel> logger,
+            IEventAggregator eventAggregator)
         {
             _insureeManagementAppService = insureeManagementAppService;
             _logger = logger;
+            _eventAggregator = eventAggregator;
 
             Insuree = new ObservableObject<DetailInsuree>();
+
             _isAddressExpanded = new ObservableObject<bool> {Value = false};
             _isPhoneNumberExpanded = new ObservableObject<bool> {Value = false};
             _isEmailAddressExpanded = new ObservableObject<bool> {Value = false};
@@ -58,6 +65,7 @@ namespace InsuranceV2.Modules.Content.ViewModels
         {
             _logger.Debug("Executing ShowPartnerDetailsCommand");
             Insuree.Value = Insuree.Value.Partner;
+            _eventAggregator.GetEvent<InsureePartnerSelectedEvent>().Publish(Insuree.Value.FullName);
             OnActivate();
         }
 
@@ -83,6 +91,7 @@ namespace InsuranceV2.Modules.Content.ViewModels
             {
                 _logger.Debug($"Getting details for insuree with id: {selectedInsuree.Id}.");
                 Insuree.Value = _insureeManagementAppService.GetDetailInsuree(selectedInsuree.Id);
+                _eventAggregator.GetEvent<InsureeSelectedEvent>().Publish(Insuree.Value.FullName);
             }
         }
 

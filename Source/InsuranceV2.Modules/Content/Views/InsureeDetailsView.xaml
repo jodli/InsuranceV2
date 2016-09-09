@@ -8,6 +8,7 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d"
              d:DataContext="{Binding Source={d:DesignInstance Type=viewModels:InsureeDetailsViewModel, IsDesignTimeCreatable=True}}">
+
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -15,34 +16,43 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
+
     <Grid>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Content="Mitarbeiter" />
 
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="0">
+                
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
+
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Label Grid.ColumnSpan="2" Content="{Binding Insuree.Value.FullName}" FontSize="16" />
-                <Expander Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Header="Adressen"
-                          IsExpanded="{Binding IsAddressExpanded.Value}">
+
+                <Expander 
+                    Grid.Row="0" 
+                    Grid.Column="0" 
+                    Grid.ColumnSpan="2" 
+                    Header="Adressen"
+                    FontSize="16"
+                    FontWeight="Bold"
+                    IsExpanded="{Binding IsAddressExpanded.Value}">
+                    
                     <TreeView ItemsSource="{Binding Insuree.Value.Addresses}">
                         <TreeView.ItemTemplate>
                             <DataTemplate>
@@ -57,30 +67,30 @@
                             </DataTemplate>
                         </TreeView.ItemTemplate>
                     </TreeView>
+                    
                 </Expander>
-                <Label Grid.Row="2" Grid.Column="0" Content="Geburtsdatum: " />
-                <Label Grid.Row="2" Grid.Column="1" Content="{Binding Insuree.Value.DateOfBirth.Date}" />
-                <Label Grid.Row="3" Grid.Column="0" Content="Verheiratet seit: " />
-                <Label Grid.Row="3" Grid.Column="1" Content="{Binding Insuree.Value.DateOfMarriage.Date}" />
-                <Label Grid.Row="4" Grid.Column="0" Content="mit Partner: " />
-                <Button Grid.Row="4" Grid.Column="1" Content="{Binding Insuree.Value.Partner.FullName}"
-                        Command="{Binding ShowPartnerDetailsCommand}"
-                        Visibility="{Binding Insuree.Value.Partner, Converter={StaticResource NotNullToVisibilityConverter}}" />
-            </Grid>
+                
+                <Label 
+                    Grid.Row="1" 
+                    Grid.Column="0" 
+                    Content="Geburtsdatum: " 
+                    FontSize="16"
+                    FontWeight="Bold"/>
+                <Label 
+                    Grid.Row="1" 
+                    Grid.Column="1" 
+                    HorizontalAlignment="Center"
+                    Content="{Binding Insuree.Value.DateOfBirth.Date}" />
 
-            <Grid Grid.Column="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Expander Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Header="Telefonnummern"
-                          IsExpanded="{Binding IsPhoneNumberExpanded.Value}">
+                <Expander 
+                    Grid.Row="2" 
+                    Grid.Column="0" 
+                    Grid.ColumnSpan="2" 
+                    Header="Telefonnummern"
+                    FontSize="16"
+                    FontWeight="Bold"
+                    IsExpanded="{Binding IsPhoneNumberExpanded.Value}">
+                    
                     <TreeView ItemsSource="{Binding Insuree.Value.PhoneNumbers}">
                         <TreeView.ItemTemplate>
                             <DataTemplate>
@@ -93,9 +103,18 @@
                             </DataTemplate>
                         </TreeView.ItemTemplate>
                     </TreeView>
+                    
                 </Expander>
-                <Expander Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Header="Email Adressen"
-                          IsExpanded="{Binding IsEmailAddressExpanded.Value}">
+
+                <Expander 
+                    Grid.Row="3" 
+                    Grid.Column="0" 
+                    Grid.ColumnSpan="2" 
+                    Header="Email Adressen"
+                    FontSize="16"
+                    FontWeight="Bold"
+                    IsExpanded="{Binding IsEmailAddressExpanded.Value}">
+                    
                     <TreeView ItemsSource="{Binding Path=Insuree.Value.EmailAddresses}">
                         <TreeView.ItemTemplate>
                             <DataTemplate>
@@ -107,21 +126,110 @@
                             </DataTemplate>
                         </TreeView.ItemTemplate>
                     </TreeView>
+                    
                 </Expander>
-                <Label Grid.Row="3" Grid.Column="0" Content="Bankdaten" />
-                <Label Grid.Row="3" Grid.Column="1" Content="12347890" />
+                
+            </Grid>
+
+            <Grid Grid.Column="1">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label 
+                    Grid.Row="0" 
+                    Grid.Column="0" 
+                    Content="IBAN"
+                    FontSize="16"
+                    FontWeight="Bold" />
+                <Label 
+                    Grid.Row="0" 
+                    Grid.Column="1" 
+                    HorizontalAlignment="Center"
+                    Content="12347890" />
+
+                <Label 
+                    Grid.Row="1" 
+                    Grid.Column="0" 
+                    Content="Beruf"
+                    FontSize="16"
+                    FontWeight="Bold" />
+                <Label 
+                    Grid.Row="1" 
+                    Grid.Column="1" 
+                    HorizontalAlignment="Center"
+                    Content="Angestellter" />
+
+                <Label 
+                    Grid.Row="2" 
+                    Grid.Column="0" 
+                    Content="Familienstand"
+                    FontSize="16"
+                    FontWeight="Bold" />
+                <Label 
+                    Grid.Row="2" 
+                    Grid.Column="1" 
+                    HorizontalAlignment="Center"
+                    Content="{Binding Insuree.Value.DateOfMarriage.Date}" />
+                
+                <Label 
+                    Grid.Row="3" 
+                    Grid.Column="0" 
+                    Content="Partner: "
+                    FontSize="16"
+                    FontWeight="Bold" />
+                <Button 
+                    Grid.Row="3" 
+                    Grid.Column="1" 
+                    Background="#00000000"
+                    BorderThickness="0"
+                    HorizontalAlignment="Center"
+                    Content="{Binding Insuree.Value.Partner.FullName}"
+                    Command="{Binding ShowPartnerDetailsCommand}"
+                    Visibility="{Binding Insuree.Value.Partner, Converter={StaticResource NotNullToVisibilityConverter}}" />
+
             </Grid>
         </Grid>
 
         <Grid Grid.Row="1">
-            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Path=Insuree.Value.Insurances, Mode=OneWay}"
-                      VerticalAlignment="Top" ColumnWidth="*"
-                      IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow"
-                      CanUserReorderColumns="False" CanUserSortColumns="False" AlternatingRowBackground="Gainsboro"
+            <DataGrid AutoGenerateColumns="False" 
+                      ItemsSource="{Binding Path=Insuree.Value.Insurances, Mode=OneWay}"
+                      VerticalAlignment="Top" 
+                      ColumnWidth="*"
+                      IsReadOnly="True" 
+                      SelectionMode="Single" 
+                      SelectionUnit="FullRow"
+                      CanUserReorderColumns="False" 
+                      CanUserSortColumns="False" 
+                      AlternatingRowBackground="Gainsboro"
                       AlternationCount="2" Margin="5">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Id" Width="50" Binding="{Binding Id}"/>
-                    <DataGridTextColumn Header="Versicherungsnr." Width="250" Binding="{Binding InsuranceNumber}"/>
+                    <DataGridTextColumn 
+                        Header="Id" 
+                        Width="50" 
+                        Binding="{Binding Id}"/>
+                    <DataGridTextColumn 
+                        Header="Versicherungsnr." 
+                        Width="50" 
+                        Binding="{Binding InsuranceNumber}"/>
+                    <DataGridTextColumn 
+                        Header="Versicherungsart" 
+                        Width="200" />
+                    <DataGridTextColumn 
+                        Header="Kasse" 
+                        Width="200" />
+                    <DataGridTextColumn 
+                        Header="Informationen" 
+                        Width="200" />
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Dynamic;
 using InsuranceV2.Common.Events;
 using InsuranceV2.Common.Logging;
@@ -9,27 +8,55 @@ using Prism.Regions;
 
 namespace InsuranceV2.Application.Services
 {
-    //TODO: create list of navigationEntries to navigate to next and previous!
-
     public class NavigationAppService : INavigationAppService
     {
         private readonly ILogger<NavigationAppService> _logger;
         private readonly IRegionManager _regionManager;
         private readonly IEventAggregator _eventAggregator;
 
-        private Uri _currentNavigation;
-        private List<Uri> _navigationHistory;
-        private int _historyIndex;
+        private Uri _currentRegion;
 
-        public NavigationAppService(IRegionManager regionManager, ILogger<NavigationAppService> logger, IEventAggregator eventAggregator)
+        public NavigationAppService(
+            IRegionManager regionManager, 
+            ILogger<NavigationAppService> logger, 
+            IEventAggregator eventAggregator)
         {
             _regionManager = regionManager;
             _logger = logger;
             _eventAggregator = eventAggregator;
 
-            _currentNavigation = null;
-            _navigationHistory = new List<Uri>();
-            _historyIndex = 0;
+            _currentRegion = null;
+        }
+
+        public void GoForward()
+        {
+            var contentRegion = _regionManager.Regions[RegionNames.ContentRegion];
+            if (contentRegion.NavigationService.Journal.CanGoForward)
+            {
+                contentRegion.NavigationService.Journal.GoForward();
+
+                _eventAggregator.GetEvent<NavigationChangedEvent>().Publish(contentRegion.NavigationService.Journal.CurrentEntry.Uri.OriginalString);
+            }
+            CheckNavigationPossibilites();
+        }
+
+        public void GoBackward()
+        {
+            var contentRegion = _regionManager.Regions[RegionNames.ContentRegion];
+            if (contentRegion.NavigationService.Journal.CanGoBack)
+            {
+                contentRegion.NavigationService.Journal.GoBack();
+
+                _eventAggregator.GetEvent<NavigationChangedEvent>().Publish(contentRegion.NavigationService.Journal.CurrentEntry.Uri.OriginalString);
+            }
+            CheckNavigationPossibilites();
+        }
+
+        private void CheckNavigationPossibilites()
+        {
+            var contentRegion = _regionManager.Regions[RegionNames.ContentRegion];
+            _eventAggregator.GetEvent<NavigationCanGoBackEvent>().Publish(contentRegion.NavigationService.Journal.CanGoBack);
+            _eventAggregator.GetEvent<NavigationCanGoForwardEvent>().Publish(contentRegion.NavigationService.Journal.CanGoForward);
         }
 
         private void NavigateTo(Uri uri)
@@ -40,26 +67,8 @@ namespace InsuranceV2.Application.Services
         private void NavigateTo(Uri uri, NavigationParameters parameters)
         {
             _logger.Info($"Navigating the {RegionNames.ContentRegion} to {uri} with {parameters.Count()} parameters.");
-            _currentNavigation = uri;
+            _currentRegion = uri;
             _regionManager.RequestNavigate(RegionNames.ContentRegion, uri, NavigationCompleted, parameters);
-        }
-
-        public void NavigateToPrevious()
-        {
-            _historyIndex--;
-            if (_historyIndex >= 0)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public void NavigateToNext()
-        {
-            _historyIndex++;
-            if (_historyIndex <= _navigationHistory.Count() - 1)
-            {
-                throw new NotImplementedException();
-            }
         }
 
         public void NavigateTo(string uri)
@@ -78,16 +87,14 @@ namespace InsuranceV2.Application.Services
             {
                 if (navigationResult.Result.Value)
                 {
-                    _navigationHistory.Add(_currentNavigation);
-                    _historyIndex = _navigationHistory.Count() - 1;
-                    _eventAggregator.GetEvent<NavigationChangedEvent>().Publish(_currentNavigation.OriginalString);
+                    _eventAggregator.GetEvent<NavigationChangedEvent>().Publish(_currentRegion.OriginalString);
+                    CheckNavigationPossibilites();
                     _logger.Info("Navigation successful.");
                 }
                 else
                 {
                     _logger.Error("Navigation failed.", navigationResult.Error);
                 }
-                _currentNavigation = null;
             }
         }
     }

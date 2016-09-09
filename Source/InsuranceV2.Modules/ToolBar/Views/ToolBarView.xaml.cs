@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace InsuranceV2.Modules.ToolBar.Views
 {
@@ -11,8 +10,6 @@ namespace InsuranceV2.Modules.ToolBar.Views
         public ToolBarView()
         {
             InitializeComponent();
-
-            Console.WriteLine("Add bindings for visibility to toolbar!");
         }
     }
 }

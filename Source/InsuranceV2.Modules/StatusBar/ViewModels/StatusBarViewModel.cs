@@ -120,6 +120,8 @@ namespace InsuranceV2.Modules.StatusBar.ViewModels
         private void SubscribeEvents()
         {
             _eventAggregator.GetEvent<NavigationChangedEvent>().Subscribe(OnNavigationChanged, true);
+            _eventAggregator.GetEvent<InsureeSelectedEvent>().Subscribe(OnInsureeChanged, true);
+            _eventAggregator.GetEvent<InsureePartnerSelectedEvent>().Subscribe(OnInsureePartnerChanged, true);
         }
 
         private void OnNavigationChanged(string newRegion)
@@ -130,6 +132,8 @@ namespace InsuranceV2.Modules.StatusBar.ViewModels
                     {
                         StatusBarVisibility = Visibility.Collapsed;
 
+                        ClientName = "";
+
                         break;
                     }
                 case ContentNames.InsureeListView:
@@ -137,9 +141,11 @@ namespace InsuranceV2.Modules.StatusBar.ViewModels
                         StatusBarVisibility = Visibility.Visible;
 
                         EmployeeVisibility = Visibility.Visible;
-                        ClientVisibility = Visibility.Collapsed;
+                        ClientVisibility = Visibility.Hidden;
 
-                        TitleName = "Clients";
+                        ClientName = "";
+
+                        TitleName = "Versicherte";
                         EmployeeName = "Test Tester";
 
                         break;
@@ -151,7 +157,7 @@ namespace InsuranceV2.Modules.StatusBar.ViewModels
                         EmployeeVisibility = Visibility.Visible;
                         ClientVisibility = Visibility.Collapsed;
 
-                        TitleName = "Cli Client";
+                        TitleName = ClientName;
                         EmployeeName = "Test Tester";
 
                         break;
@@ -165,7 +171,6 @@ namespace InsuranceV2.Modules.StatusBar.ViewModels
 
                         TitleName = "Change or add something";
                         EmployeeName = "Test Tester";
-                        ClientName = "Cli Client";
 
                         break;
                     }
@@ -198,10 +203,23 @@ namespace InsuranceV2.Modules.StatusBar.ViewModels
             }
         }
 
+        private void OnInsureeChanged(string insureeFullName)
+        {
+            ClientName = insureeFullName;
+        }
+
+        private void OnInsureePartnerChanged(string insureeFullName)
+        {
+            ClientName = insureeFullName;
+            TitleName = ClientName;
+        }
+
         //TODO: implement functionality to unsubscribe!
         private void UnSubscribeEvents()
         {
             _eventAggregator.GetEvent<NavigationChangedEvent>().Unsubscribe(OnNavigationChanged);
+            _eventAggregator.GetEvent<InsureeSelectedEvent>().Unsubscribe(OnInsureeChanged);
+            _eventAggregator.GetEvent<InsureePartnerSelectedEvent>().Unsubscribe(OnInsureePartnerChanged);
         }
 
         #endregion

@@ -8,17 +8,21 @@ using InsuranceV2.Common.MVVM;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using InsuranceV2.Common.Logging;
 
 namespace InsuranceV2.Modules.ToolBar.ViewModels
 {
     public class ToolBarViewModel : BindableBase, INotifyPropertyChanged
     {
+        private readonly ILogger<ToolBarViewModel> _logger;
         private readonly INavigationAppService _navigationAppService;
         private readonly IEventAggregator _eventAggregator;
 
         private string _addCommandParameter;
 
         private Visibility _toolBarVisibility;
+        private Visibility _informationButtonVisibility;
+        private Visibility _exportButtonVisibility;
         private Visibility _previousButtonVisibility;
         private Visibility _homeButtonVisibility;
         private Visibility _nextButtonVisibility;
@@ -26,8 +30,14 @@ namespace InsuranceV2.Modules.ToolBar.ViewModels
         private Visibility _editButtonVisibility;
         private Visibility _addButtonVisibility;
 
-        public ToolBarViewModel(INavigationAppService navigationAppService, IEventAggregator eventAggregator)
+        public ToolBarViewModel(
+            ILogger<ToolBarViewModel> logger, 
+            INavigationAppService navigationAppService, 
+            IEventAggregator eventAggregator)
         {
+            _logger = logger;
+            _logger.Debug("Created ToolBarViewModel!");
+
             _navigationAppService = navigationAppService;
             _eventAggregator = eventAggregator;
 
@@ -39,6 +49,8 @@ namespace InsuranceV2.Modules.ToolBar.ViewModels
             _addCommandParameter = ContentNames.InsureeAddOrEditView;
 
             _toolBarVisibility = Visibility.Collapsed;
+            _informationButtonVisibility = Visibility.Collapsed;
+            _exportButtonVisibility = Visibility.Collapsed;
             _previousButtonVisibility = Visibility.Collapsed;
             _homeButtonVisibility = Visibility.Collapsed;
             _nextButtonVisibility = Visibility.Collapsed;
@@ -58,17 +70,17 @@ namespace InsuranceV2.Modules.ToolBar.ViewModels
 
         private void NavigatePreviousExecute()
         {
-            _navigationAppService.NavigateToPrevious();
+            _navigationAppService.GoBackward();
         }
 
         private void NavigateNextExecute()
         {
-            _navigationAppService.NavigateToNext();
+            _navigationAppService.GoForward();
         }
 
         private void ExportExecute()
         {
-            throw new NotImplementedException();
+            _logger.Error("Export is not implemented yet!");
         }
 
         #endregion
@@ -100,6 +112,26 @@ namespace InsuranceV2.Modules.ToolBar.ViewModels
             {
                 _toolBarVisibility = value;
                 RaisePropertyChanged("ToolBarVisibility");
+            }
+        }
+
+        public Visibility InformationButtonVisibility
+        {
+            get { return _informationButtonVisibility; }
+            set
+            {
+                _informationButtonVisibility = value;
+                RaisePropertyChanged("InformationButtonVisibility");
+            }
+        }
+
+        public Visibility ExportButtonVisibility
+        {
+            get { return _exportButtonVisibility; }
+            set
+            {
+                _exportButtonVisibility = value;
+                RaisePropertyChanged("ExportButtonVisibility");
             }
         }
 
@@ -181,6 +213,8 @@ namespace InsuranceV2.Modules.ToolBar.ViewModels
         private void SubscribeEvents()
         {
             _eventAggregator.GetEvent<NavigationChangedEvent>().Subscribe(OnNavigationChanged, true);
+            _eventAggregator.GetEvent<NavigationCanGoBackEvent>().Subscribe(OnCanGoBackChanged, true);
+            _eventAggregator.GetEvent<NavigationCanGoForwardEvent>().Subscribe(OnCanGoForwardChanged, true);
         }
 
         private void OnNavigationChanged(string newRegion)
@@ -196,10 +230,10 @@ namespace InsuranceV2.Modules.ToolBar.ViewModels
                     {
                         ToolBarVisibility = Visibility.Visible;
 
+                        ExportButtonVisibility = Visibility.Visible;
+                        InformationButtonVisibility = Visibility.Visible;
+
                         HomeButtonVisibility = Visibility.Collapsed;
-                        //TODO: further informations necessary to hide or show prev/next button
-                        PreviousButtonVisibility = Visibility.Collapsed;
-                        NextButtonVisibility = Visibility.Collapsed;
 
                         TrashButtonVisibility = Visibility.Collapsed;
                         EditButtonVisibility = Visibility.Collapsed;
@@ -211,10 +245,10 @@ namespace InsuranceV2.Modules.ToolBar.ViewModels
                     {
                         ToolBarVisibility = Visibility.Visible;
 
+                        ExportButtonVisibility = Visibility.Visible;
+                        InformationButtonVisibility = Visibility.Visible;
+
                         HomeButtonVisibility = Visibility.Visible;
-                        //TODO: further informations necessary to hide or show prev/next button
-                        PreviousButtonVisibility = Visibility.Collapsed;
-                        NextButtonVisibility = Visibility.Collapsed;
 
                         TrashButtonVisibility = Visibility.Visible;
                         EditButtonVisibility = Visibility.Visible;
@@ -223,15 +257,29 @@ namespace InsuranceV2.Modules.ToolBar.ViewModels
                         break;
                     }
                 case ContentNames.InsureeAddOrEditView:
+                    {
+                        ToolBarVisibility = Visibility.Visible;
+
+                        ExportButtonVisibility = Visibility.Visible;
+                        InformationButtonVisibility = Visibility.Visible;
+
+                        HomeButtonVisibility = Visibility.Visible;
+
+                        TrashButtonVisibility = Visibility.Collapsed;
+                        EditButtonVisibility = Visibility.Collapsed;
+                        AddButtonVisibility = Visibility.Collapsed;
+
+                        break;
+                    }
                 case ContentNames.SettingsView:
                 case ContentNames.InformationView:
                     {
                         ToolBarVisibility = Visibility.Visible;
 
+                        ExportButtonVisibility = Visibility.Collapsed;
+                        InformationButtonVisibility = Visibility.Collapsed;
+
                         HomeButtonVisibility = Visibility.Visible;
-                        //TODO: further informations necessary to hide or show prev/next button
-                        PreviousButtonVisibility = Visibility.Collapsed;
-                        NextButtonVisibility = Visibility.Collapsed;
 
                         TrashButtonVisibility = Visibility.Collapsed;
                         EditButtonVisibility = Visibility.Collapsed;
@@ -246,10 +294,36 @@ namespace InsuranceV2.Modules.ToolBar.ViewModels
             }
         }
 
+        private void OnCanGoBackChanged(bool canGoBack)
+        {
+            if (canGoBack)
+            {
+                PreviousButtonVisibility = Visibility.Visible;
+            }
+            else
+            {
+                PreviousButtonVisibility = Visibility.Collapsed;
+            }
+        }
+
+        private void OnCanGoForwardChanged(bool canGoForward)
+        {
+            if (canGoForward)
+            {
+                PreviousButtonVisibility = Visibility.Visible;
+            }
+            else
+            {
+                NextButtonVisibility = Visibility.Collapsed;
+            }
+        }
+
         //TODO: implement functionality to unsubscribe!
         private void UnSubscribeEvents()
         {
             _eventAggregator.GetEvent<NavigationChangedEvent>().Unsubscribe(OnNavigationChanged);
+            _eventAggregator.GetEvent<NavigationCanGoBackEvent>().Unsubscribe(OnCanGoBackChanged);
+            _eventAggregator.GetEvent<NavigationCanGoForwardEvent>().Unsubscribe(OnCanGoForwardChanged);
         }
 
         #endregion

@@ -15,7 +15,9 @@
                 <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.StatusBarRegion}" />
             </Grid>
             <Grid x:Name="ContentRegion" Grid.Row="1">
-                <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.ContentRegion}" />
+                <ContentControl 
+                    prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.ContentRegion}"
+                    Padding="10"/>
             </Grid>
             <Grid x:Name="ToolBarRegion" Grid.Row="2">
                 <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.ToolBarRegion}" />
