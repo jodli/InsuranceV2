@@ -3,12 +3,10 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using InsuranceV2.Application.Services;
-using InsuranceV2.Common.Events;
 using InsuranceV2.Common.MVVM;
 using Prism.Commands;
-using Prism.Events;
-using Prism.Mvvm;
 using InsuranceV2.Common.Logging;
+using InsuranceV2.Common.Models;
 
 namespace InsuranceV2.Modules.ToolBar.ViewModels
 {
@@ -16,7 +14,7 @@ namespace InsuranceV2.Modules.ToolBar.ViewModels
     {
         private readonly ILogger<ToolBarViewModel> _logger;
         private readonly INavigationAppService _navigationAppService;
-        private readonly IEventAggregator _eventAggregator;
+        private readonly IEventBus _eventBus;
 
         private string _addCommandParameter;
 
@@ -32,14 +30,14 @@ namespace InsuranceV2.Modules.ToolBar.ViewModels
 
         public ToolBarViewModel(
             ILogger<ToolBarViewModel> logger, 
-            INavigationAppService navigationAppService, 
-            IEventAggregator eventAggregator)
+            INavigationAppService navigationAppService,
+            IEventBus eventBus)
         {
             _logger = logger;
             _logger.Debug("Created ToolBarViewModel!");
 
             _navigationAppService = navigationAppService;
-            _eventAggregator = eventAggregator;
+            _eventBus = eventBus;
 
             NavigateCommand = new DelegateCommand<string>(NavigateExecute);
             NavigateToNextCommand = new DelegateCommand(NavigateNextExecute);
@@ -222,14 +220,19 @@ namespace InsuranceV2.Modules.ToolBar.ViewModels
 
         private void SubscribeEvents()
         {
-            _eventAggregator.GetEvent<NavigationChangedEvent>().Subscribe(OnNavigationChanged, true);
-            _eventAggregator.GetEvent<NavigationCanGoBackEvent>().Subscribe(OnCanGoBackChanged, true);
-            _eventAggregator.GetEvent<NavigationCanGoForwardEvent>().Subscribe(OnCanGoForwardChanged, true);
+            _eventBus.Subscribe<NavigationDetails>(OnNavigationChanged);
         }
 
-        private void OnNavigationChanged(string newRegion)
+        private void OnNavigationChanged(NavigationDetails navigationDetails)
         {
-            switch (newRegion)
+            CheckRegion(navigationDetails.CurrentRegion);
+            CheckCanGoBackward(navigationDetails.CanGoBackward);
+            CheckCanGoForward(navigationDetails.CanGoForward);
+        }
+
+        private void CheckRegion(string region)
+        {
+            switch (region)
             {
                 case ContentNames.StartupView:
                     {
@@ -299,12 +302,12 @@ namespace InsuranceV2.Modules.ToolBar.ViewModels
                     }
                 default:
                     {
-                        throw new NotSupportedException(String.Format("Region {0} not supported!", newRegion));
+                        throw new NotSupportedException(String.Format("Region {0} not supported!", region));
                     }
             }
         }
 
-        private void OnCanGoBackChanged(bool canGoBack)
+        private void CheckCanGoBackward(bool canGoBack)
         {
             if (canGoBack)
             {
@@ -316,7 +319,7 @@ namespace InsuranceV2.Modules.ToolBar.ViewModels
             }
         }
 
-        private void OnCanGoForwardChanged(bool canGoForward)
+        private void CheckCanGoForward(bool canGoForward)
         {
             if (canGoForward)
             {
@@ -330,14 +333,12 @@ namespace InsuranceV2.Modules.ToolBar.ViewModels
         
         private void UnSubscribeEvents()
         {
-            _eventAggregator.GetEvent<NavigationChangedEvent>().Unsubscribe(OnNavigationChanged);
-            _eventAggregator.GetEvent<NavigationCanGoBackEvent>().Unsubscribe(OnCanGoBackChanged);
-            _eventAggregator.GetEvent<NavigationCanGoForwardEvent>().Unsubscribe(OnCanGoForwardChanged);
+            _eventBus.Unsubscribe<NavigationDetails>(OnNavigationChanged);
         }
 
         protected override void DisposeUnmanaged()
         {
-            if (_eventAggregator != null)
+            if (_eventBus != null)
             {
                 UnSubscribeEvents();
             }

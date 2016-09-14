@@ -2,19 +2,17 @@
 using System.ComponentModel;
 using System.Windows;
 using InsuranceV2.Application.Models.Insuree;
-using InsuranceV2.Application.Models.Insuree.Events;
-using InsuranceV2.Common.Events;
 using InsuranceV2.Common.Logging;
+using InsuranceV2.Common.Models;
 using InsuranceV2.Common.MVVM;
 using Prism.Common;
-using Prism.Events;
 
 namespace InsuranceV2.Modules.StatusBar.ViewModels
 {
     public class StatusBarViewModel : DisposableViewModel, INotifyPropertyChanged
     {
-        private readonly IEventAggregator _eventAggregator;
         private readonly ILogger<StatusBarViewModel> _logger;
+        private readonly IEventBus _eventBus;
 
         private Visibility _statusBarVisibility;
         private Visibility _employeeVisibility;
@@ -24,12 +22,12 @@ namespace InsuranceV2.Modules.StatusBar.ViewModels
         private string _titleName;
         private string _clientName;
 
-        public StatusBarViewModel(IEventAggregator eventAggregator, ILogger<StatusBarViewModel> logger)
+        public StatusBarViewModel(ILogger<StatusBarViewModel> logger, IEventBus eventBus)
         {
-            _eventAggregator = eventAggregator;
-
             _logger = logger;
             _logger.Debug("StatusBarViewModel created!");
+
+            _eventBus = eventBus;
 
             _statusBarVisibility = Visibility.Collapsed;
             _employeeVisibility = Visibility.Collapsed;
@@ -136,13 +134,13 @@ namespace InsuranceV2.Modules.StatusBar.ViewModels
 
         private void SubscribeEvents()
         {
-            _eventAggregator.GetEvent<NavigationChangedEvent>().Subscribe(OnNavigationChanged, true);
-            _eventAggregator.GetEvent<InsureeSelectedEvent>().Subscribe(OnInsureeChanged, true);
+            _eventBus.Subscribe<ObservableObject<DetailInsuree>>(OnInsureeChanged);
+            _eventBus.Subscribe<NavigationDetails>(OnNavigationChanged);
         }
 
-        private void OnNavigationChanged(string newRegion)
+        private void OnNavigationChanged(NavigationDetails navigationDetails)
         {
-            switch (newRegion)
+            switch (navigationDetails.CurrentRegion)
             {
                 case ContentNames.StartupView:
                     {
@@ -214,7 +212,7 @@ namespace InsuranceV2.Modules.StatusBar.ViewModels
                     }
                 default:
                     {
-                        throw new NotSupportedException(String.Format("Region {0} not supported!", newRegion));
+                        throw new NotSupportedException(String.Format("Region {0} not supported!", navigationDetails.CurrentRegion));
                     }
             }
         }
@@ -227,13 +225,13 @@ namespace InsuranceV2.Modules.StatusBar.ViewModels
         
         private void UnSubscribeEvents()
         {
-            _eventAggregator.GetEvent<NavigationChangedEvent>().Unsubscribe(OnNavigationChanged);
-            _eventAggregator.GetEvent<InsureeSelectedEvent>().Unsubscribe(OnInsureeChanged);
+            _eventBus.Unsubscribe<ObservableObject<DetailInsuree>>(OnInsureeChanged);
+            _eventBus.Unsubscribe<NavigationDetails>(OnNavigationChanged);
         }
 
         protected override void DisposeUnmanaged()
         {
-            if (_eventAggregator != null)
+            if (_eventBus != null)
             {
                 UnSubscribeEvents();
             }

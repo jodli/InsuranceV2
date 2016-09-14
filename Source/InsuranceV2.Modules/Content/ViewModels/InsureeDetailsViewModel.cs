@@ -1,12 +1,10 @@
 ﻿using System.Windows.Input;
 using InsuranceV2.Application.Models.Insuree;
-using InsuranceV2.Application.Models.Insuree.Events;
 using InsuranceV2.Application.Services;
 using InsuranceV2.Common.Logging;
 using InsuranceV2.Common.MVVM;
 using Prism.Commands;
 using Prism.Common;
-using Prism.Events;
 using Prism.Regions;
 
 namespace InsuranceV2.Modules.Content.ViewModels
@@ -15,7 +13,7 @@ namespace InsuranceV2.Modules.Content.ViewModels
     {
         private readonly IInsureeManagementAppService _insureeManagementAppService;
         private readonly ILogger<InsureeDetailsViewModel> _logger;
-        private readonly IEventAggregator _eventAggregator;
+        private readonly IEventBus _eventBus;
 
         private ObservableObject<bool> _isAddressExpanded;
         private ObservableObject<bool> _isEmailAddressExpanded;
@@ -24,11 +22,11 @@ namespace InsuranceV2.Modules.Content.ViewModels
         public InsureeDetailsViewModel(
             IInsureeManagementAppService insureeManagementAppService,
             ILogger<InsureeDetailsViewModel> logger,
-            IEventAggregator eventAggregator)
+            IEventBus eventBus)
         {
             _insureeManagementAppService = insureeManagementAppService;
             _logger = logger;
-            _eventAggregator = eventAggregator;
+            _eventBus = eventBus;
 
             Insuree = new ObservableObject<DetailInsuree>();
 
@@ -65,7 +63,7 @@ namespace InsuranceV2.Modules.Content.ViewModels
         {
             _logger.Debug("Executing ShowPartnerDetailsCommand");
             Insuree.Value = Insuree.Value.Partner;
-            _eventAggregator.GetEvent<InsureeSelectedEvent>().Publish(Insuree);
+            _eventBus.Publish(Insuree);
             OnActivate();
         }
 
@@ -91,7 +89,7 @@ namespace InsuranceV2.Modules.Content.ViewModels
             {
                 _logger.Debug($"Getting details for insuree with id: {selectedInsuree.Id}.");
                 Insuree.Value = _insureeManagementAppService.GetDetailInsuree(selectedInsuree.Id);
-                _eventAggregator.GetEvent<InsureeSelectedEvent>().Publish(Insuree);
+                _eventBus.Publish(Insuree);
             }
         }
 

@@ -79,7 +79,6 @@
     <Compile Include="Models\Insurance\ListInsurance.cs" />
     <Compile Include="Models\Insuree\AddOrEditInsuree.cs" />
     <Compile Include="Models\Insuree\DetailInsuree.cs" />
-    <Compile Include="Models\Insuree\Events\InsureeSelectedEvent.cs" />
     <Compile Include="Models\Insuree\ListInsuree.cs" />
     <Compile Include="Models\PagerModel.cs" />
     <Compile Include="Models\PhoneNumber\DetailPhoneNumber.cs" />
