@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq.Dynamic;
-using InsuranceV2.Common.Events;
 using InsuranceV2.Common.Logging;
+using InsuranceV2.Common.Models;
 using InsuranceV2.Common.MVVM;
-using Prism.Events;
 using Prism.Regions;
 
 namespace InsuranceV2.Application.Services
@@ -12,18 +11,18 @@ namespace InsuranceV2.Application.Services
     {
         private readonly ILogger<NavigationAppService> _logger;
         private readonly IRegionManager _regionManager;
-        private readonly IEventAggregator _eventAggregator;
+        private readonly IEventBus _eventBus;
 
         private Uri _currentRegion;
 
         public NavigationAppService(
             IRegionManager regionManager, 
-            ILogger<NavigationAppService> logger, 
-            IEventAggregator eventAggregator)
+            ILogger<NavigationAppService> logger,
+            IEventBus eventBus)
         {
             _regionManager = regionManager;
             _logger = logger;
-            _eventAggregator = eventAggregator;
+            _eventBus = eventBus;
 
             _currentRegion = null;
         }
@@ -34,8 +33,6 @@ namespace InsuranceV2.Application.Services
             if (contentRegion.NavigationService.Journal.CanGoForward)
             {
                 contentRegion.NavigationService.Journal.GoForward();
-
-                _eventAggregator.GetEvent<NavigationChangedEvent>().Publish(contentRegion.NavigationService.Journal.CurrentEntry.Uri.OriginalString);
             }
             CheckNavigationPossibilites();
         }
@@ -46,17 +43,14 @@ namespace InsuranceV2.Application.Services
             if (contentRegion.NavigationService.Journal.CanGoBack)
             {
                 contentRegion.NavigationService.Journal.GoBack();
-
-                _eventAggregator.GetEvent<NavigationChangedEvent>().Publish(contentRegion.NavigationService.Journal.CurrentEntry.Uri.OriginalString);
             }
             CheckNavigationPossibilites();
         }
 
         private void CheckNavigationPossibilites()
         {
-            var contentRegion = _regionManager.Regions[RegionNames.ContentRegion];
-            _eventAggregator.GetEvent<NavigationCanGoBackEvent>().Publish(contentRegion.NavigationService.Journal.CanGoBack);
-            _eventAggregator.GetEvent<NavigationCanGoForwardEvent>().Publish(contentRegion.NavigationService.Journal.CanGoForward);
+            IRegion contentRegion = _regionManager.Regions[RegionNames.ContentRegion];
+            _eventBus.Publish(new NavigationDetails(_currentRegion.OriginalString, contentRegion.NavigationService.Journal.CanGoBack, contentRegion.NavigationService.Journal.CanGoForward));
         }
 
         private void NavigateTo(Uri uri)
@@ -87,7 +81,6 @@ namespace InsuranceV2.Application.Services
             {
                 if (navigationResult.Result.Value)
                 {
-                    _eventAggregator.GetEvent<NavigationChangedEvent>().Publish(_currentRegion.OriginalString);
                     CheckNavigationPossibilites();
                     _logger.Info("Navigation successful.");
                 }
