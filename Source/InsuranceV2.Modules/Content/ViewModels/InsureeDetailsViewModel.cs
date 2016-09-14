@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 using InsuranceV2.Application.Models.Insuree;
+using InsuranceV2.Application.Models.Insuree.Events;
 using InsuranceV2.Application.Services;
-using InsuranceV2.Common.Events;
 using InsuranceV2.Common.Logging;
 using InsuranceV2.Common.MVVM;
 using Prism.Commands;
@@ -65,7 +65,7 @@ namespace InsuranceV2.Modules.Content.ViewModels
         {
             _logger.Debug("Executing ShowPartnerDetailsCommand");
             Insuree.Value = Insuree.Value.Partner;
-            _eventAggregator.GetEvent<InsureePartnerSelectedEvent>().Publish(Insuree.Value.FullName);
+            _eventAggregator.GetEvent<InsureeSelectedEvent>().Publish(Insuree);
             OnActivate();
         }
 
@@ -91,7 +91,7 @@ namespace InsuranceV2.Modules.Content.ViewModels
             {
                 _logger.Debug($"Getting details for insuree with id: {selectedInsuree.Id}.");
                 Insuree.Value = _insureeManagementAppService.GetDetailInsuree(selectedInsuree.Id);
-                _eventAggregator.GetEvent<InsureeSelectedEvent>().Publish(Insuree.Value.FullName);
+                _eventAggregator.GetEvent<InsureeSelectedEvent>().Publish(Insuree);
             }
         }
 

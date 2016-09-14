@@ -1,16 +1,20 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows;
+using InsuranceV2.Application.Models.Insuree;
+using InsuranceV2.Application.Models.Insuree.Events;
 using InsuranceV2.Common.Events;
+using InsuranceV2.Common.Logging;
 using InsuranceV2.Common.MVVM;
+using Prism.Common;
 using Prism.Events;
-using Prism.Mvvm;
 
 namespace InsuranceV2.Modules.StatusBar.ViewModels
 {
-    public class StatusBarViewModel : BindableBase, INotifyPropertyChanged
+    public class StatusBarViewModel : DisposableViewModel, INotifyPropertyChanged
     {
         private readonly IEventAggregator _eventAggregator;
+        private readonly ILogger<StatusBarViewModel> _logger;
 
         private Visibility _statusBarVisibility;
         private Visibility _employeeVisibility;
@@ -20,9 +24,12 @@ namespace InsuranceV2.Modules.StatusBar.ViewModels
         private string _titleName;
         private string _clientName;
 
-        public StatusBarViewModel(IEventAggregator eventAggregator)
+        public StatusBarViewModel(IEventAggregator eventAggregator, ILogger<StatusBarViewModel> logger)
         {
             _eventAggregator = eventAggregator;
+
+            _logger = logger;
+            _logger.Debug("StatusBarViewModel created!");
 
             _statusBarVisibility = Visibility.Collapsed;
             _employeeVisibility = Visibility.Collapsed;
@@ -33,6 +40,16 @@ namespace InsuranceV2.Modules.StatusBar.ViewModels
             _clientName = "Client!";
 
             SubscribeEvents();
+        }
+
+        protected override void OnActivate()
+        {
+            _logger.Debug("Activating StatusBarViewModel.");
+        }
+
+        protected override void OnDeactivate()
+        {
+            _logger.Debug("Deactivating StatusBarViewModel.");
         }
 
         #region Visibility
@@ -121,7 +138,6 @@ namespace InsuranceV2.Modules.StatusBar.ViewModels
         {
             _eventAggregator.GetEvent<NavigationChangedEvent>().Subscribe(OnNavigationChanged, true);
             _eventAggregator.GetEvent<InsureeSelectedEvent>().Subscribe(OnInsureeChanged, true);
-            _eventAggregator.GetEvent<InsureePartnerSelectedEvent>().Subscribe(OnInsureePartnerChanged, true);
         }
 
         private void OnNavigationChanged(string newRegion)
@@ -203,23 +219,24 @@ namespace InsuranceV2.Modules.StatusBar.ViewModels
             }
         }
 
-        private void OnInsureeChanged(string insureeFullName)
+        private void OnInsureeChanged(ObservableObject<DetailInsuree> selectedInsuree)
         {
-            ClientName = insureeFullName;
-        }
-
-        private void OnInsureePartnerChanged(string insureeFullName)
-        {
-            ClientName = insureeFullName;
+            ClientName = selectedInsuree.Value.FullName;
             TitleName = ClientName;
         }
-
-        //TODO: implement functionality to unsubscribe!
+        
         private void UnSubscribeEvents()
         {
             _eventAggregator.GetEvent<NavigationChangedEvent>().Unsubscribe(OnNavigationChanged);
             _eventAggregator.GetEvent<InsureeSelectedEvent>().Unsubscribe(OnInsureeChanged);
-            _eventAggregator.GetEvent<InsureePartnerSelectedEvent>().Unsubscribe(OnInsureePartnerChanged);
+        }
+
+        protected override void DisposeUnmanaged()
+        {
+            if (_eventAggregator != null)
+            {
+                UnSubscribeEvents();
+            }
         }
 
         #endregion

@@ -75,10 +75,11 @@
     <Compile Include="Models\Address\DetailAddress.cs" />
     <Compile Include="Models\AutoMapperConfig.cs" />
     <Compile Include="Models\EmailAddress\DetailEmailAddress.cs" />
-    <Compile Include="Models\Insurance\DetailInsurance.cs"/>
-    <Compile Include="Models\Insurance\ListInsurance.cs"/>
-    <Compile Include="Models\Insuree\AddOrEditInsuree.cs"/>
+    <Compile Include="Models\Insurance\DetailInsurance.cs" />
+    <Compile Include="Models\Insurance\ListInsurance.cs" />
+    <Compile Include="Models\Insuree\AddOrEditInsuree.cs" />
     <Compile Include="Models\Insuree\DetailInsuree.cs" />
+    <Compile Include="Models\Insuree\Events\InsureeSelectedEvent.cs" />
     <Compile Include="Models\Insuree\ListInsuree.cs" />
     <Compile Include="Models\PagerModel.cs" />
     <Compile Include="Models\PhoneNumber\DetailPhoneNumber.cs" />
@@ -102,9 +103,7 @@
       <Name>InsuranceV2.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\Insurance"/>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

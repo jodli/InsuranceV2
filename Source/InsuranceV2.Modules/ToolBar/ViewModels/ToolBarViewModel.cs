@@ -12,7 +12,7 @@ using InsuranceV2.Common.Logging;
 
 namespace InsuranceV2.Modules.ToolBar.ViewModels
 {
-    public class ToolBarViewModel : BindableBase, INotifyPropertyChanged
+    public class ToolBarViewModel : DisposableViewModel, INotifyPropertyChanged
     {
         private readonly ILogger<ToolBarViewModel> _logger;
         private readonly INavigationAppService _navigationAppService;
@@ -59,6 +59,16 @@ namespace InsuranceV2.Modules.ToolBar.ViewModels
             _addButtonVisibility = Visibility.Collapsed;
 
             SubscribeEvents();
+        }
+
+        protected override void OnActivate()
+        {
+            _logger.Debug("Activating ToolBarViewModel.");
+        }
+
+        protected override void OnDeactivate()
+        {
+            _logger.Debug("Deactivating StatusBarViewModelToolBarViewModel.");
         }
 
         #region Execution
@@ -317,13 +327,20 @@ namespace InsuranceV2.Modules.ToolBar.ViewModels
                 NextButtonVisibility = Visibility.Collapsed;
             }
         }
-
-        //TODO: implement functionality to unsubscribe!
+        
         private void UnSubscribeEvents()
         {
             _eventAggregator.GetEvent<NavigationChangedEvent>().Unsubscribe(OnNavigationChanged);
             _eventAggregator.GetEvent<NavigationCanGoBackEvent>().Unsubscribe(OnCanGoBackChanged);
             _eventAggregator.GetEvent<NavigationCanGoForwardEvent>().Unsubscribe(OnCanGoForwardChanged);
+        }
+
+        protected override void DisposeUnmanaged()
+        {
+            if (_eventAggregator != null)
+            {
+                UnSubscribeEvents();
+            }
         }
 
         #endregion
